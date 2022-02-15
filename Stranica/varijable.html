@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="header.js"></script>
+    <title>Promjenljive</title>
+</head>
+<body>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+        <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+        <header>Promjenljive</header>
+        <p>
+            Programi koji su demonstrirani u prethodnom poglavlju su potpuno beskorisni, jer uvijek ispisuju jedan te isti tekst na ekran. Da bismo od programa imali ikakve koristi, oni moraju biti u stanju da prihvataju podatke od korisnika, da ih obrađuju, i da prezentiraju korisniku rezultate obrade. Za ostvarivanje ovih zadataka, programski jezik C++ poput mnogih drugih programskih jezika koristi posebne objekte koji se nazivaju promjenljive ili varijable.
+        </p>
+        <br>
+        <p>
+            Posmatrano na fizičkom nivou, promjenljive možemo shvatiti kao određene dijelove radne memorije zadužene za čuvanje vrijednosti podataka koji se obrađuju u programu. Svaka promjenljiva se u memoriji čuva na određenoj adresi (adresa je najčešće neki broj koji određuje tačno mjesto u memoriji gdje se promjenljiva čuva). Kako bi rukovanje sa promjenljivim zasnovano na upotrebi adresa bilo veoma mučno, promjenljivim se dodjeljuju imena, koja služe za pristup njihovom sadržaju. Na taj način je programer oslobođen potrebe da razmišlja o adresama. Stoga, na logičkom nivou, promjenljive možemo posmatrati kao imena kojima su predstavljeni podaci koji se obrađuju. Sljedeća slika ilustrira ovaj koncept na primjeru tri promjenljive nazvane redom “x”, “starost” i “slovo”, koje sadrže redom vrijednosti “5.12”, “21“ i “A“ (posljednji primjer jasno ukazuje da vrijednost promjenljive ne mora nužno da bude broj): 
+        </p>
+        <pre><code class="language-plain">x           5.12
+starost     21
+slovo       A</code></pre>
+        <p>
+            U nekim programskim jezicima ime promjenljive u potpunosti određuje promjenljivu. U jeziku C++, svaka promjenljiva pored imena mora imati i svoj tip. Tip promjenljive određuje vrstu podataka koji se mogu čuvati u promjenljivoj, kao i operacije koje se mogu obavljati nad tim podacima. Na primjer, ukoliko je neka promjenljiva cjelobrojnog tipa, u njoj se mogu čuvati samo cijeli brojevi, i nad njenim sadržajem se mogu obavljati samo operacije definirane za cijele brojeve.
+        </p>
+        <p>
+
+        U jeziku C++ se svaka promjenljiva mora najaviti (deklarirati) prije nego što se prvi put upotrijebi u programu. Primjer deklaracije promjenljive izgleda ovako:
+    </p>
+    <pre class="line-numbers"><code class="language-cpp">int broj;</code></pre>
+    <p>
+        Ovim deklariramo promjenljivu nazvanu “broj“ koja može sadržavati samo cjelobrojne (engl. integer) vrijednosti, što je određeno tipom promjenljive (u ovom slučaju “int”). C++ spada u jezike tzv. stroge tipizacije, što znači da svaka promjenljiva mora imati svoj tip, koji striktno određuje skup mogućih vrijednosti (tzv. domen promjenljive) koje se mogu čuvati u toj promjenljivoj. Za početak ćemo koristiti samo promjenljive cjelobrojnog tipa, dok ćemo se kroz kasnija poglavlja upoznavati i sa drugim tipovima. Vidjećemo također da programer može definirati i svoje vlastite tipove podataka.  
+    </p>
+    <p>
+        Imena promjenljivih i funkcija su specijalan slučaj tzv. identifikatora. Identifikatori smiju sadržavati samo alfanumeričke znakove (tj. slova i brojke), pri čemu prvi znak mora biti slovo. Pored toga, dozvoljena su samo slova engleskog alfabeta, tako da naša slova (“č”, “ć” itd.) nisu dozvoljena u identifikatorima. Tako su imena “a”, “Sarajevo”, “carsija”, “a123”, “U2” i “x2y7” legalna, dok
+ 
+imena “čaršija”, “2Pac” i “7b” nisu (dakle, “burek” je legalno, ali “ćevapi” nije legalno ime promjenljive). Dalje, razmaci u identifikatorima takođe nisu dozvoljeni. Prema tome, “moj broj” nije legalno ime promjenljive. Umjesto toga, možemo koristiti ime “mojbroj” ili, još bolje, ime “MojBroj” (neki udžbenici preporučuju korištenje imena poput "mojBroj", tako da je početno slovo uvijek malo slovo).
+    </p>
+    <p>
+        Veoma je važno naglasiti da je C++ tzv. “case sensitive” jezik, što znači da pravi striktnu razliku između malih i velikih slova. Tako su “mojbroj”, “MOJBROJ” i “MojBroj” tri legalna, ali posve različita identifikatora. Dakle, mogu postojati tri potpuno različite promjenljive sa gore pomenutim imenima (što je, naravno, loša praksa). Kao generalno pravilo, imena svih ugrađenih naredbi, funkcija i objekata jezika C++ sadrže isključivo mala slova, dok imena mnogih konstanti (koje ćemo uskoro upoznati) definiranih u standardnim blibliotekama jezika C++ često sadrže samo velika slova.
+ 
+    </p>
+    <p>
+        Pored slova i cifri, identifikatori mogu sadržavati i donju crticu “_” (engl. underscore), tako da je “moj_broj” također legalan identifikator. Ovu crticu treba razlikovati od obične crtice “-“ (engl. hyphen), tako da ime “moj-broj” nije legalno. Principijelno, donja crtica je ravnopravna sa slovima, tako da identifikatori mogu čak i početi donjom crticom. Drugim riječima, imena poput “_xyz” pa čak i “_____” predstavljaju potpuno legalna imena. Suvišno je i reći da je upotreba ovakvih identifikatora veoma loša praksa. 
+    </p>
+    <p>
+        Postoje izvjesne riječi koje, mada formalno ispunjavaju sve gore postavljene uvjete, ne mogu biti identifikatori zbog toga što je njihovo značenje precizno utvrđeno pravilima jezika C++ i ne mogu se koristiti ni za šta drugo. Takve riječi nazivaju se rezervirane ili ključne riječi. Standard jezika C++ predviđa sljedeće ključne riječi:  
+    </p>
+    <pre><code class="language-cpp">and
+bitand          catch          const_cast          double
+case            const          do                  explicit
+compl           delete         enum                for
+default         else           float               inline
+dynamic_cast    false          if                  namespace
+extern          goto           mutable             operator
+friend          long           not_eq              protected
+int             not            private             return
+new             or_eq          reinterpret_cast    static
+or              register       sizeof              template
+public          signed         switch              try
+short           struct         true                union
+static_cast     throw          typename            void
+this            typeid         virtual             xor_eq
+typedef         using          xor                 continue
+unsigned        wchar_t        auto                char
+volatile        asm            break               bitor
+bool            class          and_eq
+</code></pre>
+<p>
+    Radi lakšeg uočavanja rezervirane riječi se u programima obično prikazuju podebljano, što je učinjeno i u dosadašnjim primjerima.
+</p>
+<p>
+    Postoji mogućnost da neki kompajleri koriste još neke rezervirane riječi, mada se to smatra ozbiljnim kršenjem standarda od strane kompajlera. Obično se takvim “nestandardnim” rezerviranim riječima daju neobična imena (npr. imena koja počinju znakom “_”) da se smanji mogućnost konflikta sa programima
+    koji bi mogli slučajno nesvjesno upotrijebiti takvu riječ kao identifikator. Tako, na primjer, Borland C++ Builder uvodi rezervirane riječi poput “__property”, “__closure”, itd. Jedan od najsigurnijih načina da izbjegnete konflikte sa rezerviranim riječima je da koristite identifikatore bazirane na riječima iz bosanskog jezika, s obzirom da su sve rezervirane riječi izvedene iz engleskog jezika (tako da možete biti sigurni da “baklava” nije ključna riječ). 
+</p>
+<button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+<p>
+    
+</p>
+    </section>
+    </div>
+</body>

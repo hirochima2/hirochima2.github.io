@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Konstante</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Konstante</header>
+            <p>
+                U prethodnim poglavljima upoznali smo se sa promjenljivim, koje služe za čuvanje podataka koji se mijenjaju tokom rada programa. S druge strane, konstante se koriste za čuvanje podataka koji se, nakon trenutka njihovog definiranja, više ne mijenjaju do kraja izvođenja programa. Poput promjenljivih, i konstante se također moraju deklarirati. Deklaracija konstanti se razlikuje od deklaracije promjenljivih po tome što deklaracija konstante počinje sa ključnom riječju “const”, i što konstante obavezno moraju biti inicijalizirane (bilo navođenjem početne vrijednosti unutar zagrada, bilo pomoću znaka “=”). Slijede primjeri ispravnih deklaracija konstanti:
+                <pre class="line-numbers"><code class="language-cpp">const int DinaraZaMarku(35);
+const int BrojRadnihDana = 5, BrojSedmicaUGodini = 52;</code></pre>
+            </p>
+            <p>
+                Deklaracija poput
+                <pre class="line-numbers"><code class="language-cpp">const int broj;</code></pre>
+                nije dozvoljena, jer konstanti “broj” nije dodijeljena vrijednost.
+            </p>
+            <p>
+                Uvođenje konstanti povećava čitljivost programa i olakšava njegovu izmjenu. Na primjer, deklaracija konstante “DinaraZaMarku” pretpostavlja da je kurs između konvertibilne marke i srbijanskog dinara takav da se za 1 KM dobija 35 dinara. Međutim, kursevi valuta su često podložni promjenama. Tako, na primjer, ukoliko se kurs između marke i dinara promijeni, dovoljno je promijeniti samo definiciju ove konstante. U suprotnom bismo morali pretražiti čitav program, i mijenjati svaku pojavu broja “35” nekom drugom vrijednošću, pod uvjetom da ta pojava broja “35” zaista predstavlja kurs između marke i dinara (jer je sasvim moguće da se na nekom mjestu u programu pojavi broj “35” iz razloga koji nemaju nikakve veze sa kursom marke i dinara). Slično, ukoliko na svakom mjestu u nekom programu u kojem nam treba broj sedmica u godini koristimo konstantu “BrojSedmicaUGodini”, program će biti mnogo čitljiviji nego ako koristimo bezlični broj “52”, jer pri površnoj analizi programa teško možemo zaključiti šta broj “52” zapravo predstavlja u kontekstu u kojem je upotrijebljen. Stoga se definicija i upotreba konstanti u programima smatra izuzetno poželjnom praksom. Inače, brojevi čiji se smisao ne vidi iz samog mjesta u programu na kojem su upotrijebljeni, često se nazivaju magični brojevi (engl. magic numbers), vjerovatno po analogiji sa magičnim riječima u bajkama pomoću kojih se ostvaruju neki specijalni efekti, bez ikakvog vidljivog razloga zašto. Upotrebom konstanti smanjuje se upotreba magičnih brojeva, što olakšava razumijevanje i održavanje programa.
+            </p>
+            <p>   
+                Pokušaj da unutar programa promijenimo vrijednost neke konstante smatra se greškom, tj. kompajler bi prijavio grešku da se negdje kasnije u programu pojavi naredba poput
+                <pre class="line-numbers"><code class="language-cpp">DinaraZaMarku = 120;</code></pre>
+            </p>
+            <p>
+
+Interesantno je napomenuti da se konstante mogu inicijalizirati vrijednošću nekog izraza, tako da vrijednost konstante ne mora nužno biti poznata prije nego što započne izvršavanje programa. Na primjer, razmotrimo sljedeći programski isječak:
+<pre class="line-numbers"><code class="language-cpp">int godina_rodjenja, tekuca_godina
+cout << "Unesi godinu rođenja: ";
+cin >> godina_rodjenja;
+cout << "Unesi tekuću godinu: ";
+cin >> tekuca_godina;
+const int starost = tekuca_godina - godina_rodjenja;
+</code></pre>
+            </p>
+            <p>
+                Ovaj primjer je sasvim legalan. Prvo se od korisnika traže podaci o godini rođenja i tekućoj godini, a zatim se na osnovu ovih podataka računa starost, koja se koristi za inicijalizaciju konstante “starost”. Ovdje je upotrijebljena konstanta a ne promjenljiva, s obzirom da se starost, nakon što je izračunata na osnovu ulaznih podataka, više neće mijenjati do kraja programa (glavna svrha konstanti je da omoguće kompajleru prijavu greške u slučaju da kasnije u programu nehotično probamo promijeniti vrijednost nekog podatka koji bi, po prirodi stvari, trebao da bude nepromjenljiv). Međutim, jasno je da vrijednost ove konstante ne možemo znati prije početka rada programa, odnosno prije nego što korisnik unese podatke na osnovu kojih će biti izračunata vrijednost ove konstante.
+            </p>
+            <p>
+               
+Konstanta “starost” iz prethodnog primjera očigledno se razlikuje od ranije definiranih konstanti “BrojRadnihDana” i “BrojSedmicaUGodini”, čija je vrijednost očigledno poznata i prije pokretanja programa. Takve konstante nazivaju se prave konstante (engl. true constants). Preciznije, prave konstante su one konstante koje su inicijalizirane ili brojem ili konstantnim izrazom (engl. constant expression), koji se definira kao izraz koji se sastoji isključivo od brojeva i drugih pravih konstanti. Konstante koje nisu prave konstante možemo nazvati neprave konstante, mada se one u engleskoj literaturi obično nazivaju konstantne promjenljive (iako je, sa lingvističkog aspekta, jasno da je ovaj termin klasični oksimoron) ili, još gore, neizmjenljive promjenljive (engl. unmodifable variables). Da bi se u listingu programa lakše razlikovale prave konstante od nepravih konstanti i promjenljivih, mnogi programeri koriste konvenciju po kojoj se za početna slova imena promjenljivih i nepravih konstanti uvijek koriste mala slova, a za početna slova imena pravih konstanti velika slova. Pored toga, u imenima pravih konstanti se izbjegava upotreba znaka “_”. Ove konvencije ćemo se i mi pridržavati.
+ 
+            </p>
+            <p>
+                Upotrebu konstanti ćemo ilustrirati na primjeru programa koji računa iznos godišnjeg poreza poreskog obveznika po britanskom sistemu naplate poreza. Po ovom sistemu, iznos poreza se računa kao jedna trećina godišnjeg prihoda korisnika umanjena za poresku naknadu, pri čemu se naknada sastoji od fiksne lične naknade od 5000 funti i naknade za djecu od 1000 funti po svakom djetetu. Očigledno su ulazni podaci neophodni za rad programa iznos godišnjeg prihoda korisnika, i broj njegove djece:
+                <pre data-src="C++/input/input15.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    const int LicnaNaknada(5000), NaknadaZaDjecu(1000);
+    int prihod, broj_djece;
+    cin >> prihod;
+}</code></pre>
+            </p>
+        </section>
+    </div>
+</body>
+</html>

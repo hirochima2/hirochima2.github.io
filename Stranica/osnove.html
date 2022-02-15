@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="header.js"></script>
+    <title>Osnovna struktura C++ programa</title>
+</head>
+<body>
+    <script src="nav.js"></script>
+    
+      </div>
+      <div  id="main" class="main">
+        <section id="prvi_dio" class="glavni-sektsn">
+          <br>
+          <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Osnovna struktura C++ programa</header>
+            <p>
+                Ovaj dio pokriva osnove stvari koje se mogu naći u većini C++ programa Uobičajeno je da svaki počeci sa
+                učenjem nekog programskog jezika počinju pravljenjem programa koji ispisuje pozdravnu poruku na ekranu.
+                Zato će naš sljedeći program izgledati ovako:
+            <pre data-src="C++/zdravo-narode.cpp" data-download-link data-download-link-label="Preuzmite!"
+                class="line-numbers"><code class="language-cpp"> //Ovaj kod ispisuje zdravo narode! //Ovo je komentar
+      
+      #include &lt;iostream&gt; //Zaglavlje standardne biblioteke
+      using namespace std; //Deklaracija standardnog imenika
+      int main(){ //Zaglavlje funkcije
+      cout&lt;&lt;&quot;Zdravo narode!&quot;;
+      return 0;
+      }
+                </code></pre>
+            Znak “//” označava komentar. Prilikom prevođenja programa, kompajler potpuno ignorira sve što je napisano
+            iza znaka za komentar do kraja tekućeg reda. Svrha komentara je da pomogne ljudima koji analiziraju program
+            da lakše shvate šta program ili njegovi pojedini dijelovi rade. Komentari su obično kratki. Postoji još
+            jedan način za pisanje komentara, naslijeđen iz jezika C. Sve što se nalazi između oznaka “/*” i “*/”
+            također se tretira kao komentar. Ovakav način pisanja komentara može biti pogodan za pisanje komentara koji
+            se protežu u više redova teksta, kao na primjer u sljedećem programu:
+      
+            <br>
+            <pre data-src="C++/zdravo-narode1.cpp" data-download-link data-download-link-label="Preuzmite!"
+                class="line-numbers"><code class="language-cpp">
+      /* Ovo je veoma jednostavan C++ program.
+      On ne radi ništa posebno, osim što ispisuje pozdravnu poruku. Međutim, od nečeg se mora početi. */
+      
+      #include &lt;iostream&gt; //Zaglavlje standardne biblioteke
+      using namespace std; //Deklaracija standardnog imenika
+      int main(){ //Zaglavlje funkcije
+      cout&lt;&lt;&quot;Zdravo narode!&quot;;
+      return 0;
+      }
+      </pre></code> </p>
+            <p>
+                Glavninu programa sačinjava cjelina nazvana funkcija.
+                Funkcije predstavljaju funkcionalne cjeline programa koje objedinjavaju skupine naredbi koje su
+                posvećene obavljanju nekog konkretnog zadatka.
+                Prikazani program ima samo jednu funkciju. Iole složeniji programi gotovo uvijek imaju više funkcija,
+                jer je veće programe mnogo lakše pisati ukoliko se prethodno razbiju na manje funkcionalne cjeline koje
+                se kasnije izvode kao različite funkcije.
+                U svakom C++ programu mora postojati tačno jedna funkcija koja se
+                zove “main”. Ova funkcija se naziva glavna funkcija, i to je ona funkcija koja će se prva početi
+                izvršavati kada program započne sa radom. U našem primjeru, to je ujedno i jedina funkcija u programu.
+                Drugim riječima, program uvijek započinje izvršavanje od prve naredbe glavne funkcije.
+            </p>
+            <p>
+                Funkcije u programskom jeziku C++ uvijek započinju zaglavljem (engl. function heading) koje pored imena
+                funkcije sadrži spisak parametara funkcije (engl. parameter list), i tip povratne vrijednosti (engl.
+                return type). Parametri su podaci koje pozivaoc funkcije treba da proslijedi pozvanoj funkciji, sa
+                ciljem preciziranja zadatka koji funkcija treba da obavi. Popis parametara se navodi u zagradama
+                neposredno iza imena funkcije. Pošto se main funkcija poziva neposredno iz operativnog sistema,
+                eventualne parametre ovoj funkciji može proslijediti jedino operativni sistem. Stoga je najčešći slučaj
+                da funkcija main nema nikakvih parametara, što se označava praznim zagradama (odsustvo parametara se
+                ponekad označava i navođenjem riječi “void“ unutar zagrada, što je zastarjela praksa nasljeđena iz
+                jezika C). O parametrima ćemo detaljnije govoriti u kasnijim poglavljima.
+      
+            </p>
+            <p>
+                Ispred imena funkcije navodi se tip povratne vrijednosti funkcije. Povratna vrijednost je vrijednost
+                koju funkcija vraća pozivaocu funkcije. Vraćanje vrijednosti obavlja se pomoću naredbe “return”, koja
+                tipično predstavlja posljednju naredbu unutar funkcije, i iza koje se navodi povratna vrijednost. U
+                slučaju funkcije “main”, povratna vrijednost se vraća operativnom sistemu. Po dogovoru, vrijednost “0”
+                vraćena operativnom sistemu označava uspješan završetak programa, dok se vrijednosti različite od nule
+                vraćaju operativnom sistemu isključivo kao signalizacija da iz nekog razloga program nije uspješno
+                obavio planirani zadatak (značenje ovih vrijednosti zavisi od konkretnog operativnog sistema). Stoga je
+                posljednja naredba funkcije “main“ u gotovo svim slučajevima naredba
+            <pre class="line-numbers"><code class="language-cpp">return 0;</code></pre>
+            </p>
+            <p>
+                Sve naredbe jezika C++ obavezno završavaju znakom “;”, koji označava kraj naredbe. Riječ “int“ ispred
+                imena funkcije označava da je vrijednost koju ova funkcija vraća cijeli broj, kao što će biti jasnije iz
+                sljedećeg poglavlja.
+            </p>
+            <p>
+                Kako je povratna vrijednost iz “main“ funkcije gotovo uvijek nula, mnogi kompajleri dopuštaju da se
+                naredba “return“ potpuno izbaci iz “main“ funkcije. Tako nešto ne smatra se dobrom programerskom
+                praksom. Također, ranije verzije kompajlera za C++ dozvoljavale su da se naredba “return“ izbaci i da se
+                tip povratne vrijednosti “int“ zamijeni sa “void”, što označava da se nikakva povratna vrijednost ne
+                vraća. Standard ISO C++98 zabranio je ovakvu praksu, i strogo naredio da funkcija “main“ kao povratni
+                tip može imati samo “int”, i ništa drugo.
+            </p>
+            <p>
+                Nakon zaglavlja funkcije, slijedi tijelo funkcije (engl. function body). Tijelo funkcije počinje znakom
+                “{“ a završava znakom “}”, odnosno tijelo funkcije uvijek je omeđeno vitičastim zagradama. Kasnije ćemo
+                vidjeti da se vitičaste zagrade koristimo kada god treba objediniti neku skupinu naredbi u jednu
+                kompaktnu cjelinu. U ovom slučaju ta cjelina će biti upravo tijelo funkcije. Pod naredbama
+                podrazumijevamo upute koje govore računaru kakvu akciju treba da preduzme, odnosno naredbe opisuju
+                algoritam. Kao što vidimo, program se ne sastoji samo od naredbi. Na primjer, komentar ili zaglavlje
+                funkcije nisu naredbe, jer ne dovode do nikakve konkretne akcije. Program u našem primjeru je toliko
+                jednostavan da ima samo dvije naredbe, od kojih je druga naredba praktično trivijalna. Analizirajmo
+                stoga jedinu netrivijalnu naredbu u programu, koja glasi:
+            <pre class="line-numbers"><code class="language-cpp">cout&lt;&lt;&quot;Zdravo ljudi!&quot;;</code></pre>
+            </p>
+            
+            <p>
+                “cout“ (skraćenica od engl. console out) predstavlja objekat tzv. izlaznog toka podataka (engl. output
+                stream), koji je povezan sa standardnim uređajem za ispis. Standardni uređaj za ispis je tipično ekran,
+                mada ne mora biti (C++ uopće ne podrazumijeva da računar na kojem se program izvršava mora
+                posjedovati ekran). Znak &quot;&lt;&lt;&quot; predstavlja operator umetanja (engl. insertion) u izlazni
+                tok, koji pojednostavljeno možemo čitati kao “šalji na”. Tekst "Zdravo narode!" koji se nalazi između
+                navodnika, predstavlja niz znakova koji šaljemo na (odnosno umećemo u) izlazni tok. Takav niz znakova
+                nazivamo stringovni literal (ili neimenovana stringovna konstanta). O stringovnim literalima i
+                stringovima općenito će kasnije biti više govora, a za sada će nam stringovni literali služiti samo za
+                ispis fiksnog teksta na izlazni uređaj. Dakle, gornja naredba može se interpretirati kao:
+                Pošalji niz znakova “Zdravo narode!” na izlazni uređaj (tipično ekran).
+            </p>
+            <p>
+                U slučaju da radite pod nekim grafičkim operativnim sistemom (poput Windows-a), ovaj tekst će se tipično
+                pojaviti u posebnom prozoru nazvanom konzolni prozor. Moguće je da u slučaju kompajlera sa kojim radite
+                nećete biti u stanju da vidite nikakav tekst, jer se konzolni prozor obično automatski zatvara nakon
+                završetka programa, čime i ispisani tekst odlazi u nepovrat. O načinima za prevazilaženje ovog problema
+                govorićemo u narednom poglavlju, a u međuvremenu, djelimično rješenje može biti ubacivanje sljedeće
+                naredbe neposredno ispred naredbe “return”:
+            <pre class="line-numbers"><code class="language-cpp">cin.get();</code></pre>
+            </p>
+            <p>
+                Ubacivanjem ove naredbe postići ćemo da se program neće završiti prije nego što korisnik pritisne tipku
+                ENTER, čime smo odložili zatvaranje konzolnog prozora. Ovo nije zapravo pravi smisao ove naredbe. već
+                smo se ovdje oslonili na jednu njenu propratnu pojavu. O njenom tačnom smislu govorićemo u kasnijim
+                poglavljima.
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+                
+            </p>
+            <br>
+            </section>
+      <script>
+    
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+    
+    for (i = 0; i < dropdown.length; i++) {
+      dropdown[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var dropdownContent = this.nextElementSibling;
+      if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+      } else {
+      dropdownContent.style.display = "block";
+      }
+      });
+    }
+    </script>
+    

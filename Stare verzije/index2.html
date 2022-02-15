@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="prism.css">
+    <script src="prism.js"></script>
+    <script src="preuzimanje.js"></script>
+    <script src="dropdownmeni.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&family=Rubik&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stil3.css">
+    <title>C++ Dokumentacija</title>
+
+</head>
+
+<body>
+    <div id="glavni">
+        <nav id="bar">
+            <div class="divider">
+                <header>C++ Dokumentacija</header>
+            </div>
+    </div>
+    <div class="sidenav">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#clients">Clients</a>
+        <a href="#contact">Contact</a>
+        <button class="dropdown-btn">Dropdown 
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a href="#">Link 1</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+        </div>
+        <a href="#contact">Search</a>
+      </div>
+    <div class="sadrzaj">
+        <section id="prvi_dio" class="glavni-sektsn">
+            <header>Osnovna struktura C++ programa</header>
+            <p>
+                Ovaj dio pokriva osnove stvari koje se mogu naći u većini C++ programa Uobičajeno je da svaki počeci sa
+                učenjem nekog programskog jezika počinju pravljenjem programa koji ispisuje pozdravnu poruku na ekranu.
+                Zato će naš sljedeći program izgledati ovako:
+            <pre data-src="C++/zdravo-narode.cpp" data-download-link data-download-link-label="Preuzmite!"
+                class="line-numbers"><code class="language-cpp"> //Ovaj kod ispisuje zdravo narode! //Ovo je komentar
+
+#include &lt;iostream&gt; //Zaglavlje standardne biblioteke
+using namespace std; //Deklaracija standardnog imenika
+int main(){ //Zaglavlje funkcije
+    cout&lt;&lt;&quot;Zdravo narode!&quot;;
+    return 0;
+    }
+                </code></pre>
+            Znak “//” označava komentar. Prilikom prevođenja programa, kompajler potpuno ignorira sve što je napisano
+            iza znaka za komentar do kraja tekućeg reda. Svrha komentara je da pomogne ljudima koji analiziraju program
+            da lakše shvate šta program ili njegovi pojedini dijelovi rade. Komentari su obično kratki. Postoji još
+            jedan način za pisanje komentara, naslijeđen iz jezika C. Sve što se nalazi između oznaka “/*” i “*/”
+            također se tretira kao komentar. Ovakav način pisanja komentara može biti pogodan za pisanje komentara koji
+            se protežu u više redova teksta, kao na primjer u sljedećem programu:
+
+            <br>
+            <pre data-src="C++/zdravo-narode1.cpp" data-download-link data-download-link-label="Preuzmite!"
+                class="line-numbers"><code class="language-cpp">
+/* Ovo je veoma jednostavan C++ program.
+On ne radi ništa posebno, osim što ispisuje pozdravnu poruku. Međutim, od nečeg se mora početi. */
+
+#include &lt;iostream&gt; //Zaglavlje standardne biblioteke
+using namespace std; //Deklaracija standardnog imenika
+int main(){ //Zaglavlje funkcije
+    cout&lt;&lt;&quot;Zdravo narode!&quot;;
+    return 0;
+    }
+</pre></code> </p>
+            <p>
+                Glavninu programa sačinjava cjelina nazvana funkcija.
+                Funkcije predstavljaju funkcionalne cjeline programa koje objedinjavaju skupine naredbi koje su
+                posvećene obavljanju nekog konkretnog zadatka.
+                Prikazani program ima samo jednu funkciju. Iole složeniji programi gotovo uvijek imaju više funkcija,
+                jer je veće programe mnogo lakše pisati ukoliko se prethodno razbiju na manje funkcionalne cjeline koje
+                se kasnije izvode kao različite funkcije.
+                U svakom C++ programu mora postojati tačno jedna funkcija koja se
+                zove “main”. Ova funkcija se naziva glavna funkcija, i to je ona funkcija koja će se prva početi
+                izvršavati kada program započne sa radom. U našem primjeru, to je ujedno i jedina funkcija u programu.
+                Drugim riječima, program uvijek započinje izvršavanje od prve naredbe glavne funkcije.
+            </p>
+            <p>
+                Funkcije u programskom jeziku C++ uvijek započinju zaglavljem (engl. function heading) koje pored imena
+                funkcije sadrži spisak parametara funkcije (engl. parameter list), i tip povratne vrijednosti (engl.
+                return type). Parametri su podaci koje pozivaoc funkcije treba da proslijedi pozvanoj funkciji, sa
+                ciljem preciziranja zadatka koji funkcija treba da obavi. Popis parametara se navodi u zagradama
+                neposredno iza imena funkcije. Pošto se main funkcija poziva neposredno iz operativnog sistema,
+                eventualne parametre ovoj funkciji može proslijediti jedino operativni sistem. Stoga je najčešći slučaj
+                da funkcija main nema nikakvih parametara, što se označava praznim zagradama (odsustvo parametara se
+                ponekad označava i navođenjem riječi “void“ unutar zagrada, što je zastarjela praksa nasljeđena iz
+                jezika C). O parametrima ćemo detaljnije govoriti u kasnijim poglavljima.
+
+            </p>
+            <p>
+                Ispred imena funkcije navodi se tip povratne vrijednosti funkcije. Povratna vrijednost je vrijednost
+                koju funkcija vraća pozivaocu funkcije. Vraćanje vrijednosti obavlja se pomoću naredbe “return”, koja
+                tipično predstavlja posljednju naredbu unutar funkcije, i iza koje se navodi povratna vrijednost. U
+                slučaju funkcije “main”, povratna vrijednost se vraća operativnom sistemu. Po dogovoru, vrijednost “0”
+                vraćena operativnom sistemu označava uspješan završetak programa, dok se vrijednosti različite od nule
+                vraćaju operativnom sistemu isključivo kao signalizacija da iz nekog razloga program nije uspješno
+                obavio planirani zadatak (značenje ovih vrijednosti zavisi od konkretnog operativnog sistema). Stoga je
+                posljednja naredba funkcije “main“ u gotovo svim slučajevima naredba
+            <pre class="line-numbers"><code class="language-cpp">return 0;</code></pre>
+            </p>
+            <p>
+                Sve naredbe jezika C++ obavezno završavaju znakom “;”, koji označava kraj naredbe. Riječ “int“ ispred
+                imena funkcije označava da je vrijednost koju ova funkcija vraća cijeli broj, kao što će biti jasnije iz
+                sljedećeg poglavlja.
+            </p>
+            <p>
+                Kako je povratna vrijednost iz “main“ funkcije gotovo uvijek nula, mnogi kompajleri dopuštaju da se
+                naredba “return“ potpuno izbaci iz “main“ funkcije. Tako nešto ne smatra se dobrom programerskom
+                praksom. Također, ranije verzije kompajlera za C++ dozvoljavale su da se naredba “return“ izbaci i da se
+                tip povratne vrijednosti “int“ zamijeni sa “void”, što označava da se nikakva povratna vrijednost ne
+                vraća. Standard ISO C++98 zabranio je ovakvu praksu, i strogo naredio da funkcija “main“ kao povratni
+                tip može imati samo “int”, i ništa drugo.
+            </p>
+            <p>
+                Nakon zaglavlja funkcije, slijedi tijelo funkcije (engl. function body). Tijelo funkcije počinje znakom
+                “{“ a završava znakom “}”, odnosno tijelo funkcije uvijek je omeđeno vitičastim zagradama. Kasnije ćemo
+                vidjeti da se vitičaste zagrade koristimo kada god treba objediniti neku skupinu naredbi u jednu
+                kompaktnu cjelinu. U ovom slučaju ta cjelina će biti upravo tijelo funkcije. Pod naredbama
+                podrazumijevamo upute koje govore računaru kakvu akciju treba da preduzme, odnosno naredbe opisuju
+                algoritam. Kao što vidimo, program se ne sastoji samo od naredbi. Na primjer, komentar ili zaglavlje
+                funkcije nisu naredbe, jer ne dovode do nikakve konkretne akcije. Program u našem primjeru je toliko
+                jednostavan da ima samo dvije naredbe, od kojih je druga naredba praktično trivijalna. Analizirajmo
+                stoga jedinu netrivijalnu naredbu u programu, koja glasi:
+            <pre class="line-numbers"><code class="language-cpp">cout&lt;&lt;&quot;Zdravo ljudi!&quot;;</code></pre>
+            </p>
+            
+            <p>
+                “cout“ (skraćenica od engl. console out) predstavlja objekat tzv. izlaznog toka podataka (engl. output
+                stream), koji je povezan sa standardnim uređajem za ispis. Standardni uređaj za ispis je tipično ekran,
+                mada ne mora biti (C++ uopće ne podrazumijeva da računar na kojem se program izvršava mora
+                posjedovati ekran). Znak &quot;&lt;&lt;&quot; predstavlja operator umetanja (engl. insertion) u izlazni
+                tok, koji pojednostavljeno možemo čitati kao “šalji na”. Tekst "Zdravo narode!" koji se nalazi između
+                navodnika, predstavlja niz znakova koji šaljemo na (odnosno umećemo u) izlazni tok. Takav niz znakova
+                nazivamo stringovni literal (ili neimenovana stringovna konstanta). O stringovnim literalima i
+                stringovima općenito će kasnije biti više govora, a za sada će nam stringovni literali služiti samo za
+                ispis fiksnog teksta na izlazni uređaj. Dakle, gornja naredba može se interpretirati kao:
+                Pošalji niz znakova “Zdravo narode!” na izlazni uređaj (tipično ekran).
+            </p>
+            <p>
+                U slučaju da radite pod nekim grafičkim operativnim sistemom (poput Windows-a), ovaj tekst će se tipično
+                pojaviti u posebnom prozoru nazvanom konzolni prozor. Moguće je da u slučaju kompajlera sa kojim radite
+                nećete biti u stanju da vidite nikakav tekst, jer se konzolni prozor obično automatski zatvara nakon
+                završetka programa, čime i ispisani tekst odlazi u nepovrat. O načinima za prevazilaženje ovog problema
+                govorićemo u narednom poglavlju, a u međuvremenu, djelimično rješenje može biti ubacivanje sljedeće
+                naredbe neposredno ispred naredbe “return”:
+            <pre class="line-numbers"><code class="language-cpp">cin.get();</code></pre>
+            </p>
+            <p>
+                Ubacivanjem ove naredbe postići ćemo da se program neće završiti prije nego što korisnik pritisne tipku
+                ENTER, čime smo odložili zatvaranje konzolnog prozora. Ovo nije zapravo pravi smisao ove naredbe. već
+                smo se ovdje oslonili na jednu njenu propratnu pojavu. O njenom tačnom smislu govorićemo u kasnijim
+                poglavljima.
+            </p>
+            </section>
+            <section id="drugi_dio" class="glavni-sektsn">
+                <header>1.1 Izlazni tok, funkcija cout</header>
+            <p>
+                Objekat “cout“ ne mora nužno prihvaćati samo stringovne literali, nego i mnoge druge tipove podataka o
+                kojima će biti više riječi kasnije. Na primjer, pored stringovnih literala, biće prihvaćeni i brojevi
+                (brojčani literali), tako da možemo pisati:
+            <pre class="line-numbers"><code class="language-cpp">cout&lt;&lt;&quot; Proba&quot;;
+cout&lt;&lt; 1234;
+cout&lt;&lt; 12.34;</code></pre>
+            </p>
+            <p>
+                U gornjem primjeru “12.34” je decimalni broj. Primijetimo da se za odvajanje decimala od cijelog dijela ne koristi zarez nego tačka. O pravilima za pisanje brojeva govorićemo detaljnije u poglavljima koja slijede.
+                Operator umetanja u tok može se primijeniti više puta zaredom na “cout“ objekat, tj. možemo pisati:
+                <pre class="line-numbers"><code class="language-cpp"> cout&lt;&lt;&quot;Broj je&quot; &lt;&lt; 10;</code></pre>
+                Ova linija koda će ispisati sljedeći ispis na izlazni uređaj:
+                <pre><code class="language-plain">Broj je 10</code></pre>
+            </p>
+            <p>
+                Veoma je bitno da se na samom početku shvati razlika između objekata kao što su 10 i "10". Objekat 10 je broj i nad njim se mogu vršiti računske operacije poput sabiranja itd. S druge strane, objekat "10" je niz znakova (stringovni literal) koji se slučajno sastoji od dvije cifre (1 i 0), i nad njim se ne mogu vršiti nikakve računske operacije (npr. telefonski broj je sigurno sastavljen od cifara, ali teško kome će pasti na pamet da sabira dva telefonska broja zajedno). Ova razlika će biti mnogo jasnija nešto kasnije. Ipak, sa aspekta ispisa ova dva objekta se ponašaju identično, tako da bi isti efekat proizvela i sljedeća naredba:
+                <pre class="line-numbers"><code class="language-cpp">cout &lt;&lt;&quot;Broj je&quot; &lt;&lt; "10";
+// ili prosto
+cout &lt;&lt;&quot;Broj je 10&quot;;
+                </code></pre>
+            </p>
+            <p>
+                Stringovni literali mogu sadržavati potpuno proizvoljan niz znakova, tako da je npr. "! ?@ #" sasvim legalan stringovni literal, iako je njegov smisao upitan. Grubo rečeno, može se shvatiti da navodnici označavaju “bukvalno to”, “baš to” itd. Kada god nisu upotrijebljeni navodnici, kompajler za C++ će pokušati da interpretira smisao onog što je napisano prije nego što se izvrši ispis (o čemu će kasnije biti više riječi), dok kada se upotrijebe navodnici, na izlazni uređaj se bukvalno prenosi ono što je napisano između njih. Tako npr. ako napišemo: 
+            <pre class="line-numbers"><code class="language-cpp">cout &lt;&lt; "2+3" ;</code></pre>
+            Na ekranu ćemo dobiti ispis: 
+            <pre><code class="language-plain">2+3</code></pre>
+            Ali ako napišemo:
+            <pre class="line-numbers"><code class="language-cpp">cout &lt;&lt; 2+3;</code></pre>
+            Prikaz na ekranu će biti:
+            <pre><code class="language-plain">5</code></pre>
+            </p>
+            <p>
+                Naravno naredba poput:
+                <pre class="line-numbers"><code class="language-cpp">cout &lt;&lt; @#!&&/3++ ;</code></pre>
+                dovodi do prijave greške od strane kompajlera, jer je kompajler pokušao da interpretira smisao napisanih znakova, dok je sa druge strane:
+                <pre class="line-numbers"><code class="language-cpp">cout &lt;&lt; "@#!&&/3++";</code></pre>
+                sasvim legalna naredba.
+            </p>
+            </section>
+    
+        <section id="treci_dio" class="glavni-sektsn">
+            <header>1.2 Biblioteke,korištenje standarnog riječnika</header>
+            <p>
+                Iako smo gledali ispis u prošlom segmentu, još uvijek nismo objasnili sve elemente našeg prvog programa. Prvi red programa bez komentara je glasio:
+                <pre class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;</code></pre>
+                Naredba “#include“ predstavlja uputu (tzv. direktivu) kompajleru da u program uključi tzv. zaglavlje biblioteke (engl. library header) sa imenom “iostream”. Naime, sve funkcije i objekti u jeziku C++ grupirani su u biblioteke, i na početku svakog programa obavezno se uključuju sve biblioteke koje sadrže funkcije i objekte koje koristimo u programu. Biblioteka “iostream“ (skraćeno od engl. input- output stream), između ostalog, definira objekat “cout“ koji koristimo za pristup izlaznom toku podataka. Tako, npr. ako pišemo matematički program, na početku programa će također stajati i:
+                <pre class="line-numbers"><code class="language-cpp">#include &lt;cmath&gt;</code></pre>
+                A ako pišemo program koji radi sa grafikom, vjerovatno ćemo imati i nešro poput:
+                <pre class="line-numbers"><code class="language-cpp">#include &lt;graphics.h&gt;</code></pre>
+            </p>
+            <p>
+                Ideja svega ovoga je da se program ne opterećuje bespotrebno objektima i funkcijama koji se neće koristiti unutar programa. Npr. bespotrebno je program opterećivati grafičkim objektima ako program neće koristiti grafiku. Standard ISO C++98 jezika C++ predviđa da se kao sastavni dio jezika C++ obavezno moraju nalaziti sljedeće biblioteke:
+            <pre><code class="language-plain">
+algorithm   cctype      exception   new         string
+ciso64      cmath       iostream    numeric     typeinfo      
+csignal     cstdio      map         ostream     utility
+ctime       deque       cfloat      queue       valarray
+functional  iosfwd      csetjmp     set         vector
+iterator    locale      cstring     sstream
+bitset      cerno       fstream     stack
+climits     complex     istream     stdexcept
+cstdarg     cstdlib     memory      streambuf
+
+</code></pre>
+            </p>
+            <p>
+                U starijim verzijama kompajlera za C++ sva zaglavlja biblioteka imala su nastavak “.h“ na imenu, tako da se umjesto zaglavlja “iostream“ koristilo zaglavlje “iostream.h”. Novi kompajleri još uvijek podržavaju stara imena zaglavlja, ali njihovo korištenje se ne preporučuje, jer će podrška za stara imena biti izbačena u doglednoj budućnosti. Kompajler ima pravo da upozori programera na to da se upotreba starih zaglavlja ne preporučuje emitiranjem poruke upozorenja. Sve biblioteke čija imena počinju slovom “c” osim “complex“ naslijeđena su iz jezika C, u kojima su imali imena zaglavlja bez početnog slova “c” i sa nastavkom “.h“ (npr. ”math.h” umjesto “cmath”). I u ovom slučaju, stara imena zaglavlja se još uvijek mogu koristiti, ali tu praksu treba izbjegavati.
+            </p>
+            <p>
+                Pored navedenih 50 standardnih biblioteka, mnogi kompajleri za C++ dolaze sa čitavim skupom nestandardnih biblioteka, koje ne predstavljaju propisani standard jezika C++. Tako, na primjer, biblioteka za rad sa grafikom sigurno ne može biti unutar standarda jezika C++, s obzirom da C++ uopće ne podrazumijeva da računar na kojem se program izvršava mora imati čak i ekran, a kamoli da mora biti u stanju da vrši grafički prikaz. Također, biblioteka sa zaglavljem “windows.h“ koja služi za pisanje Windows aplikacija ne može biti dio standarda C++ jezika, jer C++ ne predviđa da se programi moraju nužno izvršavati na Windows operativnom sistemu. Zaglavlja nestandardnih biblioteka gotovo uvijek imaju i dalje nastavak “.h“ na imenu, da bi se razlikovala od standardnih biblioteka. Treba napomenuti i to da se nestandardne biblioteke za razne namjene često mogu nabaviti i kod neovisnih proizvođača softvera, ili besplatno skinuti sa Interneta. Očigledno su nestandardne biblioteke često itekako potrebne, ali ne mogu da uđu u dio standarda jezika C++, s obzirom da standard jezika ne smije da sadrži nikakve pretpostavke o hardverskim osobinama računara na kojem se program izvršava, niti o operativnom sistemu koji se izvršava na računaru.  
+            </p>
+            <p>
+                Strogo uzevši, direktiva “#include“ ne čini sastavni dio jezika C++, nego čini tzv. naredbu pretprocesora. Pretprocesor je program koji vrši početnu obradu C++ programa još prije nego što C++ program uopće bude prihvaćen od strane kompajlera. Kako je pretprocesor obično tijesno vezan za kompajler, korisnik najčešće nije svjestan ove činjenice (i ne mora da bude svjestan, osim u veoma naprednim primjenama). Sve naredbe pretprocesora počinju znakom “#” koji se, inače, čita kao “heš” (engl. hash).
+            </p>
+            <header>Standardni riječnik</header>
+            <p>
+                Preostaje još da objasnimo red programa koji je glasio:
+                <pre class="line-numbers"><code class="language-cpp">using namespace std;</code></pre>
+                </p>
+                <p>
+                Ovaj programski red govori programu da koristi imenik (engl. namespace) nazvan “std”. Imenici su osobina jezika C++ koja je uvedena tek nedavno. Naime, pojavom velikog broja nestandardnih biblioteka različitih proizvođača bilo je nemoguće spriječiti konflikte u imenima koje mogu nastati kada dvije različite biblioteke upotrijebe isto ime za dva različita objekta ili dvije različite funkcije. Zbog toga je odlučeno da se imena svih objekata i funkcija razvrstavaju u imenike. Dva različita objekta mogu imati isto ime, pod uvjetom da se nalaze u različitim imenicima. Standard propisuje da se svi objekti i sve funkcije iz standardnih biblioteka moraju nalaziti u imeniku “std”. Pomoću navedenog programskog reda govorimo kompajleru da želimo da sve funkcije i objekti iz ovog imenika budu vidljivi u našem programu. Bez ovog reda, objektu “cout“ bismo morali pristupati pomoću konstrukcije “std::cout”, koja znači “objekat cout iz imenika std”. Alternativno bismo umjesto prethodnog programskog reda mogli pisati i sljedeći red:
+                <pre class="line-numbers"><code class="language-cpp">using std::cout;</code></pre>
+            </p>
+            <p>
+                Ovim bismo naglasili da želimo pristupati objektu “cout“ iz imenika “std“ (bez kasnijeg stalnog navođenja imena imenika pri svakom pristupu cout objektu), bez potrebe da “uvozimo” čitav imenik “std”.
+            </p>
+        </section>
+        <section id="cetvrti_dio" class="glavni-sektsn">
+            <header>Cetvrti dio</header>
+            <p>Inventore numquam at distinctio, expedita aspernatur, repudiandae porro similique, fuga ex rem quasi quod
+                totam
+                doloremque vero excepturi. Rem facere, alias molestiae in et necessitatibus tempore veniam esse optio
+                sed?</p>
+            <ul>
+                <li>Lista neka</li>
+                <li>Ja</li>
+                <li>Dobro</li>
+            </ul>
+        </section>
+        <section id="peti_dio" class="glavni-sektsn">
+            <header>Peti dio</header>
+            <p>Sint molestiae soluta reiciendis, a, inventore et cumque asperiores id eum quas voluptatibus quod,
+                corporis
+                veniam nisi autem pariatur maxime labore corrupti. A fuga harum odit adipisci itaque hic architecto!</p>
+            <ul>
+                <li>Lista neka</li>
+                <li>Ja</li>
+                <li>Dobro</li>
+            </ul>
+        </section>
+    </div>
+</body>
+
+</html>

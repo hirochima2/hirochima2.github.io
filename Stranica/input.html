@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="header.js"></script>
+    <title>Ulazni tok</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+        <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+        <header>Ulazni tok</header>
+        <p>
+            Upotrebu promjenljivih ćemo ilustrirati na primjeru programa koji će prosto ponoviti na ekranu broj koji unesemo sa tastature:
+        </p>
+        <pre data-src="C++/input/input1.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int broj;
+    cin &gt;&gt; broj;
+    cout &lt;&lt; broj;
+    return 0;
+}</code></pre>
+    <p>
+    Ovdje trebamo posebno obratiti pažnju na naredbu koja glasi
+    </p>
+    <pre class="line-numbers"><code class="language-cpp">cin &gt;&gt; broj;</code></pre>
+    <p>
+        “cin“ (skraćenica od engl. console in) predstavlja objekat tzv. ulaznog toka podataka (engl. input stream), koji je povezan sa standardnim uređajem za unos. Standardni uređaj za unos je tipično tastatura, mada ne mora biti (C++ uopće ne podrazumijeva da računar na kojem se program izvršava mora posjedovati tastaturu, jer postoje i drugi načini za unos podataka). Znak “>>” predstavlja operator izdvajanja (engl. extraction) iz ulaznog toka, koji pojednostavljeno možemo čitati kao “šalji u”. Njegov smisao je suprotan u odnosu na smisao operatora umetanja “<<” koji se koristi uz objekat izlaznog toka “cout”. Razmotrimo preciznije šta se zapravo dešava. Uz pretpostavku da je standardni ulazni uređaj zaista tastatura, po nailasku na prethodnu naredbu koja zahtijeva izdvajanje promjenljive “broj“ iz ulaznog toka “cin“ program privremeno prekida rad i omogućava nam da unesemo neki niz znakova sa tastature, sve dok ne pritisnemo tipku ENTER. Uneseni niz znakova se pri tome čuva negdje u memoriji. Operator “>>” iz unesenog niza znakova izdvaja sve znake do prvog razmaka (ili do kraja unesenog niza), nakon čega izdvojene znakove interpretira kao cijeli broj koji smješta u promjenljivu “broj“ čije ime se nalazi desno od operatora “>>” (interpretacija niza znakova kao cijelog broja uvjetovana je činjenicom da je “broj“ promjenljiva cjelobrojnog tipa). Dakle, prethodna naredba može se interpretirati na sljedeći način:
+        <strong>Pošalji unos sa tastature interpretiran kao cijeli broj u promjenljivu nazvanu "broj"</strong>
+    </p>
+    <p>
+        Kada pokrenemo ovaj program, ne možemo odmah znati šta će se prikazati na ekranu, jer će ispis zavisiti od toga šta unesemo sa tastature. Zbog toga ćemo, u ovom i sličnim primjerima, pretpostavljene vrijednosti unosa sa tastature prikazivati pored riječi "ENTER". Tako možemo prikazati sljedeću sliku: 
+    </p>
+    <pre><code class="language-plain">10 (ENTER)
+10</code></pre>
+<p>
+    Dakle, program je prihvatio unos sa tastature (u gornjem primjeru “10”) i prosto ga ponovio.
+</p>
+<p>
+    Zavisno od kompajlera sa kojim radite, i u ovom primjeru će se vjerovatno desiti da će nakon završetka programa konzolni prozor zatvoriti, tako da nećete biti u stanju da vidite šta je program ispisao nakon unosa broja. Ubacivanje naredbe “cin.get();“ koja je korištena u prethodnom primjeru kao “polurješenje” u ovom primjeru neće pomoći, jer se njeno korištenje zasniva na pretpostavci da se ulazni tok neće koristiti (što ovdje očigledno nije tačno). Stoga nam je potrebno univerzalnije rješenje, koje će odložiti završetak programa sve dok recimo korisnik ne pritisne bilo koju tipku. Standard jezika C++ uopće ne predviđa nikakav način da se ovo riješi (vjerovatno zbog toga što ne predviđa da računar na kojem se program izvršava mora posjedovati tipke), tako da se moramo poslužiti nestandardnim rješenjima. Mada su ovakva rješenja ovisna od upotrijebljenog kompajlera i operativnog sistema, većina raspoloživih kompajlera dolazi sa nestandardnom bibliotekom “conio.h“ (od engl. console input/output) koja sadrži skupinu nestandardnih funkcija za rad sa tastaturom (a ne bilo kojim ulaznim tokom) i ekranom (a ne bilo kojim izlaznim tokom), dakle sa onim uređajima za koje C++ ne garantira da moraju postojati. U ovoj biblioteci nalazi se i veoma korisna funkcija “getch()“ koja, između ostalog, privremeno zaustavlja izvođenje programa sve dok korisnik ne pritisne bilo koju tipku, a to je upravo ono što nam treba. Dakle, jedno nestandardno rješenje ovog problema može se demonstrirati kroz sljedeći program:
+</p>
+<pre data-src="C++/input/input2.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt; 
+#include &lt;conio.h&gt; //Nestandardno!
+using namespace std;
+int main(){
+    int broj;
+    cin >> broj;
+    cout << broj;
+    getch(); //Nestandardno!
+    return 0;
+}</code></pre>
+<p>
+    Napomenimo da su zagrade iza “getch“ bitne, tako da naredba “getch;“ (bez zagrada) neće izazvati željeni efekat, mada kompajler neće prikazati nikakvu grešku (kasnije ćemo vidjeti da par zagrada predstavlja operaciju poziva funkcije, tako da u slučaju da izostavimo ove zagrade, funkcija “getch“ bi bila samo referencirana odnosno prozvana ali ne i pozvana). U primjerima koji slijede nećemo koristiti biblioteku “conio.h“ niti naredbu “getch();“ da ne bismo listing programa nepotrebno opterećivali detaljima koji nisu bitni za razumijevanje samog programa, i koji su pri tome nestandardni. Međutim, ako želite da sami isprobate neke od kasnijih programa, vjerovatno ćete trebati ubaciti opisane modifikacije da bi efekat programa bio jednak očekivanom.
+Već smo rekli da razmaci u programu u principu nisu bitni, osim unutar stringova i šiljastih zagrada. Međutim, to ne znači da smijemo izostaviti one razmake koji razdvajaju jednu riječ od druge. Tako je sljedeći program neispravan:
+</p>
+<pre class="line-numbers"><code class="language-cpp">#include &lt;iostream>
+using namespacestd; // Greška: riječ "namespacestd" nema smisla
+intmain(){          // Greška: riječ "intmain" nema smisla
+    intbroj;        // Greška: riječ "intbroj" nema smisla
+    cin>>broj;      // Nije greška: ">>" razdvaja "cin" i "broj"
+    cout<&lt;broj;    //  Nije greška: "<<" razdvaja "cout" i "broj"
+}
+</code></pre>
+<p>
+    Do sada razmotreni primjeri programa iz ovog poglavlja su “ružni” u smislu da korisnik programa nakon njihovog pokretanja uopće ne zna šta se od njega očekuje. Svaki dobro napisani program trebao bi da bude takav da korisnik programa u svakom trenutku zna šta se od njega očekuje, i šta predstavlja ispis koji se eventualno javlja kao rezultat rada programa (programer koji je pisao program to sigurno zna, ali programer i korisnik programa često nisu ista osoba). Drugim riječima, program bi trebao biti “ljubazan prema korisniku” (engl. user friendly). Stoga se programi mogu učiniti “ljepšim” ako svaku naredbu ulaza propratimo odgovarajućom naredbom izlaza koja će na ekranu ispisati upute šta se od nas očekuje da unesemo. Sljedeći primjer ilustrira takav “ljubazniji” program:
+</p>
+<pre data-src="C++/input/input3.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int broj;
+    cout << "Unesi neki broj: ";
+    cin >> broj;
+    cout << "Unijeli ste broj: " << broj << endl;
+    return 0;
+}</pre></code>        
+<p>
+    Jedan mogući scenario izvršavanja ovog programa je sljedeći:
+</p>
+<pre><code class="language-plain">Unesi neki broj: 7(ENTER)
+Unijeli ste broj: 7</code></pre>
+<p>
+    Naravno, ovakav program je još uvijek posve beskoristan, ali barem posjeduje izvjesnu dozu komunikacije sa korisnikom programa.
+</p>
+<p>
+    Kao što je već rečeno, operator “>>” izdvaja znakove iz ulaznog toka samo do prvog razmaka, što ilustrira sljedeći primjer izvršavanja “neljubazne” verzije ovog programa:
+</p>
+<pre><code class="language-plain">10 20 30(ENTER)
+10</code></pre>
+<p>
+    Također, ukoliko se prilikom izdvajanja brojčanih podataka iz ulaznog toka naiđe na znak koji nije sastavni dio broja (npr. na slovo), izdvajanje prestaje na tom znaku, kao u sljedećem scenariju:
+</p>
+<pre><code class="language-plain">10ab20(ENTER)
+10
+</code></pre>
+<p>
+    U oba primjera, samo broj “10” je izdvojen iz ulaznog toka. Međutim, preostali unijeti podaci (niz znakova “20 30” odnosno “ab20”) i dalje su pohranjeni u memoriji i predstavljaju dio ulaznog toka. Stoga će eventualna sljedeća upotreba operatora izdvajanja nastaviti izdvajanje iz niza znakova zapamćenog u memoriji (kažemo da se nastavlja izdvajanje iz ulaznog toka). Tek kada se ulazni tok isprazni, odnosno kada se istroše svi znakovi pohranjeni u memoriji biće zatražen novi unos sa ulaznog uređaja. Neka, na primjer, imamo sljedeći program:
+</p>
+<pre data-src="C++/input/input4.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream>
+using namespace std;
+int main(){
+    int a,b,c;
+    cin >> a;
+    cin >> b;
+    cin >> c;
+    cout << a << endl << b << endl << c << endl;
+    return 0; 
+}</code></pre>
+<p>
+    Primijetimo prvo da smo u ovom programu deklarirali tri cjelobrojne promjenljive a, b i c odjednom pomoću deklaracije
+</p>
+<pre class="line-numbers"><code class="language-cpp">int a,b,c;</code></pre>
+<p>
+    Potpuno isti efekat positgli bismo sa tri odvojene deklaracije: 
+</p>
+<pre class="line-numbers"><code class="language-cpp">int a;
+int b;
+int c;
+</code></pre>
+<p>
+    Prikažimo dva moguća “scenarija” pri izvršavanju ovog programa, koji ilustriraju način na koji djeluje operator izdvajanja nad ulaznim tokom:
+</p>
+<pre><code class="language-plain">10 20 30(ENTER)
+10
+20
+30</code></pre>
+<pre><code class="language-plain">10 20(ENTER)
+30 (ENTER)
+10
+20
+30</code></pre>
+<p>
+    Operator “>>” se također može nadovezivati odnosno ulančavati poput operatora “<<”, tako da smo isti program mogli napisati i kraće, na sljedeći način:
+</p>
+<pre data-src="C++/input/input5.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream>
+    using namespace std;
+    int main(){
+        int a,b,c;
+        cin >> a >> b >> c;
+        cout << a << endl << b << endl << c << endl;
+        return 0; 
+    }</code></pre>
+    <p>
+        Međutim, ovdje treba obratiti pažnju na jednu veoma čestu početničku grešku. Ukoliko umjesto naredbe
+        <pre class="line-numbers"><code class="language-cpp">cin >> a >> b >> c;</code></pre>
+        Slučajno napišemo naredbu poput
+        <pre class="line-numbers"><code class="language-cpp">cin >> a,b,c;</code></pre>
+    </p>
+    <p>
+        kompajler neće prijaviti nikakvu grešku, s obzirom da je gornja konstrukcija sintaksno ispravna u jeziku C++. Međutim, ova konstrukcija ne radi ono što bi korisnik mogao očekivati. Posebno, ona će dovesti do izdvajanja samo promjenljive “a” iz ulaznog toka, dok će promjenljive “b” i “c” biti prosto ignorirane. Zašto je tako, shvatićemo kasnije kada upoznamo značenje tzv. zarez-operatora (engl. comma operator). U ovom trenutku je samo potrebno zapamtiti da ova konstrukcija ne vrši izdvajanje promjenljivih “a”, “b” i “c” iz ulaznog toka. Ovakvih naizgled ispravnih konstrukcija koje ne rade ono što bi na prvi pogled trebalo da rade treba se naročito čuvati, jer nas na njih kompajler ne može upozoriti (one su u načelu sintaksno ispravne). U žargonu se takve konstrukcije obično nazivaju zamke (engl. pitfalls).
+        Ako uneseni niz znakova nije sadržavao niti jednu cifru, a očekivana je cifra (npr. zbog toga što zahtijevamo unos cjelobrojne promjenljive), ulazni tok će dospjeti u tzv. neispravno stanje, i svaki sljedeći pokušaj izdvajanja iz ulaznog toka biće ignoriran, sve dok tok ne vratimo ponovo u ispravno stanje pomoću naredbe “cin.clear()”. O ovome ćemo detaljno govoriti kasnije, kada naučimo kako možemo utvrditi da li je ulazni tok u neispravnom stanju, i na taj način preduzeti određenu akciju (npr. obavijestiti korisnika da je unio pogrešne podatke).
+        Veoma je važno napomenuti da deklaracija neke promjenljive samo obavješatava kompajler da imenovana promjenljiva postoji, ali ne i kolika joj je vrijednost. Na primjer, deklaracijom “int a;” kompajler će biti obaviješten o postojanju promjenljive “a”, čime će zauzeti mjesto u memoriji gdje će se čuvati njena vrijednost. Međutim, njena početna vrijednost će biti posve slučajna, preciznije njena početna vrijednost će zavisiti od onoga što se u tom trenutku od ranije nalazilo u memoriji na dodijeljenom mjestu. Ta vrijednost je često nula, ali ne uvijek. Stoga će sljedeći program, kada ga pokrenemo, vjerovatno ispisati neku potpuno nepredvidljivu i besmislenu vrijednost: 
+    </p>
+    <pre data-src="C++/input/input6.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+    using namespace std;
+    int main(){
+        int a;
+        cout << a << endl;
+        return 0;
+}</pre></code>
+<p>
+    Navedeni program predstavlja tipični primjer programa koji je sintaksno ispravan, tj. napisan je potpuno u skladu sa “pravopisnim” i “gramatičkim” pravilima jezika C++, ali sadrži suštinsku grešku logičke odnosno semantičke prirode. Ovakvih grešaka se treba dobro čuvati, jer nas kompajler može upozoriti samo na sintaksne greške (poneki kompajleri mogu prepoznati ovakve situacije i eventualno uputiti upozorenje, ali ne i grešku). Dakle, prilikom prevođenja prethodnog programa, kompajler neće javiti postojanje ikakve greške.
+</p>
+<p>
+    Svaka promjenljiva koja je deklarirana imaće besmislenu vrijednost sve dok joj se eksplicitno ne dodijeli neka konkretna vrijednost. Jedan način dodjele vrijednosti smo već upoznali: izdvajanje vrijednosti iz ulaznog toka. U tom slučaju, promjenljiva dobija vrijednost na osnovu podataka u ulaznom toku (tipično podataka unijetih sa tastature). U narednom poglavlju ćemo upoznati i drugi način dodjele vrijednosti promjenljivim, korištenjem tzv. operatora dodjele “=”. Napomenimo da je korištenje
+promjenljivih kojima nije dodijeljena vrijednost jedna od najčešćih programerskih grešaka (tipično u većim programima), koja obično dovodi do programa koji, zavisno od slučaja, nekad rade ispravno, a nekada ne rade (jer rezultat njihovog rada praktično zavisi od slučajne početne vrijednosti promjenljive).
+</p>
+<p>
+    Postoji mogućnost da se promjenljivoj prilikom deklaracije zada i njena početna vrijednost, tako da će njen sadržaj odmah biti dobro definiran. To se postiže tako što se iza imena promjenljive njena početna vrijednost navede unutar zagrada. Tako će se sljedeći program ponašati posve predvidljivo (ispisivaće uvijek vrijednost “5”), s obzirom da je definirano da je početna vrijednost promjenljive “a” jednaka “5”. Kažemo da je promjenljiva “a” inicijalizirana na vrijednost “5”.
+</p>
+<pre data-src="C++/input/input7.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+    using namespace std;
+    int main(){
+        int a(5);
+        cout << a << endl;
+        return 0;
+}</pre></code>
+<p>
+    Napomenimo da je mogućnost zadavanja početne vrijednosti promjenljive u zagradama uvedena u novijim standardima jezika C++, tako da neki vrlo stari prevodioci za C++ (koje ionako više ne bi trebalo koristiti) ne podržavaju ovu sintaksu. U takvim slučajevima, inicijalizacija promjenljivih se može izvršiti na nešto drugačiji način (naslijeđen iz jezika C), koji će biti opisan u sljedećem poglavlju.
+</p>
+<p>
+    Za promjenljive čija se početna vrijednost ne navodi prilikom deklaracije kažemo da su neinicijalizirane. Zbog problema koji mogu nastati zbog upotrebe neinicijaliziranih promjenljivih, preporučuje se da se sve promjenljive koje će se koristiti u programu obavezno inicijaliziraju, osim u slučaju kada neposredno iza same deklaracije slijedi izdvajanje te promjenljive iz ulaznog toka, nakon čega će ona definitivno dobiti sasvim određenu vrijednost.
+</p>
+<button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+<p>
+    
+</p> 
+</section>
+        </div>
+        </body>
+        </html>

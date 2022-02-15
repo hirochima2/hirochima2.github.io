@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="header.js"></script>
+    <title>Biblioteke, korištenje standardnog riječnika</title>
+</head>
+<body>
+  <script src="nav.js"></script>
+  
+<div id="main" class="main">
+<section id="treci_dio" class="glavni-sektsn">
+    <br>
+    <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+      <header>1.2 Biblioteke,korištenje standarnog riječnika</header>
+      <p>
+          Iako smo gledali ispis u prošlom segmentu, još uvijek nismo objasnili sve elemente našeg prvog programa. Prvi red programa bez komentara je glasio:
+          <pre class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;</code></pre>
+          Naredba “#include“ predstavlja uputu (tzv. direktivu) kompajleru da u program uključi tzv. zaglavlje biblioteke (engl. library header) sa imenom “iostream”. Naime, sve funkcije i objekti u jeziku C++ grupirani su u biblioteke, i na početku svakog programa obavezno se uključuju sve biblioteke koje sadrže funkcije i objekte koje koristimo u programu. Biblioteka “iostream“ (skraćeno od engl. input- output stream), između ostalog, definira objekat “cout“ koji koristimo za pristup izlaznom toku podataka. Tako, npr. ako pišemo matematički program, na početku programa će također stajati i:
+          <pre class="line-numbers"><code class="language-cpp">#include &lt;cmath&gt;</code></pre>
+          A ako pišemo program koji radi sa grafikom, vjerovatno ćemo imati i nešro poput:
+          <pre class="line-numbers"><code class="language-cpp">#include &lt;graphics.h&gt;</code></pre>
+      </p>
+      <p>
+          Ideja svega ovoga je da se program ne opterećuje bespotrebno objektima i funkcijama koji se neće koristiti unutar programa. Npr. bespotrebno je program opterećivati grafičkim objektima ako program neće koristiti grafiku. Standard ISO C++98 jezika C++ predviđa da se kao sastavni dio jezika C++ obavezno moraju nalaziti sljedeće biblioteke:
+      <pre><code class="language-plain">
+algorithm   cctype      exception   new         string
+ciso64      cmath       iostream    numeric     typeinfo      
+csignal     cstdio      map         ostream     utility
+ctime       deque       cfloat      queue       valarray
+functional  iosfwd      csetjmp     set         vector
+iterator    locale      cstring     sstream
+bitset      cerno       fstream     stack
+climits     complex     istream     stdexcept
+cstdarg     cstdlib     memory      streambuf
+
+</code></pre>
+      </p>
+      <p>
+          U starijim verzijama kompajlera za C++ sva zaglavlja biblioteka imala su nastavak “.h“ na imenu, tako da se umjesto zaglavlja “iostream“ koristilo zaglavlje “iostream.h”. Novi kompajleri još uvijek podržavaju stara imena zaglavlja, ali njihovo korištenje se ne preporučuje, jer će podrška za stara imena biti izbačena u doglednoj budućnosti. Kompajler ima pravo da upozori programera na to da se upotreba starih zaglavlja ne preporučuje emitiranjem poruke upozorenja. Sve biblioteke čija imena počinju slovom “c” osim “complex“ naslijeđena su iz jezika C, u kojima su imali imena zaglavlja bez početnog slova “c” i sa nastavkom “.h“ (npr. ”math.h” umjesto “cmath”). I u ovom slučaju, stara imena zaglavlja se još uvijek mogu koristiti, ali tu praksu treba izbjegavati.
+      </p>
+      <p>
+          Pored navedenih 50 standardnih biblioteka, mnogi kompajleri za C++ dolaze sa čitavim skupom nestandardnih biblioteka, koje ne predstavljaju propisani standard jezika C++. Tako, na primjer, biblioteka za rad sa grafikom sigurno ne može biti unutar standarda jezika C++, s obzirom da C++ uopće ne podrazumijeva da računar na kojem se program izvršava mora imati čak i ekran, a kamoli da mora biti u stanju da vrši grafički prikaz. Također, biblioteka sa zaglavljem “windows.h“ koja služi za pisanje Windows aplikacija ne može biti dio standarda C++ jezika, jer C++ ne predviđa da se programi moraju nužno izvršavati na Windows operativnom sistemu. Zaglavlja nestandardnih biblioteka gotovo uvijek imaju i dalje nastavak “.h“ na imenu, da bi se razlikovala od standardnih biblioteka. Treba napomenuti i to da se nestandardne biblioteke za razne namjene često mogu nabaviti i kod neovisnih proizvođača softvera, ili besplatno skinuti sa Interneta. Očigledno su nestandardne biblioteke često itekako potrebne, ali ne mogu da uđu u dio standarda jezika C++, s obzirom da standard jezika ne smije da sadrži nikakve pretpostavke o hardverskim osobinama računara na kojem se program izvršava, niti o operativnom sistemu koji se izvršava na računaru.  
+      </p>
+      <p>
+          Strogo uzevši, direktiva “#include“ ne čini sastavni dio jezika C++, nego čini tzv. naredbu pretprocesora. Pretprocesor je program koji vrši početnu obradu C++ programa još prije nego što C++ program uopće bude prihvaćen od strane kompajlera. Kako je pretprocesor obično tijesno vezan za kompajler, korisnik najčešće nije svjestan ove činjenice (i ne mora da bude svjestan, osim u veoma naprednim primjenama). Sve naredbe pretprocesora počinju znakom “#” koji se, inače, čita kao “heš” (engl. hash).
+      </p>
+      <header id="std">Standardni riječnik</header>
+      <p>
+          Preostaje još da objasnimo red programa koji je glasio:
+          <pre class="line-numbers"><code class="language-cpp">using namespace std;</code></pre>
+          </p>
+          <p>
+          Ovaj programski red govori programu da koristi imenik (engl. namespace) nazvan “std”. Imenici su osobina jezika C++ koja je uvedena tek nedavno. Naime, pojavom velikog broja nestandardnih biblioteka različitih proizvođača bilo je nemoguće spriječiti konflikte u imenima koje mogu nastati kada dvije različite biblioteke upotrijebe isto ime za dva različita objekta ili dvije različite funkcije. Zbog toga je odlučeno da se imena svih objekata i funkcija razvrstavaju u imenike. Dva različita objekta mogu imati isto ime, pod uvjetom da se nalaze u različitim imenicima. Standard propisuje da se svi objekti i sve funkcije iz standardnih biblioteka moraju nalaziti u imeniku “std”. Pomoću navedenog programskog reda govorimo kompajleru da želimo da sve funkcije i objekti iz ovog imenika budu vidljivi u našem programu. Bez ovog reda, objektu “cout“ bismo morali pristupati pomoću konstrukcije “std::cout”, koja znači “objekat cout iz imenika std”. Alternativno bismo umjesto prethodnog programskog reda mogli pisati i sljedeći red:
+          <pre class="line-numbers"><code class="language-cpp">using std::cout;</code></pre>
+      </p>
+      <p>
+          Ovim bismo naglasili da želimo pristupati objektu “cout“ iz imenika “std“ (bez kasnijeg stalnog navođenja imena imenika pri svakom pristupu cout objektu), bez potrebe da “uvozimo” čitav imenik “std”.
+      </p>
+      <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+  <p>
+
+  </p>
+  </section>
+  
+  </div>
+  <script src="dropdownmn.js"></script>
+  </body>
+  </html>

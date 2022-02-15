@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Dodjeljivanje</title>
+</head>
+<body>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+        <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+        <header>Promjenljive</header>
+        <p>
+            U prethodnom poglavlju smo vidjeli da se promjenljivoj može dodijeliti vrijednost izdvajanjem sa ulaznog toka. Pored toga, vidjeli smo da početnu vrijednost promjenljive možemo zadati i putem inicijalizacije, prilikom njene deklaracije. Sada ćemo vidjeti da se promjenljivoj može dodijeliti vrijednost i primjenom naredbe pridruživanja odnosno dodjele (engl. assignment statement). Primjer naredbe pridruživanja u jeziku C++ izgleda poput:
+        </p>
+        <pre class="line-numbers"><code class="language-cpp">broj = 5;</code></pre>
+        <p>
+            Ovdje je pretpostavljeno da je promjenljiva broj prethodno deklarirana (u suprotnom će prevodilac javiti grešku). Znak “=” predstavlja operator dodjele (engl. assignment operator). Čita se kao “postaje”, tako da gornju naredbu treba čitati kao “Broj postaje pet”. Ovdje je bitno shvatiti da operator dodjele ne predstavlja jednakost u matematskom smislu, nego ima imperativno dejstvo, kojim se objektu sa lijeve strane operatora dodjele dodjeljuje vrijednost sa desne strane. Stoga, prethodnu naredbu nismo mogli napisati kao
+        </p>
+        <pre class="line-numbers"><code class="language-cpp">5 = broj; </code></pre>
+        <p>
+            s obzirom da se objektu “5” ne može dodjeliti druga vrijednost od one vrijednosti koju on sam po sebi veći ima (“5”). Slijedi da se sa lijeve strane operatora dodjele mogu nalaziti samo objekti čija se vrijednost može mijenjati. To su tipično objekti iza kojih u načelu stoji određena memorijska lokacija, koja može prihvatiti vrijednost koja se dodjeljuje objektu. Takvi objekti, koji mogu stajati sa lijeve strane operatora dodjele, nazivaju se l-vrijednosti (engl. lvalues). Dakle, promjenljive jesu l-vrijednosti, a brojevi nisu. Kasnije ćemo upoznati i druge l-vrijednosti osim promjenljivih.
+        </p>
+        <p>
+            Svakoj promjenljivoj se, kao što joj i ime govori, može mijenjati vrijednost proizvoljan broj puta tokom izvršavanja programa. Slijedeći program to lijepo ilustrira:
+        </p>
+        <pre data-src="C++/input/input8.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int broj;
+    broj = 10;
+    cout << broj;
+    broj = 20;
+    cout << broj;
+    return 0;
+}
+        </code></pre>
+        <p>
+            Rezultat izvršavanja ovog programa je sljedeći:
+            <pre><code class="language-plain">1020</code></pre>
+        </p>
+    <p>
+        Kao što je i očekivano, ovaj program je ispisao brojeve “10” i “20”. Međutim, interesantno je primijetiti da su ovi brojevi slijepljeni, tako da prikaz izgleda poput broja “1020”. Zašto je tako? Razlog je veoma jednostavan: zbog toga što nigdje nije rečeno da tako ne treba da bude! Ono što ne piše u programu, neće se ni izvršiti. Računar ništa ne podrazumijeva. Već smo rekli da se prilikom ispisa na izlazni tok, svaki sljedeći ispis prosto nastavlja od mjesta gdje je prethodni ispis završio. Upravo se to i desilo u ovom programu. Da smo htjeli da broj “20” bude odvojen jednim razmakom od broja “10”, taj razmak bismo morali ispisati eksplicitno, tj. trebali bismo imati program poput sljedećeg:
+    </p>
+    <pre data-src="C++/input/input9.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int broj;
+    broj = 10;
+    cout << broj << " ";
+    broj = 20;
+    cout << broj << endl;
+    return 0;
+}
+</code></pre>
+<p>
+    Slično, ukoliko smo željeli da broj “20” bude ispisan u novom redu, mogli smo napisati program poput sljedećeg:
+</p>
+<pre data-src="C++/input/input10.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int broj;
+    broj = 10;
+    cout << broj << endl;
+    broj = 20;
+    cout << broj << endl;
+    return 0;
+}
+    </code></pre>
+    <p>
+        U jeziku C++ pridruživanje se može obaviti istovremeno sa deklaracijom, kao u sljedećem primjeru:
+    </p>
+    <pre data-src="C++/input/input11.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int broj = 10;
+    cout << broj << endl;
+    broj = 20;
+    cout << broj << endl;
+    return 0;
+}</pre></code>
+<p>
+    Istu stvar smo mogli napisati i na sljedeći način, s obzirom da smo vidjeli da se početna vrijednost promjenljive može prilikom deklaracije navesti unutar zagrada iza njenog imena:
+</p>
+<pre data-src="C++/input/input12.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int broj(10);
+    cout << broj << endl;
+    broj = 20;
+    cout << broj << endl;
+    return 0;
+}</pre></code>
+<p>
+    Ova šarolikost može u prvi mah zbuniti početnika. Da rezimiramo, postoje tri načina na koji možemo definirati cjelobrojnu promjenljivu “broj“ čija je vrijednost “10”:
+</p>
+<p>
+    Prva dva načina imaju potpuno identično dejstvo: stvaraju promjenljivu broj koju odmah prilikom stvaranja inicijaliziraju na vrijednost 10. Zaista, prva dva načina su pretežno sinonimi (osim u nekim relativno rijetkim izuzecima, o kojima će biti govora kasnije), pri čemu je drugi način naslijeđen iz jezika C. Prvi način je uveden ekskluzivno u jeziku C++, s obzirom da je C++ uveo složenije tipove podataka koji se ne mogu inicijalizirati jednom vrijednošću, već traže više vrijednosti za inicijalizaciju, tako da je sintaksa koja koristi znak “=” neprikladna (npr. objekti koji predstavljaju kompleksne brojeve inicijaliziraju se sa dvije vrijednosti, koje predstavljaju realni i imaginarni dio kompleksnog broja). Također, postoje izvjesni tipovi objekata u jeziku C++, koje ćemo kasnije upoznati, kod kojih bi upotreba znaka “=” za inicijalizaciju bila zbunjujuća. Stoga, C++ preporučuje da se za inicijalizaciju objekata uvijek koristi sintaksa sa zagradama (način 1), mada će za inicijalizaciju većine objekata koji se mogu inicijalizirati sa jednom vrijednošću (osim određenih tipova objekata kod kojih je inicijalizacija na ovaj način eksplicitno zabranjena, o čemu će kasnije biti riječi) biti prihvaćena i sintaksa kod koje se koristi znak “=” (način 2).
+</p>
+<p>
+    S druge strane, način 3 se donekle razlikuje od prva dva načina. Pri korištenju ovog načina, prvo se stvara neinicijalizirana promjenljiva “broj”, kojoj se kasnije dodjeljuje vrijednost “10”. Dakle, u ovom slučaju, faza dodjele vrijednosti je razdvojena od faze dodjele vrijednosti. Mada početnicima ukazivanje na ovu razliku može djelovati kao nepotrebno sitničarenje, potrebno je već na samom početku shvatiti da jezik C++ strogo razlikuje proces inicijalizacije (engl. initialization), kod kojeg se vrijednost nekog objekta (npr. promjenljive) postavlja prilikom njenog kreiranja, i proces dodjele (engl. assignment), kod kojeg se postavlja vrijednost objekta koji već postoji (i koji pri tome od ranije ima neku vrijednost, makar i nedefiniranu), pri čemu novopostavljena vrijednost zamjenjuje prethodno postojeću vrijednost.
+</p>
+<p>
+    U ovako jednostavnom primjeru, razlika između inicijalizacije i dodjele je zaista minorna, tako da mnogi na nju neće obraćati pažnju. Međutim, kod rada sa složenijim objektima razlike postaju izražajnije. U slučaju složenijih objekata ćemo vidjeti da način 3 može biti znatno neefikasniji od prva dva načina. Pored toga, postoje i takvi objekti za koje je zabranjeno da budu neinicijalizirani, pa se način 3 ne može ni primijeniti. Sve ovo će postati jasnije tek kada se upoznamo sa objektima mnogo složenije strukture nego što su cjelobrojne promjenljive. Uglavnom, sintaksa sa zagradama, iskorištena u načinu 1, uvedena je baš sa ciljem da se jasnije istakne razlika između inicijalizacije i dodjele. Sintaksa sa znakom “=”, korištena u načinu 2, zadržana je uglavnom radi kompatibilnosti sa jezikom C. Noviji standardi jezika C++ ne preporučuju njeno korištenje, s obzirom da se iz nje ne vidi jasno da se ne radi o dodjeli nego o inicijalizaciji, a složeniji koncepti jezika C++ zahtijevaju od programera da jasno vodi računa o razlici između ova dva pojma, kao što ćemo vidjeti kasnije kada upoznamo rad sa složenijim korisnički definiranim tipovima podataka.
+</p>
+<p>
+    Jezik C++ spada u strogo tipizirane jezike (engl. strongly typed languages), što znači da svaka promjenljiva obavezno mora imati svoj tačno određeni tip. Tako, deklaracija
+</p>
+<pre class="line-numbers"><code class="language-cpp">int broj;</code></pre>
+<p>
+    označava da je tip promjenljive “broj” cijeli broj (engl. integer). Tip promjenljive služi da odredi kako vrstu vrijednosti koja može biti dodijeljena promjenljivoj, kao i vrstu operacija koje se na nju mogu primjenjivati. Tako, na primjer, za promjenljivu “broj” iz gornjeg primjera, to znači da se njoj mogu dodjeljivati samo cjelobrojne vrijednosti, i nad njom se mogu primjenjivati samo operacije definirane za cijele brojeve (a ne, na primjer, operacije definirane za skupove ili nizove znakova).
+</p>
+<pre data-src="C++/input/input13.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int a, b, c;
+    a = 5;
+    b = 3;
+    c = a * 2;
+    b = (c + 3) / a;
+    a = a + 7;
+    cout << a << endl;
+    cout << b << endl;
+    cout << c << endl;
+    return 0;
+}</pre></code>
+       <p>
+        U ovom programu treba obratiti posebnu pažnju na dodjelu “a = a + 5” koja na prvi pogled izgleda čudno. Međutim, treba imati u vidu da operator “=” ne predstavlja jednakost, nego dodjelu, pri čemu se lijevoj strani dodjeljuje izračunata vrijednost izraza sa desne strane. Tako se, u ovoj naredbi, trenutna vrijednost promjenljive “a” sabira sa 5, nakon čega se izračunata vrijednost smješta ponovo u promjenljivu “a”. Tako, navedena dodjela ima značenje “nova vrijednost promjenljive a postaje stara vrijednost promjenljive a plus 7 ”. Drugim riječima, navedena dodjela uvećava vrijednost promjenljive a za 7. Tako će rezultat izvršavanje ovog programa biti:
+        <pre><code class="language-plain">12
+2
+10</code></pre>
+       </p>
+       <p>
+        Dakle, veoma je bitno da shvatimo da znak “=” označava dodjelu, a ne dvosmjernu jednakost, odnosno jednakost u matematičkom smislu.
+        </p>
+         <p>
+            Već smo rekli da se promjenljive mogu inicijalizirati prilikom deklaracije, kao i da se operator “<<” može nadovezivati, što omogućava da prethodni program napišemo kompaktnije:
+            <pre data-src="C++/input/input14.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int a(5), b(3), c(a * 2);
+    b = (c + 3) / a;
+    a = a + 7;
+    cout << a << endl << b << endl << c << endl;
+    return 0;
+}</pre></code>
+         </p>
+         <p>
+            U ovom primjeru je interesantna inicijalizacija promjenljive “c”, koja se ne vrši brojem nego izrazom, što je sasvim legalno, pod uvjetom da se u izrazu nalaze samo promjenljive koje su prethodno inicijalizirane, ili im je na neki drugi način dodijeljena vrijednost. U suprotnom će promjenljiva biti inicijalizirana izrazom čija vrijednost nije definirana, što je suštinski isto kao da nije ni inicijalizirana!
+         </p>
+         <p>
+            Deklaracije promjenljivih se ne moraju nužno nalaziti na početku funkcije, ali svaka promjenljiva mora biti deklarirana prije nego što se upotrijebi u programu. Tako je npr. sljedeći program ispravan:
+            <pre data-src="C++/input/input15.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int a;
+    a = 5;
+    int b;
+    b = 3;
+    int c;
+    c = a * 2;
+    b = (c + 3) / a;
+    a = a + 7;
+    cout << a << endl << b << endl << c << endl;
+    return 0;
+}</pre></code>
+Međutim, slijedeći program je neispravan, jer se promjenljive koriste prije njihove deklaracije:
+<pre class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    a = 5;
+    b = 3;
+    c = a * 2;
+    int a, b, c;
+    b = (c + 3) / a;
+    a = a + 7;
+    cout << a << endl << b << endl << c << endl;
+    return 0;
+}</pre></code>
+        </p>
+    <p>
+        U jeziku C sve promjenljive su se morale deklarirati na samom početku, prije prve tzv. izvršne naredbe unutar funkcije (tj. naredbe koja ima neko dejstvo). U jeziku C++, kao što smo upravo rekli, ovo više nije slučaj. Naprotiv, u jeziku C++ se strogo preporučuje da se niti jedna promjenljiva ne deklarira prije mjesta njenog prvog korištenja.
+    </p>
+    <p>
+        Svakoj promjenljivoj se može promijeniti vrijednost proizvoljan broj puta u programu, ali se ni jedna promjenljiva ne smije deklarirati više od jedanput, tako da je sljedeći program također neispravan:
+    </p>
+    <pre class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int a;
+    a = 3;
+    cout << a;
+    int a;          //Dvostruka deklaracija - greška!
+    a = 2;
+    cout << a;
+    return 0;
+}</pre></code>
+<p>
+    Isto vrijedi za sljedeći program, u kojem su obje deklaracije (sa inicijalizacijom) napisane tako da liče na dodjelu:
+</p>
+ <pre class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int a = 3;
+    cout << a;
+    int a = 2;          //Dvostruka deklaracija - greška!
+    cout << a;
+    return 0;
+}</pre></code>
+<p>
+Već je rečeno da su veoma opasne greške koje mogu nastati usljed upotrebe neinicijaliziranih promjenljivih. Ovakve greške su posebno opasne, jer nam kompajler ne može ukazati na njih, tj. sa aspekta kompajlera program djeluje ispravan (on to u suštini i jeste, ali samo sintaksno). Svaka promjenljiva koja se upotrijebi u bilo kojem izrazu mora imati jasno definiranu vrijednost da bi sam izraz bio dobro definiran. Stoga će sljedeći program ispisati neku nedefiniranu vrijednost (s obzirom da vrijednost izraza “a + 7” ne može biti dobro definirana, s obzirom da promjenljivoj “a” nije pridružena nikakva konkretna vrijednost:
+<pre class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+   int a, b;
+   b = a + 7;
+   cout << b << endl;
+   return 0; 
+}</pre></code>
+</p>
+<p>
+    Isto tako nipošto ne smijemo misliti da će sljedeći program ispisati vrijednost “3” po analogiji sa matematskim jednačinama (rezultat ovog programa je zapravo nepredvidljiv jer je promjenljiva “y” neinicijalizirana i nigdje joj se ne dodjeljuje vrijednost, a nakon druge dodjele promjenljiva “x” će također postati nedefinirana, jer joj se dodjeljuje nedefinirana vrijednost izraza “y + 2”):
+    <pre class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+   int x = 5, y;
+   x = y + 2;
+   cout << y << endl;
+   return 0; 
+}</pre></code>
+</p>
+<p>
+    Cjelobrojnu aritmetiku ćemo dodatno ilustrirati na primjeru još jednog jednostavnog programa:
+    <pre class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int broj_1, broj_2;
+    cout << "Unesi jedan broj: ";
+    cin >> broj_1;
+    cout << "Unesi drugi broj: ";
+    cin >> broj_2;
+    cout << "Zbir ovih brojeva je " << broj_1 + broj_2 << endl;
+    return 0;
+}</pre></code>
+<p>
+    Mogući scenario izvršavanja ovog programa je sljedeći (pri čemu nećemo više pisati (ENTER) iza unosa da naznačimo da se unos mora završiti pritiskom na ENTER):
+    <pre><code class="language-plain">Unesi jedan broj: 7
+Unesi drugi broj: 5
+Zbir ovih brojeva je 12</code></pre>
+</p>
+<p>
+    Ovdje treba primijetiti da se aritmetički izrazi mogu koristiti i kao drugi operand operatora umetanja na izlazni tok “<<”. (zapravo, bilo koji operator može primiti kao operand bilo koji izraz čiji je tip saglasan sa očekivanim tipom odgovarajućeg operanda). Možda je malo neobična činjenica (po kojoj se C++ razlikuje od mnogih drugih jezika) da je konstrukcija poput
+    <pre class="line-numbers"><code class="language-cpp">cout << broj_1 + broj_2</code></pre>
+</p>
+</p>
+<p>
+    također izraz. Njegova vrijednost nije ništa drugo već sam objekat “cout” (nešto preciznije, referenca na ovaj objekat, ali u ovom trenutku ne možemo objasniti šta to tačno znači). Upravo zahvaljujući ovoj činjenici je i moguće nadovezivanje na izlazni tok. Razmotrimo, na primjer, izraz
+    <pre class="line-numbers"><code class="language-plain">cout << broj_1 << " " << broj_2</code></pre>
+</p>
+<p>
+    Ovaj izraz se zapravo interpretira kao: 
+    <pre class="line-numbers"><code class="language-cpp">((cout << broj_1) << " ") << broj_2</code></pre>
+</p>
+<p>
+    Prvo se obavi “računanje” izraza u unutrašnjim zagradama, koje kao posljedicu ima ispis sadržaja promjenljive “broj_1”. Rezultat ovog izraza je sam objekat “cout”, tako da se sada prethodni izraz svodi na izraz
+    <pre class="line-numbers"><code class="language-cpp">(cout << " ") << broj_2</code></pre>
+</p>
+<p>
+    Ponovo se prvo izvodi izraz u zagradi, koji ispisuje razmak, nakon čega daje objekat “cout” kao rezultat,
+tako da se izraz svodi na izraz
+<pre class="line-numbers"><code class="language-cpp">cout << broj_2</code></pre>
+koji na kraju ispisuje sadržaj promjenljive “broj_2”. Krajnji rezultat cijelog izraza je također objekat “cout”, ali se ovaj rezultat dalje ne koristi nizašta (tj. ignorira se). Također, vrijedi napomenuti da je rezultat izraza poput “cin >> broj” sam objekat ulaznog toka “cin”
+</p>
+<p>
+    Operator “<<” ima niži prioritet od aritmetičkih operatora poput “+” itd. tako da se izraz
+    <pre class="line-numbers"><code class="language-cpp">cout << broj_1 + broj_2</code></pre>
+    posve logično interpretira kao
+    <pre class="line-numbers"><code class="language-cpp">cout << (broj_1 + broj_2)</code></pre>
+</p>
+<p>
+    Dakle, prvo se računa vrijednost izraza “broj_1 + broj_2” nakon čega se izračunata vrijednost šalje na
+izlazni tok (tipično ekran).
+</p>
+<p>
+    Matematički čistunci će reći da je ovakav zapis matematički konzistentniji, jer ne asocira na jednakost veličina koje ne mogu biti jednake. Tako smo matematički “sumnjivu” naredbu “a = a + 5” iz jednog od ranijih primjera mogli zamijeniti sa “a += 5”. Kasnije ćemo ovu mogućnost koristiti dosta često.
+</p>
+<p>
+    Još jedna od neobičnih osobina jezika C++ (po kojoj se on izrazito razlikuje od jezika kao što su BASIC, FORTRAN i Pascal) je u tome što iskaz dodjele također predstavlja izraz. To zapravo znači da iskaz oblika “a=5” ne samo što dodjeljuje promjenljivoj “a” vrijednost “5”, nego i on sam ima vrijednost “5”, tako da se može iskoristiti kao sastavni dio nekog složenijeg izraza. Tako je sasvim moguća naredba poput sljedeće:
+    <pre class="line-numbers"><code class="language-cpp">b = 3 + 2 * (a = 5);</code></pre>
+    Efekat ove naredbe je identičan kao da smo napisali skupinu od sljedeće dvije naredbe:
+    <pre class="line-numbers"><code class="language-cpp">a = 5;
+b = 3 + 2 * a;</code></pre>
+</p>
+<p>
+    Korištenje ove osobine se ne preporučuje, jer je ona idealan put koji vodi ka pisanju nejasnih i nečitljivih programa. Ovdje je navodimo uglavnom da bismo mogli kasnije da ukažemo na jednu veoma čestu grešku koja se može nehotično napraviti prilikom upotrebe naredbi “if“ i “while”. C++ programeri obično ovu osobinu ne zloupotrebljavaju. već je koriste uglavnom kada treba dodijeliti istu vrijednost u nekoliko promjenljivih. Tada umjesto
+    <pre class="line-numbers"><code class="language-cpp">a = 2; b = 2; c = 2;</code></pre>
+    možemo pisati
+    <pre class="line-numbers"><code class="language-cpp">a = b = c = 2;</code></pre>
+</p>
+<p>
+    Ovo se naziva višestruka dodjela (engl. multiple assignment). Tačan efekat ove konstrukcije je kao da smo pisali slijedeću sekvencu:
+    <pre class="line-numbers"><code class="language-cpp">c = 2; b = c; a = b;</code></pre>
+    a ne sekvencu: 
+    <pre class="line-numbers"><code class="language-cpp">a = b; b = c; c = 2;</code></pre>
+</p>
+</p>
+<p>
+    Dakle, operator “=” se izvodi s desna na lijevo, suprotno uobičajenom toku operacija. Primijetimo da efekat gornje dvije sekvence nije isti. Kaže se da je operator “=” desno asocijativan, za razliku od većine operatora, koji su lijevo asocijativni (za proizvoljan operator “·” se kaže da je lijevo asocijativan ukoliko se izraz “x · y · z” interpretira kao “(x · y) · z”, a desno asocijativan ukoliko se interpretira kao “x · (y · z)”). Naravno, za slučaj asocijativnih operatora lijeva i desna asocijativnost daje isti efekat (npr. svejedno je da li se “4+3+2” interpretira kao “(4+3)+2” ili kao “4+(3+2)”), ali za slučaj neasocijativnih operatora važno je znati interpretaciju. Na primjer, bitno je znati da se izraz “4 – 3 – 2” interpretira kao “(4 – 3) – 2” a ne kao “4 – (3 – 2)”. Drugim riječima, operator “–“ je lijevo asocijativan. Svi operatori koje budemo spominjali podrazumijevano će biti lijevo asocijativni, ako posebno ne naglasimo drugačije. Pored operatora dodjele, u desno asocijativne operatore spadaju i kombinirani operatori dodjele, poput. “+=”, ali ta činjenica je više od teoretskog nego od praktičnog značaja, s obzirom da su veoma rijetki slučajevi da se neki od kombiniranih operatora dodjele u istom izrazu upotrijebi više od jedanput.
+</p>
+<p>
+    Ovdje treba ukazati na jednu dosta čestu grešku. Naredba
+    <pre class="line-numbers"><code class="language-cpp">a = a – b – c;</code></pre>
+    nije ekvivalentna naredbi
+    <pre class="line-numbers"><code class="language-cpp">a –= b – c;</code></pre>
+    kako bi neko mogao brzopleto pomisliti, jer se ova posljednja naredba zapravo interpretira kao
+    <pre class="line-numbers"><code class="language-cpp">a = a – (b – c);</code></pre>
+    koja se zapravo svodi na naredbu
+    <pre class="line-numbers"><code class="language-cpp">a = a – b + c;</code></pre>
+    S druge strane, naredba
+    <pre class="line-numbers"><code class="language-cpp">a -= b + c;</code></pre>
+    ekvivalentna je polaznoj naredbi!
+</p>
+<p>
+    Činjenica da dodjela predstavlja izraz omogućuje da se unutar istog izraza izvrši dodjela neke promjenljive i njen ispis na izlazni tok (mada i ovu osobinu treba izbjegavati). Tako se, na primjer, sljedeće dvije naredbe
+    <pre class="line-numbers"><code class="language-cpp">c = a + b;
+cout << c;</code></pre>
+mogu “upakovati” u jednu (nepreporučljivu) naredbu oblika
+<pre class="line-numbers"><code class="language-cpp">cout <<(c = a + b);</pre></code>
+</p>
+<p>
+    Zagrade su u ovom slučaju neophodne. Naime, operator dodjele “=” ima veoma nizak prioritet, niži od prioriteta gotovo svih ostalih operatora (razlog za ovo bi trebao biti jasan). Tako bi se prethodni izraz bez zagrada interpretirao kao “(cout << c) = a + b”, što je očita besmislica, s obzirom da “cout << c” nije l-vrijednost, i ne može se naći sa lijeve strane operatora dodjele.
+</p>
+<p>
+    Sljedeći veoma karakteristični operatori jezika C++ su “++” i “––“. Ovo su unarni a ne binarni operatori, odnosno primjenjuju se na samo jedan operand. Oni povećavaju odnosno smanjuju vrijednost operanda na koji su primijenjeni za 1. Pri tome, operand mora biti l-vrijednost (najčešće ime neke promjenljive). Tako, umjesto “a = a + 1“ ili “a += 1“ možemo pisati samo
+    <pre class="line-numbers"><code class="language-cpp">a++;</code></pre>
+</p>
+<p>
+    Ovi operatori mogu se pisati u prefiksnoj odnosno u postfiksnoj formi, odnosno bilo ispred bilo iza operanda (promjenljive). Tako smo mogli pisati i:
+    <pre class="line-numbers"><code class="language-cpp">++a;</code></pre>
+</p>
+<p>
+    Ovo dvoje ipak nije isto. Razlika je u tome šta je vrijednost ovih izraza, i uočljiva je samo u slučaju kada se ovi operatori upotrijebe unutar nekog složenijeg izraza (što također ne treba zloupotrebljavati). Naime, obje konstrukcije “a++” i “++a” povećavaju sadržaj promjenljive “a” za 1, ali je razlika u tome šta je rezultat tog izraza, tj. kako će on biti iskorišten dalje unutar nekog složenijeg izraza. Rezultat izraza “a++” je vrijednost promjenljive “a” prije uvećavanja, dok je vrijednost izraza “++a” vrijednost promjenljive “a” nakon uvećavanja. Kažemo da “++a” obavlja preinkrementiranje, dok “a++” obavlja postinkrementiranje. Na primjer, neka je vrijednost promjenljive “a” jednaka “5”, i neka je data naredba
+    <pre class="line-numbers"><code class="language-cpp">b = 3 + 2 * (a++);</code></pre>
+    Efekat ove naredbe je kao da smo napisali sljedeće dvije naredbe:
+    <pre class="line-numbers"><code class="language-cpp">b = 3 + 2 * a;
+a = a + 1;</code></pre> 
+S druge strane, efekat naredbe
+<pre class="line-numbers"><code class="language-cpp">b = 3 + 2 * (++a);</code></pre>
+je isti kao da smo napisali sekvencu naredbi
+<pre class="line-numbers"><code class="language-cpp">a = a + 1;
+b = 3 + 2 * a;</code></pre> 
+</p>
+<p>
+    Iako u oba slučaja imamo da je nakon izvršenja naredbe vrijednost promjenljive “a“ jednaka “6”, vrijednosti promjenljive “b“ će se razlikovati u prvom i drugom slučaju (u prvom slučaju će ova vrijednost biti “13”, a u drugom slučaju “15”). Interesantno je napomenuti da je prioritet operatora “++” veoma visok, tako da smo u oba slučaja zagrade mogli izostaviti, po cijenu da program učinimo slabije čitljivim (u slučaju kada nismo sigurni u prioritet pojedinih operatora, upotreba zagrada za specifikaciju prioriteta nije na odmet, čak i u slučajevima kada njihovo korištenje nije neophodno).
+</p>
+<p>
+    Izrazi poput izraza “3+2*(++a)“ koji mijenjaju vrijednost neke od promjenljivih, ili koji obavljaju bilo kakvu akciju koja ne spada u puko izračunavanje vrijednosti izraza, nazivaju se izrazi sa bočnim efektima (engl. side effects). U prethodnom izrazu, kažemo da je bočni efekat izvršen nad promjenljivom “a“. Specifikacija jezika C++ kaže da se, u slučaju da se nad nekom promjenljivom primijeni bočni efekat, ta promjenljiva u izrazu smije upotrijebiti samo jedanput. U suprotnom je vrijednost izraza nedefinirana (njegova vrijednost zavisi od izvedbe kompajlera), i takvi izrazi se ne smiju upotrebljavati. Tako je npr. vrijednost izraza “a * a++“ i “(a++) - (a++)“ nedefinirana. Na primjer, u prvom slučaju, zna se da je vrijednost desnog operanda operacije množenja vrijednost promjenljive “a“ prije uvećanja, ali se ne zna da li je će kao lijevi operand operacije množenja biti upotrijebljena vrijednost promjenljive “a“ prije ili poslije uvećanja. Kao posljedica toga, ovaj izraz ima nedefiniranu vrijednost. Stoga se početnicima savjetuje da izbjegavaju formiranje složenijih izraza u kojima se javljaju bočni efekti.
+</p>
+<p>
+    Analogna priča se može ispričati i za operator “––“. On umanjuje vrijednost svog operanda koji također mora biti l-vrijednost (obično promjenljiva) za 1, ali u zavisnosti da li je napisan ispred ili iza promjenljive obavlja predekrementiranje odnosno postdekrementiranje. Interesantno je da je jezik C++ dobio ime upravo po operatoru “++”, jer je C++ poboljšana verzija jezika poznatog pod imenom C (a jezik C je dobio ime zahvaljujući ekscentričnosti njegovih autora koji su željeli da imaju kratko i originalno ime za svoj novi programski jezik; usput, jedan od njihovih ranijih jezika zvao se B).
+</p>
+<p>
+    Na kraju treba ukazati na još jednu interesantnu osobinu jezika C++, koja ga također razlikuje od većine srodnih jezika. Mnogi drugi jezici, kao što je npr. Pascal, striktno razlikuju izraze od naredbi. U njima izrazi mogu biti dio naredbi, ali nikada ne mogu predstavljati naredbu. Također, naredba ne može biti iskorištena kao izraz. Međutim, razmotrimo konstrukcije poput “a = 3”, “a++” i “cout << a” u jeziku C++. Sve tri konstrukcije predstavljaju izraze, ali također predstavljaju i naredbe. U jeziku C++ vrijedi još opštije pravilo nego što je prikazano u ovim primjerima: svaki izraz može biti iskorišten i kao naredba (obrnuto ne vrijedi, odnosno svaka naredba ne može biti iskorištena kao izraz). Na primjer, konstrukcija “2 + 3” nedvojbeno predstavlja izraz, ali principijelno može biti iskorištena i kao naredba. Tako je, sa aspekta sintakse, sasvim dopušteno u programu napisati nešto poput
+<pre><code class="language-cpp">2 + 3;</code></pre>
+</p>
+<p>
+    Šta radi ovakva naredba? Ništa. Činjenica je da će izraz “2 + 3” biti izračunat, ali kako nije rečeno šta treba uraditi sa rezultatom izračunavanja ovog izraza (5), on će prosto biti ignoriran. Da bi rezultat imao smisla, nešto s njim treba uraditi (npr. ispisati ga, smjestiti ga u neku promjenljivu, ili uraditi nešto treće). Slijedi da bi izraz bio smisleno upotrijebljen kao naredba, on mora sadržavati neki bočni efekat. U suprotnom, upotreba izraza kao naredbe je besmislena, mada je sintaksom jezika C++ dozvoljena, tako da kompajler neće prijaviti nikakvu grešku na naredbu poput gore navedene (bolji kompajleri će eventualno prijaviti upozorenje da navedena naredba ne radi ništa). Treba uočiti razliku između izraza poput “a + 1” koji ne može smisleno biti upotrijebljen kao samostalna naredba, od izraza “a+=1” koji može biti upotrijebljen kao samostalna naredba (s obzirom da mijenja sadržaj promjenljive “a”).
+</p>
+<button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+<p>
+    
+</p>
+</body>
+</html>

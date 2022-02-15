@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Aritmetički izrazi</title>
+</head>
+<body>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <script src="preuzimanje.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Aritmetički izrazi</header>
+            <p>
+                Sa desne strane operatora dodjele ne mora se uvijek nalaziti samo broj, kao u dosadašnjim primjerima. Sasvim je moguće sa desne strane operatora dodjele upotrijebiti ime neke druge promjenljive (koja mora imati prethodno definiranu vrijednost, da bi dodjela imala smisla), pa čak i proizvoljan izraz (engl. expression). Prilično je teško formalno definirati šta je to izraz. Stoga, ovdje nećemo ni pokušavati formalno definirati izraz, već ćemo pojam izraza uvesti opisno, na neformalan način, pri čemu će smisao ovakvog opisa biti jasan po intuiciji. Neformalno rečeno, izraz je formula u kojoj se mogu nalaziti razni objekti (npr. promjenljive i brojevi), koji su eventualno međusobno povezani izvjesnim operatorima. Pri tome, svaka skupina objekata i operatora ne tvori nužno izraz, već za formiranje izraza postoje izvjesna sintaksna pravila (koja su, u većini slučajeva, intuitivno jasna). Čitav izraz uvijek ima neku vrijednost, koja nastaje kao rezultat izračunavanja (engl. evaluation) izraza. Na primjer,
+                <pre><code class="language-plain">2 + 3 * 5</code></pre>
+                predstavlja jedan izraz, čija je vrijednost “17” (ovdje znak “*” označava operaciju množenja). Za sada
+ćemo se upoznati prvo sa cjelobrojnim izrazima. Oni se mogu sastojati od sljedećih elemenata:
+            </p>
+            <ol>
+                <li>Cijelih brojeva, npr.</li>
+                <pre><code class="language-plain">5     999     +999    -42</code></pre>
+                <p>
+                    Cijeli brojevi se sastoje od cifara “0“ – “9“ kojima eventualno prethodi predznak “+” ili “–” (pri čemu se predznak “+” podrazumijeva u slučaju izostavljanja. Ovdje treba upozoriti na jednu čudnu konvenciju koja je (nažalost) naslijeđena iz jezika C. Naime, dok se u matematici vodeće nule u broju ignoriraju (tako da je “00253“ isti broj kao i “253”), u jezicima C i C++ vodeća nula označava da je broj napisan u oktalnom brojnom sistemu (tj. sistemu sa bazom 8). Tako je u jezicima C i C++ broj “00253“ zapravo broj “171“ (2×82+5×81+3). O ovome treba voditi računa, jer može dovesti do grešaka koje se teško otkrivaju. Također, jezici C i C++ omogućavaju i zadavanje cijelih brojeva u heksadekadnom brojnom sistemu (što može nekada biti korisno) dodavanjem prefiksa “0x” ispred broja. Pri tome se slova “A“ – “F“ (nebitno da li su mala ili velika) koriste kao cifre “10” – “15”. Tako, broj “0x1f2“ zapravo predstavlja cijeli broj “498” u dekadnom sistemu (1×162 + 15×161 + 2×160)
+                </p>
+                <li>Cjelobrojnih aritmetičkih operatora, među kojima su najvažniji: </li>
+                <pre><code class="language-plain">+     sabiranje
+-     oduzimanje
+*     množenje
+/     cjelobrojno dijeljenje
+%     ostatak pri cjelobrojnom dijeljenju</code></pre>
+                <li>Cjelobrojnih funkcija, o kojima će kasnije biti riječi</li>
+                <li>Zagrada, pri čemu se bez obzira na dubinu gniježdenja, koriste isključivo male zagrade</li>
+            </ol>
+        <p>
+            Slijedi nekoliko primjera ispravnih cjelobrojnih izraza:
+            <pre><code class="language-plain">Izraz:                      Vrijednost:
+2 + 2                       4
+33 * -6                     -198
+48 / 5                      9
+7 % 3                       1
+(5 + 2) * 7 + 4             53
+120 / (4 + 12 * (3 + 2))    1
+             </code></pre>
+        </p>
+        <p>
+            Primijetimo da operator “/“ označava cjelobrojno dijeljenje, tako da rezultat izraza “7/2“ nije “3.5“ kao u matematici, nego “3”. Operator “%“ označava ostatak pri cjelobrojnom dijeljenju (engl. remainder), tako da je 7 % 2 = 1. Kod operatora “/“ i “%“ drugi operand ne smije biti nula, inače se javlja greška koja tipično rezultira prekidom rada programa. Također, rezultat izvođenja operatora “%“ nije precizno definiran standardom jezika C++ u slučaju da je drugi operand negativan. Rezultat u tom slučaju može zavisiti od konkretne izvedbe kompajlera. Najčešće je operator “%“ definiran tako da vrijedi formula
+            <pre><code class="language-plain">x % y = x - y * (x / y)</code></pre>
+            bey obzira na znak operanada x i y.
+        </p>
+        <p>
+            Prilikom izračunavanja izraza, poštuje se prioritet operacija na način kako je uobičajeno u matematici. Tako, operatori “*“ i “/“ imaju prioritet u odnosu na operatore “+“ i “–“. Operator “%“ ima isti prioritet kao i operatori “*“ i “/“. Naravno, redoslijed izvođenja operacija može se promijeniti upotrebom zagrada na način uobičajen u matematici (samo uz korištenje isključivo malih zagrada). U slučaju operatora istog prioriteta, redoslijed izvođenja operacija je slijeva nadesno, tako da se izraz “7 / 3 * 2” interpretira kao “(7/3)*2” a ne kao “7/(3*2)”.
+        </p>
+        <p>
+            Već je rečeno da se sa desne strane operatora dodjele mogu koristiti i izrazi, tako da su sljedeće naredbe dodjele sasvim legalne:
+            <pre class="line-numbers"><code class="language-cpp">broj = 2 + 2;
+broj = 7 % 3;
+broj = 120 / (4 + 12 * (3 + 2));</code></pre>
+        </p>
+        <p>
+            Činjenica da operator “/” u cjelobrojnim izrazima predstavlja cjelobrojno dijeljenje može često dovesti do zabuna. Na primjer, pogledajmo izraze “a * (b / 30)” i “(a * b) / 30” gdje su “a” i “b” neke cjelobrojne promjenljive. Matematički posmatrano, ova dva izraza djeluju ekvivalentni. Međutim, oni to nisu, upravo zbog činjenice da “/” predstavlja cjelobrojno dijeljenje. Na primjer, neka promjenljive “a” i “b” imaju redom vrijednosti “90” i “75”. Tada je vrijednost prvog izraza “180”, jer je 75 / 30 = 2 i 90 * 2 = 180. Međutim, vrijednost drugog izraza je “225”, jer je 90 * 75 = 6750 i 6750 / 30 = 225. Iz istog razloga, nisu ekvivalentni ni izrazi poput “a / (b / 30)” i “(a / b) * 30” (za iste vrijednosti promjenljivih “a” i “b” kao u prethodnom primjeru, njihove vrijednosti su redom “45” i “30”). Stoga, koji ćemo oblik izraza koristiti, ovisi od toga šta zaista želimo da postignemo. Obično su izrazi sa cjelobrojnim dijeljenjem najsvrsihodniji u slučaju kada je cjelobrojno dijeljenje posljednja operacija koja se obavlja, tako da u većini primjena izraz poput “(a*b)/30” ima više smisla od izraza “a*(b/30)”. Specijalno se treba čuvati izraza u kojima se javlja višestruko cjelobrojno dijeljenje. Na primjer, izraz “a/(b/30)” za slučaj kada promjenljive “a” i “b” imaju respektivno vrijednosti “20” i “10” nije uopće definiran, jer je10/30=0 (tako da dobijamo dijeljenje nulom), za razliku od prividno ekvivalentnog izraza “(a / b) * 30”, čija je vrijednost “60”!
+        </p>
+        <p>
+            Jezik C++ posjeduje veliki broj operatora koji ne postoje u drugim programskim jezicima. Upoznajmo prvo operatore “+=”,“-=”,“*=”,“/=” i “%=”. Naime, kako u programiranju često postoji potreba da se neka promjenljiva poveća, smanji, pomnoži ili podijeli nečim, i da se rezultat ponovo stavi u tu istu promjenljivu, autori jezika C++ su uveli i skraćeni način da se ovakva dodjeljivanja obave:
+            <pre><code class="language-plain">x += y      znači isto što i        x = x + y;
+x -= y;     znači isto što i        x = x - y;
+x *= y;     znači isto što i        x = x * y;
+x /= y;     znači isto što i        x = x / y;
+x %= y;     znači isto što i        x = x % y; </code></pre>
+        </p>
+        </section>
+    </div>
+</body>
+</html>

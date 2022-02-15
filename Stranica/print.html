@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="header.js"></script>
+    <title>Izlazni tok, funkcija cout</title> 
+</head>
+<body>
+
+  <script src="nav.js"></script>
+
+<div id="main" class="main">
+<section id="drugi_dio" class="glavni-sektsn">
+    <br>
+    <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+      <header>1.1 Izlazni tok, funkcija cout</header>
+  <p>
+      Objekat “cout“ ne mora nužno prihvaćati samo stringovne literali, nego i mnoge druge tipove podataka o
+      kojima će biti više riječi kasnije. Na primjer, pored stringovnih literala, biće prihvaćeni i brojevi
+      (brojčani literali), tako da možemo pisati:
+  <pre class="line-numbers"><code class="language-cpp">cout&lt;&lt;&quot; Proba&quot;;
+cout&lt;&lt; 1234;
+cout&lt;&lt; 12.34;</code></pre>
+  </p>
+  <p>
+      U gornjem primjeru “12.34” je decimalni broj. Primijetimo da se za odvajanje decimala od cijelog dijela ne koristi zarez nego tačka. O pravilima za pisanje brojeva govorićemo detaljnije u poglavljima koja slijede.
+      Operator umetanja u tok može se primijeniti više puta zaredom na “cout“ objekat, tj. možemo pisati:
+      <pre class="line-numbers"><code class="language-cpp"> cout&lt;&lt;&quot;Broj je&quot; &lt;&lt; 10;</code></pre>
+      Ova linija koda će ispisati sljedeći ispis na izlazni uređaj:
+      <pre><code class="language-plain">Broj je 10</code></pre>
+  </p>
+  <p>
+      Veoma je bitno da se na samom početku shvati razlika između objekata kao što su 10 i "10". Objekat 10 je broj i nad njim se mogu vršiti računske operacije poput sabiranja itd. S druge strane, objekat "10" je niz znakova (stringovni literal) koji se slučajno sastoji od dvije cifre (1 i 0), i nad njim se ne mogu vršiti nikakve računske operacije (npr. telefonski broj je sigurno sastavljen od cifara, ali teško kome će pasti na pamet da sabira dva telefonska broja zajedno). Ova razlika će biti mnogo jasnija nešto kasnije. Ipak, sa aspekta ispisa ova dva objekta se ponašaju identično, tako da bi isti efekat proizvela i sljedeća naredba:
+      <pre class="line-numbers"><code class="language-cpp">cout &lt;&lt;&quot;Broj je&quot; &lt;&lt; "10";
+// ili prosto
+cout &lt;&lt;&quot;Broj je 10&quot;;
+      </code></pre>
+  </p>
+  <p>
+      Stringovni literali mogu sadržavati potpuno proizvoljan niz znakova, tako da je npr. "! ?@ #" sasvim legalan stringovni literal, iako je njegov smisao upitan. Grubo rečeno, može se shvatiti da navodnici označavaju “bukvalno to”, “baš to” itd. Kada god nisu upotrijebljeni navodnici, kompajler za C++ će pokušati da interpretira smisao onog što je napisano prije nego što se izvrši ispis (o čemu će kasnije biti više riječi), dok kada se upotrijebe navodnici, na izlazni uređaj se bukvalno prenosi ono što je napisano između njih. Tako npr. ako napišemo: 
+  <pre class="line-numbers"><code class="language-cpp">cout &lt;&lt; "2+3" ;</code></pre>
+  Na ekranu ćemo dobiti ispis: 
+  <pre><code class="language-plain">2+3</code></pre>
+  Ali ako napišemo:
+  <pre class="line-numbers"><code class="language-cpp">cout &lt;&lt; 2+3;</code></pre>
+  Prikaz na ekranu će biti:
+  <pre><code class="language-plain">5</code></pre>
+  </p>
+  <p>
+      Naravno naredba poput:
+      <pre class="line-numbers"><code class="language-cpp">cout &lt;&lt; @#!&&/3++ ;</code></pre>
+      dovodi do prijave greške od strane kompajlera, jer je kompajler pokušao da interpretira smisao napisanih znakova, dok je sa druge strane:
+      <pre class="line-numbers"><code class="language-cpp">cout &lt;&lt; "@#!&&/3++";</code></pre>
+      sasvim legalna naredba.
+  </p>
+  <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+  <p>
+
+  </p>
+  </section>
+  </div>
+  </div>
+  <script>
+   
+  </script>
+  <script src="dropdownmn.js"></script>
+  </html>
+  

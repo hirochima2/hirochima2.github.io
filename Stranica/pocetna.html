@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="header.js"></script>
+    <title>Početna stranica</title> 
+</head>
+<body>
+
+  <script src="nav.js"></script>
+<div id="main" class="main">
+  <style>
+    #main{
+      line-height: 150px;
+      height: 150px;
+    }
+    div{
+      border: 5px solid none;
+      text-align: center;
+    }
+    div p{
+      display: inline-block;
+      line-height: normal;
+      vertical-align: middle;
+    }
+  </style>
+    <h1>C++ ONLINE WEB DOKUMENTACIJA</h1>
+    <p>
+      
+    </p>
+    <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+    <p>
+
+    </p>
+    <br>
+    <p>Klikom na dugme "Otvori Meni" otvarate "SideBar" pomoću kojeg se možete kretati po stranici.  
+    </p>
+    <p>
+
+    </p>
+    <br>
+    <p>
+
+    </p>
+    <p>
+      Copyright 2022© Aldin Ćimić
+    </p>
+    <br>
+</div>
+</body>
+<script>
+   
+</script>
+<script>
+
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+dropdown[i].addEventListener("click", function() {
+this.classList.toggle("active");
+var dropdownContent = this.nextElementSibling;
+if (dropdownContent.style.display === "block") {
+dropdownContent.style.display = "none";
+} else {
+dropdownContent.style.display = "block";
+}
+});
+}
+</script>
+</html>
