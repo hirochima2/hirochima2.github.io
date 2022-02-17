@@ -111,6 +111,51 @@ cout << porez << endl;
 cout << "Cisti prihod:         "
 cout.width(5);
 cout << prihod - porez << endl;</code></pre>
+Ovaj isječak če proizvesti sljedeći ispis: 
+<pre><code class="language-plain">Prihod:                11000
+Oporezovani prihod:     2000
+Poreska dazbina:         666
+Čisti prihod:          10334
+</code></pre>
+</p>
+<p>
+
+Ovim smo, bez sumnje, uljepšali ispis time što smo poravnali ispis udesno (primijetimo da smo, radi lakše procjene neophodne širine polja za ispis podataka, sve tekstove proširili razmacima na istu dužinu). Međutim, ovo uljepšavanje smo “skupo platili” dosadnim ponavljanjem naredbe “cout.width” i potrebom da “prekidamo” tok na objekar “cout”. Srećom, biblioteka “iomanip“ (skraćeno od engl. input-output manipulators) posjeduje tzv. manipulatore (odnosno manipulatorske objekte) poput “setw”. Manipulatori su specijalni objekti koji se šalju na izlazni tok (pomoću operatora “<<”) sa ciljem podešavanja osobina izlaznog toka. Njihovom upotrebom, širinu ispisa možemo postavljati “u hodu”, bez prekidanja toka, pomoću naredbi poput:
+<pre class="line-numbers"><code class="language-cpp">cout << "Prihod:       "<< setw(5) << prihod << endl;
+cout << "Oporezovani prihod: " << setw(5) << oporezovani_prihod << endl;
+cout << "Poreska dazbina: " << setw(5) << porez << endl;
+cout << "Cisti prihod: " << setw(5) << prihod - porez << endl;</pre></code>
+ili čak poput jedne jedine naredbe(bez ikakvog prekidanja toka):
+<pre class="line-numbers"><code class="language-cpp">cout << "Prihod:       "<< setw(5) << prihod << endl << "Oporezovani prihod: " << setw(5) << oporezovani_prihod << endl << "Poreska dazbina: " << setw(5) << porez << endl << "Cisti prihod: " << setw(5) << prihod - porez << endl;</pre></code>
+</p>
+<p>
+    Primijetimo da smo u svim navedenim primjerima unutar navodnika umetali razmake, bez obzira na to što ćemo kasnije dodatno podešavati širinu ispisa brojčanih rezultata upotrebom naredbe “cout.width” ili pomoću manipulatora “setw”. Ovo smo učinili da bismo lakše mogli proizvesti ispis koji je poravnat uz posljednju cifru rezultata. Naravno da smo isti efekat mogli postići i bez umetanja razmaka uz prethodno pažljivo proračunavanje širina za svaki od brojčanih podataka. Tako smo isti ispis mogli postići pomoću sljedeće naredbe, u kojoj stringovne konstante ne sadrže razmake:
+<pre class="line-numbers"><code class="language-cpp">cout << "Prihod:       "<< setw(18) << prihod << endl
+<< "Oporezovani prihod: " << setw(6) << oporezovani_prihod << endl
+<< "Poreska dazbina: " << setw(9) << porez << endl
+<< "Cisti prihod: " << setw(12) << prihod - porez << endl;</pre></code>
+</p>
+<p>
+    Očigledno je ovakvo rješenje mnogo manje elegantno od prethodnog rješenja u kojem se može smatrati da “tekstualni dio” ispisa i “brojčani dio” ispisa u svakom redu zauzimaju istu širinu, pri čemu je ta širina u tekstualnom dijelu ispisa ostvarena dopunjavanjem stringovnih konstanti do iste fiksne dužine, a u brojčanom dijelu ispisa slanjem manipulatora “setw(5)” na izlazni tok. Konačno, uljepšana verzija programa za računanje poreza i oporezovanog prihoda mogla bi izgledati poput sljedećeg:
+    <pre data-src="C++/input/input17.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+int main(){
+    const int LicnaNaknada(5000), NaknadaZaDjecu (1000);
+    int prihod, broj_djece;
+    cout << "Unesi god. prihod: ";
+    cin >> prihod;
+    cout << "Unesi broj djece: ";
+    cin >> broj_djece;
+    cout << endl;
+    int oporezovani_prihod = prihod - LicnaNaknada - broj_djece * NaknadaZaDjecu;
+    int porez = oporezovani_prihod / 3;
+    cout << "Prihod:            "<< setw(5) << prihod << endl
+     << "Oporezovani prihod: " << setw(5) << oporezovani_prihod << endl
+     << "Poreska dazbina:    " << setw(5) << porez << endl
+     << "Cisti prihod:       " << setw(5) << prihod - porez << endl;
+     return 0;
+}</pre></code>
 </p>
         </section>
     </div>
