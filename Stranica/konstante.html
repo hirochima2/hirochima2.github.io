@@ -53,14 +53,65 @@ Konstanta “starost” iz prethodnog primjera očigledno se razlikuje od ranije
             </p>
             <p>
                 Upotrebu konstanti ćemo ilustrirati na primjeru programa koji računa iznos godišnjeg poreza poreskog obveznika po britanskom sistemu naplate poreza. Po ovom sistemu, iznos poreza se računa kao jedna trećina godišnjeg prihoda korisnika umanjena za poresku naknadu, pri čemu se naknada sastoji od fiksne lične naknade od 5000 funti i naknade za djecu od 1000 funti po svakom djetetu. Očigledno su ulazni podaci neophodni za rad programa iznos godišnjeg prihoda korisnika, i broj njegove djece:
-                <pre data-src="C++/input/input15.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+                <pre data-src="C++/input/input16.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
 using namespace std;
 int main(){
     const int LicnaNaknada(5000), NaknadaZaDjecu(1000);
     int prihod, broj_djece;
     cin >> prihod;
+    cin >> broj_djece;
+    // Oporezovani prihod je prihod umanjen za iznos naknada
+    int oporezovani_prihod = prihod - LicnaNaknada - broj_djece * NaknadaZaDjecu;
+
+    // Porez se racuna kao cijeli broj funti 
+    int porez = oporezovani_prihod / 3;
+    cout << prihod << oporezovani_prihod << porez << prihod - porez;
+    return 0;
 }</code></pre>
             </p>
+            <p>        
+            Neka je godišnji prihod nekog korisnika sa četvero djece 11000 funti. Mogući scenario izvršavanja ovog programa je sljedeći:
+<pre><code class="language-plain">11000
+4
+11000200066610334</code></pre>
+Ovdje odmah primijećujemo dvije stvari. Prvo, program je “ružan” jer kad ga pokrenemo, ne znamo šta se od nas traži dok ne analiziramo listing programa. Drugo, mada želimo da dobijemo rezultate koji konkretno iznose “11000”, “2000”, “666” i “10334”, dobili smo slijepljeni broj “11000200066610334” koji nam ništa ne govori. To ne treba da nas čudi, jer nigdje nismo naveli da rezultate treba razdvojiti (već smo vidjeli da se ovo razdvajanje treba eksplicitno “isprogramirati”). U nastavku ćemo razmotriti razne načine kako ovaj program “upristojiti”.
+            </p>
+            <p>
+                Kao što već znamo, problem sljepljenog ispisa rezultata u prethodnom programu, ako ne želimo da svaki podatak ispisujemo u novom redu, lako možemo riješiti eksplicitnim traženjem da se ispiše po jedan razmak između svaka dva rezultata, tj. pisanjem naredbe poput: 
+            <pre class="line-numbers"><code class="language-cpp">cout << prihod << " " << oporezovani_prihod << " " << porez << " " << prihod - porez << endl;</code></pre>
+            Sada bi rezultat izvršavanja programa za iste ulazne podatke izgledao ovako: 
+            <pre><code class="language-plain">11000
+4
+11000 2000 666 10334</code></pre>
+što već ima smisla.
+</p>
+<p>
+    Bolju kontrolu nad ispisom podataka možemo postići zadavanjem širine polja predviđene za ispis podataka. Ovo zadavanje postiže se pomoću naredbe oblika
+    <pre class="line-numbers"><code class="language-cpp">cout.width(sirina)</code></pre>
+    gdje je “širina” proizvoljan cijeli broj, ili izraz koji ima cjelobrojnu vrijednost. Tako, ako upotrijebimo
+sljedeće naredbe:
+<pre class="line-numbers"><code class="language-cpp">cout << "Poreska dazbina iznosi: ";
+cout.width(8);
+cout << porez;</code></pre>
+ispis će izgledati ovako:
+<pre><code class="language-plain">Poreska dazbina iznosi: 666</code></pre>
+</p>
+<p>
+    Ovdje treba obratiti pažnju da “8” nije broj razmaka koji se ispisuju ispred podatka, nego broj mjesta koje će zauzeti podatak. Kako u našem slučaju podatak (broj “666”) ima 3 cifre, on se dopunjuje sa 5 dodatnih razmaka ispred, tako da će ukupna širina ispisa biti 8 mjesta. Ovo se obično koristi kada želimo da ispišemo skupinu podataka (čiju širinu unaprijed ne znamo) poravnatu udesno (kao u primjeru koji slijedi). Nažalost, naredba “cout.width” djeluje samo na prvi sljedeći ispis, nakon čega se opet sve vraća na normalu. Tako, da uljepšamo izlaz iz prethodnog programa moramo pisati sljedeći niz naredbi:
+<pre class="line-numbers"><code class="language-cpp">cout << "Prihod:               "
+cout.width(5);
+cout << prihod << endl <<;
+cout << "Oporezovani prihod: ";
+cout.width(5);
+cout << oporezovani_prihod << endl;
+
+cout << "Poreska dazbina: ";
+cout.width(5);
+cout << porez << endl;
+cout << "Cisti prihod:         "
+cout.width(5);
+cout << prihod - porez << endl;</code></pre>
+</p>
         </section>
     </div>
 </body>
