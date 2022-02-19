@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Druge vrste cjelobrojnih tipova</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Druge vrste cjelobrojnih tipova</header>
+            <p>
+                U dosadašnjim izlaganjima, sve promjenljive koje smo deklarirali imale su tip “int”, i to je bio jedini tip podataka sa kojim smo se do sada susreli. Rekli smo da tip “int” predstavlja cjelobrojni tip podataka, ali to je zapravo samo dio priče, s obzirom da jezik C++ posjeduje više različitih cjelobrojnih tipova podataka, pri čemu je “int” samo jedan od njih. Tačnije, jezik C++ posjeduje četiri osnovna tipa cjelobrojnih podataka, koji se redom nazivaju “char”, “short”, “int” i “long”. Ovi tipovi se razlikuju po tome koliko memorijskog prostora računar rezervira za promjenljive koje su deklarirane tim tipom. Efektivno, ovo se odražava na opseg vrijednosti koje se mogu zapamtiti u promjenljivim kojima je dodijeljen neki od ovih tipova. Napomenimo da je za precizno razumijevanje izlaganja koji slijede neophodno da čitatelj odnosno čitateljka posjeduju izvjesna predznanja o pojmovima kao što su bit, bajt, itd. kao i načinu zapisivanja brojeva u računarskoj memoriji.
+            </p>
+            <p>
+                Standard jezika C++, što je prilično čudno, ne predviđa koliko tačno memorije zauzimaju promjenljive pojedinih tipova. Jedino se garantira da promjenljive tipa “char” zauzimaju tačno jedan bajt, a da promjenljive ostalih cjelobrojnih tipova uvijek zauzimaju cijeli broj bajtova. Pored toga, još se garantira da vrijedi
+            </p>
+            <p>
+                veličina(char) <= veličina(short) <= veličina(int) <= veličina(long)
+            </p>
+            <p>
+                Kod većine kompajlera koji se danas koriste, promjenljive tipa “short” zauzimaju 2 bajta, dok promjenljive tipa “long” zauzimaju 4 bajta, a u nekim verzijama kompajlera 8 bajta. Najšarolikija je situacija sa tipom “int”. Do nedavno su preovladavali kompajleri kod kojih promjenljive tipa “int” zauzimaju 2 bajta, dok danas pretežno susrećemo kompajlere kod kojih promjenljive tipa “int” zauzimaju 4 bajta u memoriji. To praktično znači da su kod većine današnjih kompajlera tipovi “int” i “long” sinonimi (dok su donedavno tipovi “int” i “short” bili sinonimi). Da bismo stekli osjećaj o najmanjim i najvećim vrijednostima koje se mogu smjestiti u promjenljive odgovarajućih tipova, sljedeća tabela daje zavisnost između zauzeća memorije u bajtima i najmanje odnosno najveće vrijednosti koja se može smjestiti u promjenljivu koja zauzima navedenu količinu memorije:
+            </p>
+            <table style="border-spacing: 2em;">
+                <tr>
+                    <th>Količina memorije</th>
+                    <th>Najmanja vrijednost</th>
+                    <th>Najveća vrijednost</th>
+                </tr>
+                <tr>
+                    <th> 1 bajt</th>
+                    <th>-128</th>
+                    <th>+127</th>
+                </tr>
+                <tr>
+                    <th>2 bajta</th>
+                    <th>-32768</th>
+                    <th>+32767</th>
+                </tr>
+                <tr>
+                    <th>4 bajta</th>
+                    <th>-2147483648</th>
+                    <th>+2147483647</th>
+                </tr>
+                <tr>
+                    <th>8 bajta</th>
+                    <th>    -9223372036854775808        </th>
+                    <th>    +922337203685477807</th>
+                </tr>                
+            </table>
+            <p>
+                Na primjer, pretpostavimo da koristimo kompajler kod kojeg promjenljive tipa “short” zauzimaju 2 bajta a promjenljive tipa “long” 4 bajta (najčešći slučaj), i neka su date sljedeće deklaracije:
+                <pre class="line-numbers"><code class="language-cpp">short a, b;
+long c;</code></pre>
+            </p>
+            <p>
+                Tada će promjenljive “a” i “b” moći će da prime opseg brojeva od –32768 do +32767, dok će promjenljiva “c” moći da primi znatno širi opseg brojeva u rasponu od –2147483648 do +2147483647. Pošto je tip “int” tipično najdiskutabilniji po pitanju opsega koji prihvata, ukoliko želimo da program koji pišemo bude što prenosiviji, u smislu da što manje ovisi od osobina upotrijebljenog kompajlera, dobra je praksa sve cjelobrojne promjenljive za koje znamo da neće uzimati veliki opseg vrijednosti (npr. promjenljive koje opisuju dan, mjesec i godinu nečijeg rođenja) deklarirati kao promjenljive tipa “short”, a promjenljive za koje očekujemo da mogu uzimati veće vrijednosti (npr. cijene) deklarirati kao promjenljive tipa “long”.
+            </p>
+            <p>
+                Pomoću operatora ”sizeof” može se saznati koliko bajta zauzima pojedini tip na Vašem konkretnom C++ kompajleru. Ovaj operator kao argument prihvata ime nekog tipa ili izraz, a daje kao rezultat broj bajta koje zauzima navedeni tip, ili rezultat navedenog izraza (nakon obavljenog izračunavanja). Kako se koristi ovaj operator, lako se vidi iz sljedećeg primjera:
+            <pre class="line-numbers"><code class="language-cpp">cout << "Tip char zauzima " << sizeof(char) << " bajta\n ";
+cout << "Tip short zauzima " << sizeof(short) << " bajta\n ";
+cout << "Tip int zauzima " << sizeof(int) << " bajta\n ";
+cout << "Tip long zauzima " << sizeof(long) << " bajta\n ";</code></pre>
+            </p>
+            <p>
+                Ukoliko se kao argument operatora ”sizeof” koristi ime neke promjenljive (ili, općenitije, neki izraz), zagrade nisu neophodne, tako da se umjesto ”sizeof(a)” može pisati samo ”sizeof a” (ukoliko je argument ime tipa, zagrade su uvijek neophodne). Međutim, s obzirom da operator ”sizeof” ima veoma visok prioritet, zagrade su gotovo uvijek neophodne ukoliko nas zanima veličina nekog izraza. Tako, na primjer, ”sizeof a+b” neće biti shvaćeno kao ”sizeof(a+b)”, što je vjerovatno bila namjera programera, nego kao ”sizeof(a)+b”.
+            </p>
+            <p>
+               Umjesto “short” i “long” može se pisati i “short int” i “long int”, da se istakne da se radi o “kratkim” i “dugim” cjelobrojnim tipovima. Dakle, legalne su i deklaracije poput sljedećih: 
+                <pre class="line-numbers"><code class="language-cpp">short int a;
+long int b;</code></pre>
+            </p>
+            <p>
+                Kod nekih verzija kompajlera kod kojih promjenljive tipa ”long” zauzima 4 bajta, uveden je i tip ”long long” (ili ”long long int”) čije promjenljive zauzimaju 8 bajta, npr.
+                <pre class="line-numbers"><code class="language-cpp">long long veliki_broj;</code></pre> 
+            </p>
+            <p>
+                Ipak, treba voditi računa da ovaj tip nije predviđen standardom.
+                Postavlja se posve prirodno pitanje zašto su uvedena četiri cjelobrojna tipa, a ne samo jedan. Ako tip “char”, o kojem ćemo detaljno govoriti kasnije, privremeno ostavimo po strani, razlozi su uglavnom historijske prirode:
+            </p>
+            <ol>
+                <li>Memorija je nekada bila jako skupa pa se vodilo računa o utrošku svakog bajta. Ako je potrebno memorirati 100000 podataka od kojih svaki zauzima opseg od 1 – 100, posve je neracionalno rezervirati 4 bajta za svaki podatak (i potrošiti 400000 bajta memorije), kada je dovoljno rezervirati samo bajt po podatku, čime je utrošak memorije svega 100000 bajta. Memoriju je, naravno, važno štedjeti, ali ne treba ni pretjerivati (primjer nepromišljene štednje memorije doveo je do pojave čuvenog milenijskog baga Y2K).</li>
+                <li>Računari su prije sporije obrađivali veće brojeve nego manje. U doba 8-bitnih procesora to je bilo izrazito izraženo. To je u suštini tačno i danas, ali sa današnjim 32-bitnim i 64-bitnim procesorima računari uglavnom obrađuju brojeve dužine do 4 bajta istom brzinom neovisno od njihove stvarne veličine (N-bitni procesori mogu brojeve dužine do N bita obrađivati “u jednom potezu”). Dakle, danas nema osobitih “brzinskih” zahtjeva koji bi zahtijevali da cjelobrojne promjenljive budu kraće od 4 bajta.</li>
+            </ol>
+            <p>
+                Pomoću prefiksa “unsigned” moguće je naznačiti da promjenljiva neće uzimati negativne vrijednosti, čime se dvostruko povećava raspon pozitivnih vrijednosti koje promjenljiva može primiti. Tako, ako izvršimo deklaraciju
+                <pre class="line-numbers"><code class="language-cpp">unsigned int a;</code></pre>
+                promjenljiva “a“ će, na kompajleru kod kojih promjenljive tipa “int” zauzimaju 4 bajta, moći primiti vrijednosti iz opsega 0 – 4294967295 umjesto iz opsega –2147483648 – 2147483647.
+            </p>
+            <p>
+                Ako iza riječi “unsigned” slijedi riječ “int”, riječ “int” je moguće izostaviti, tako da je valjana i sljedeća deklaracija:
+                <pre class="line-numbers"><code class="language-cpp">unsigned a;</code></pre>
+            </p>
+            <p>
+                Suprotan prefiks prefiksu “unsigned” je prefiks “signed” kojim se navodi da će promjenljiva pamtiti i predznak, ali je ovaj prefiks suvišan, jer se podrazumijeva ako se izostavi. Ipak, radi jasnoće, dozvoljeno je pisati i deklaraciju poput
+                <pre class="line-numbers"><code class="language-cpp">signed int a;</code></pre>
+            </p>
+            <p>
+                Činjenica da svi cjelobrojni tipovi posjeduju ograničen opseg može dovesti do neugodne pojave nazvane prekoračenje (engl. overflow). Naime, ukoliko promjenljivoj dodijelimo vrijednost izvan dozvoljenog opsega, ili ako prilikom izvođenja računskih operacija dođe do prekoračenja dozvoljenog opsega vrijednosti, rezultat neće biti tačan. Možemo zamisliti da umjesto brojnog pravca poznatog u matematici, imamo brojni krug, u kojem iza “najvećeg” broja ponovo dolazi “najmanji” broj. Ilustrirajmo to na primjeru tipa “unsigned short” na kompajleru kod kojeg promjenljive tipa “short” zauzimaju 2 bajta (istu pretpostavku ćemo koristiti u svim narednim izlaganjima). Tako, sa promjenljivim ovog tipa imamo sljedeći “račun”:
+                <pre><code class="language-plain">65532 + 1 = 65533
+65532 + 2 = 65534
+65532 + 3 = 65535
+65532 + 4 = 0
+65532 + 5 = 1
+65533 + 6 = 2</code></pre>
+            itd. Matematičari bi rekli da se račun vrši “po modulu 2N” gdje je N broj bita promjenljive (16 u našem slučaju). Iz ovoga slijedi da je:
+            <pre><code class="language-plain">65536 = 0
+65537 = 1</code></pre>
+                itd. Namjerno pišemo “o” umjesto “=” da naznačimo da se ne radi o jednakosti u matematskom smislu. Matematičari će u ovakvom “poređenju” prepoznati zapravo kongurenciju po modulu 2N.
+            </p>
+            <p>
+                Slično vrijedi i “podbacimo” li ispod donje granice dozvoljenog opsega (engl. underflow). Tako, uz tip “unsigned short” imamo:
+                <pre><code class="language-plain">3 - 2 = 1
+3 - 3 = 0
+3 - 4 = 65535</code></pre>
+                Dakle, smisao računara za “matematiku” je pomalo “čudan”. U ovo se možemo uvjeriti ako napišemo sljedeću sekvencu naredbi:
+            <pre class="line-numbers"><code class="language-cpp">unsigned int a;
+a = -2;
+cout << a;</code></pre>
+            </p>
+            <p>
+                Nakon gornjeg razmatranja neće nam biti previše čudno zašto će računar kao rezultat ispisati broj “65534”. Ako Vam sve ovo djeluje “uvrnuto” i zbunjujuće, poštujte sljedeća pravila:
+                <ul>
+                    <li>NEMOJTE dodjeljivati promjenljivoj vrijednosti koje su izvan dozvoljenog opsega;</li>
+                    <li>NEMOJTE dozvoliti da rezultat neke operacije premaši opseg promjenljive u koju se rezultat smješta.</li>
+                </ul>
+
+            </p>
+            <p>
+                Sretna je okolnost da kod većine današnjih kompajlera promjenljive tipa “int”, koje se najčešće koriste, zauzimaju 4 bajta, tako da opseg vrijednosti koje se u njih mogu smjestiti uglavnom zadovoljavaju potrebe većine primjena. Znatno je teža situacija bila u vrijeme kada su promjenljive tipa “int” zauzimale 2 bajta, tako da je njihovo korištenje (umjesto npr. promjenljivih tipa “long”) dovodilo do ozbiljnih problema. Da bismo se bolje upoznali sa pojavom prekoračenja (koja nekada može zaista da ima veoma neugodne posljedice), korisno je razmotriti i sljedeće primjere, koji zahtijevaju malo veće udubljivanje (ako Vam izloženi primjeri djeluju “šokantni”, nemojte misliti da je to “ružno svojstvo” samo jezika C++: od istog problema “pate” i svi drugi programski jezici). Šta se dešava kada se prekrši drugo pravilo, pokazuje sljedeći primjer:
+                <pre class="line-numbers"><code class="language-cpp">short int a, b, c;
+a = 20000; b = 20000;
+c = a + b;
+cout << c;</code></pre> 
+            </p>
+            <p>
+                Pokušajte sami odgonetnuti zašto je krajnje dejstvo ove sekvence naredbi ispis broja “–25536”. Manje je očigledno zašto sljedeća sekvenca daje isti (pogrešan) rezultat:   
+                <pre class="line-numbers"><code class="language-cpp">short int a, b;
+a = 20000; b = 20000;
+cout << a + b;</code></pre>
+                pa čak i sljedeća sekvenca:
+                <pre class="line-numbers"><code class="language-cpp">short int a, b, c;
+a = 20000; b = 20000;
+c = a + b;
+cout << c;</code></pre>  
+            </p>
+            <p>
+                U čemu je problem? C++ podrazumijeva da je rezultat izraza onog tipa kakav je tip najvećeg (po opsegu) od argumenata koji učestvuju u izrazu. U sva tri primjera oba argumenta su tipa “short int” pa je i rezultat tipa “short int” (neovisno od toga što se u trećem primjeru rezultat smješta u promjenljivu tipa “long int”). Stoga, u sva tri slučaja dolazi do prekoračenja, jer rezultat izraza “20000 + 20000” premašuje opseg tipa “short int”.
+            </p>
+            <p>
+                Bitno je napomenuti da se i sami cijeli brojevi u C++ programima posmatraju kao da su tipa “int”, ukoliko po svojoj vrijednosti upadaju u opseg tipa “int”. Ovo može stvoriti poseban problem kod kompajlera kod kojih tip “int” zauzima 2 bajta. Na primjer, kod takvih kompajlera će čak i naredba
+                <pre class="line-numbers"><code class="language-cpp">cout << 20000 + 20000;</code></pre>
+                dovesti do pogrešnog rezultata (–25536), s obzirom da se operandi tretiraju kao da su tipa “int”, tako da dolazi do prekoračenja. S druge strane, naredba
+                <pre class="line-numbers"><code class="language-cpp">cout << 35000 + 5000;</code></pre>
+               
+daje ispravan rezultat, s obzirom da prvi argument (35000) ne može stati u 2 bajta, pa se ne tretira kao tip “int” nego kao prvi sljedeći tip po veličini (na razmatranom kompajleru, to je tip “unsigned int”, s obzirom da je 35000 < 65535). Stoga je rezultat sabiranja 35000 + 5000 tipa “unsigned int”. Kako 40000 lijepo može da stane u tip “unsigned int”, dobija se tačan rezultat. 
+            </p>
+            <p>
+                Ovakvi problemi mogu da budu uzrok gadnih frustracija. Na primjer, čak i kod kompajlera kod kojih tip “int” zauzima 32 bajta, naredba
+                <pre class="line-numbers"><code class="language-cpp">cout << 2000000000 + 2000000000;</code></pre>
+                neće dati tačan rezultat. Da bi se izbjegli problemi ovog tipa, jezik C++ uvodi konvenciju da se dodavanjem sufiksa “L”, “U” ili “UL” na broj eksplicitno signalizira da broj treba tretirati kao tip “long”, “unsigned”, odnosno “unsigned long” (umjesto velikih mogu se koristiti i mala slova, tako da su sufiksi “l”, “u” i “ul” također legalni, samo ih nije dobro koristiti, pogotovo što se malo slovo “l” po izgledu gotovo ne razlikuje od cifre “1”). Tako je broj “20000” tipa “int”, ali je broj “20000L” tipa “long”. Stoga će naredba
+                <pre class="line-numbers"><code class="language-cpp">cout << 20000L + 20000;</code></pre>
+                ispisati tačan rezultat, čak i kod kompajlera kod kojih tip “int” zauzima 2 bajta (umjesto “20000L” pomoglo bi i “20000U”). Iz istog razloga, naredba 
+                <pre class="line-numbers"><code class="language-cpp">cout << 2000000000UL + 2000000000;</code></pre>
+                proizvodi tačan rezultat (zbir 4000000000 lijepo može stati u tip “unsigned long”). Sufiks “LL” može se koristiti za forsiranje tipa “long long” kod kompajlera koji poznaju taj tip.
+            </p>
+            <p>
+                U nekim slučajevima je potrebno izvršiti eksplicitnu pretvorbu jednog tipa u drugi. Stoga, jezik C++ dopušta da se eksplititno promijeni tip neke promjenljive, konstante, broja ili čitavog izraza korištenjem operatora za promjenu tipa (engl. type-casting operator). Ovaj operator se koristi na jedan od dva navedena načina:
+                <pre><code class="language-plain">(ime tipa) izraz
+ime tipa(izraz)</code></pre>
+            </p>
+            <p>
+                Prvi način je naslijeđen iz jezika C, dok je drugi način uveden u jeziku C++. U drugom načinu, sintaksa upotrebe operatora za promjenu tipa podsjeća na sintaksu za poziv funkcije, tako da govorimo o tzv. funkcijskoj ili konstruktorskoj notaciji. Ipak, funkcijska (konstruktorska) notacija se može koristiti samo ako se ime tipa sastoji od samo jedne riječi. Na primjer, obje konstrukcije “(long)a” i “long(a)” su dozvoljene i ravnopravne, međutim konstrukcija “unsigned long(a)” nije legalna, a konstrukcija “(unsigned long)a” jeste. Stoga će, na primjer, sljedeća naredba
+                <pre class="line-numbers"><code class="language-cpp">cout << long(20000) + 20000;</code></pre>
+                ili, ekvivalentno, naredba
+                <pre class="line-numbers"><code class="language-cpp">cout << (long)20000 + 20000</code></pre> 
+            
+            </p>
+            <p>
+                ispisati ispravan rezultat “40000” čak i na kompajlerima kod kojih tip “int” zauzima 2 bajta. Naravno, ovdje je umjesto “long(20000)” ili “(long)20000” bilo lakše pisati “20000L”. Pravu primjenu operator za pretvorbu tipa dobija tek kada se primijeni na neku promjenljivu ili izraz. Na primjer, sljedeća sekvenca naredbi demonstrira kako ispravno pomnožiti dvije promjenljive tipa “short int”, pri čemu rezultat, koji ne može da stane u tip “short int”, želimo smjestiti u promjenljivu tipa “long int”:
+                <pre class="line-numbers"><code class="language-cpp">short int a, b;
+long int c;
+a = 20000; b = 10;
+c = (long)a * b;
+cout << c;</code></pre>
+            </p>
+            <p>
+                Ovdje smo pomoću “type-casting” operatora “(long)” pretvorili promjenljivu “a” u tip “long” (odnosno “long int”) čime smo postigli da rezultat bude tačan.
+            </p>
+            <p>
+                Na kraju, za matematički orijentirane čitatelje i čitateljke, daćemo gotovu matematičku formulu kojom se može predvidjeti rezultat neke operacije u slučaju da dođe do prekoračenja. Neka je x tačna (matematička) vrijednost nekog broja, izraza, itd. i neka je N broj bita koji zauzima tip izraza koji se izračunava. Neka izraz Îx ̊ označava cijeli dio broja x, tj. najveći cijeli broj koji je manji od ili jednak x (npr.  3.14   = 3 i  1.32   = 2). Tada je rezultat u slučaju prekoračenja
+                <pre><code class="language-plain">x – 2N  (x / 2N)</code></pre>
+                ako je tip izraza bez znaka, odnosno
+                <pre><code class="language-plain">x-2N(x+2N-1)/2N</code></pre>
+
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+    
+            </p>
+            </section>
+            </div>
+            </body>
+            </html>

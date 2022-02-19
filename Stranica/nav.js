@@ -20,6 +20,7 @@ document.write('<div>\
   <a href="aizrazi.html">2.2 Aritmetički izrazi</a>\
   <a href="dodjela.html"> 2.3 Dodjeljivanje</a>\
   <a href="konstante.html">2.4 Konstante</a>\
+  <a href="tipvar.html">2.5 Druge vrste cjelobrojnih tipova</a>\
 </div>\
 <a href="prijava.html">Odjava</a>\
     </div>\
