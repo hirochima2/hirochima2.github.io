@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Realni tipovi podataka</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Realni tipovi podataka</header>
+            <p>
+                U prethodnm poglavlju smo se detaljno upoznali sa cjelobrojnim tipovima podataka. Međutim, postoje mnogi problemi koje nije moguće riješiti korištenjem samo cjelobrojnih vrijednosti. Stoga jezik C++ uvodi realne tipove podataka, koje omogućavaju pamćenje (doduše, aproksimativno) vrijednosti koje se iskazuju pomoću realnih brojeva. Jezik C++ predviđa tri tipa za pamćenje realnih vrijednosti: “float”, “double” i “long double”. Razlika između ovih tipova je u tome što promjenljive tipa “float” zauzimaju manje memorije, ali imaju manji opseg i manju preciznost (mogu zapamtiti manje tačnih cifara), dok promjenljive tipa “double” zauzimaju više memorije, ali nude veći opseg i veću preciznost. Tip “long double” omogućuje izuzetno veliki opseg i preciznost, i namijenjen je uglavnom za složenije inžinjerske proračune. Najviše se koristi tip “double”. Napomenimo da se prefiks “unsigned” ne može koristiti uz realne promjenljive, odnosno one su uvijek sa znakom. Slijede neki primjeri realnih promjenljivih (tj. promjenljivih realnog tipa):
+                <pre class="line-numbers"><code class="language-cpp">float temperatura;
+double duzina, sirina, povrsina;</code></pre>
+            </p>
+            <p>
+                Realnim promjenljivim mogu biti pridružene realne vrijednosti (preciznije, prividno realne vrijednosti, jer je njihov opseg i broj tačnih cifara koje se pamte ograničen). Realni izrazi mogu sadržavati realne brojeve (odnosno realne brojčane konstante), za koje je karakteristično da imaju decimalnu tačku, i, opcionalno, cjelobrojni eksponent, koji se piše iza oznake “E” ili “e”, pri čemu “xEy” (ili “xey”) zapravo znači “x × 10y ”. Slijedi nekoliko primjera ispravno napisanih cijelih brojeva:
+                <pre><code class="language-plain">15.423
+3.0
+3.              (ovo je isto kao i 3.0)
+-0.1234
+-.1234          (ovo je isto kao i -0.1234)
+55E6            (ovo znači 55*10 na 6.)
+-3.8E3
+12.0e-3</code></pre>
+            </p>
+            <p>
+
+Obratimo pažnju na sljedeće: “3” je cijeli broj, dok je “3.0” (ili samo “3.”) realan broj, iako im je vrijednost ista. Kakvog ovo ima smisla, vidjećemo uskoro.
+            </p>
+            <p>
+                U primjerima koji slijede ćemo pretpostavimo da imamo sljedeće deklaracije promjenljivih:
+                <pre class="line-numbers"><code class="language-cpp">int brojac;
+double poluprecnik;</code></pre>
+                kao i definiciju realne konstante
+                <pre class="line-numbers"><code class="language-cpp">const double PI(3.141592654);</code></pre>
+            </p>
+            <p>
+                (podsjetimo se da je smisao konstanti u tome da nas kompajler upozori ako kasnije u programu nehotice pokušamo da promijenimo njenu vrijednost naredbom poput “PI=4”). Realni izrazi mogu sadržavati realne operande (brojeve i promjenljive), ali mogu sadržavati i cjelobrojne operande, koji se u tom slučaju automatski konvertiraju u realne. Na primjer, kada se izračunava izraz
+                <pre class="line-numbers"><code class="language-cpp">2 * PI * poluprecnik</code></pre>
+            </p>
+            <p>
+                cijeli broj “2” se automatski konvertira u realnu vrijednost “2.0” (odnosno “2.”). Iz istog razloga, cijeli broj može bez problema biti dodijeljen realnoj promjenljivoj, na primjer:
+                <pre class="line-numbers"><code class="language-cpp">poluprecnik = 3;</code></pre> 
+            </p>
+            <p>
+                Ovaj tip automatske konverzije, kod kojeg se uži tip (po skupu mogućih vrijednosti) konvertira u širi tip, nazivamo promocija. Moguća je i obrnuta dodjela, tj. dodjela u kojoj se realna vrijednost dodijeljuje cjelobrojnoj promjenjivoj. U tom slučaju se dešava automatsko odsjecanje decimala. Npr. ako imamo sljedeću deklaraciju:
+                <pre class="line-numbers"><code class="language-cpp">int brojac;</code></pre>
+                nakon naredbe
+                <pre class="line-numbers"><code class="language-cpp">brojac = PI * 10;</code></pre>
+            </p>
+            <p>
+                vrijednost promjenljive “brojac” će biti “31”. Iako se i ovdje dešava automatska konverzija tipa, da bi program bio čitkiji (a i da bismo bili sigurni šta radimo), dobra je praksa da konverziju tipa zatražimo eksplicitno pomoću type-casting operatora (napomenimo da će neki kompajleri, u slučaju da konverziju tipa ne zatražimo eksplicitno, prijaviti upozorenje, ali ne i grešku). Na primjer:
+                <pre classa="line-numbers"><code class="language-cpp">brojac = (int)(PI*10);</code></pre>
+
+            </p>
+            <p>
+                Zašto je izraz “PI * 10” u zagradi? Stvar je u tome što type-casting operator ima veoma visok prioritet,
+veći od operacije množenja, tako da ako izostavimo zagrade, kao u naredbi
+                <pre class="line-numbers"><code class="language-cpp">brojac = (int)PI*10;</code></pre>
+            </p>
+            <p>
+                rezultat će biti “30”, jer tada type-casting djeluje samo na konstantu “PI“ čime se dobija rezultat “3”, koji se nakon toga množi sa 10, tako da je krajnji rezultat “30”. 
+            </p>
+            <p>
+                Slijedi primjer jednog jednostavnog programa koji ilustrira realnu aritmetiku:
+                <pre data-src="C++/input/input18.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    const double PI(3.141592654);
+    double poluprecnik;
+    cout << "Unesi poluprecnik: ";
+    cin >> poluprecnik;
+    double obim = 2 * PI * poluprecnik;
+    double povrsina = PI * poluprecnik * poluprecnik;
+    cout << "Obim je " << obim << endl 
+        << "Povrsina je " << povrsina << endl;
+    return 0;
+}</pre></code>
+Mogući scenario izvršavanja ovog koda je sljedeći:
+<pre><code class="language-plain">Unesi poluprecnik: 3.2
+Obim je 20.106193
+Povrsina je 32.169909</pre></code>
+            </p>
+    <p>
+        Realnu aritmetiku ćemo ilustrirati još jednim kratkim programom, koji učitava iznos novca izražen u
+engleskim funtama, zatim kursnu razliku engleske funte i BH konvertibilne marke, i na izlazu daje odgovarajući iznos izražen u konvertibilnim markama.
+<pre data-src="C++/input/input18.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    double funte, kursna_razlika;
+    cout << "Unesi iznos novca u funtama: ";
+    cin >> funte;
+    cout << "Unesi kursnu razliku: ";
+    cin >> kursna_razlika;
+    double marke = funte * kursna_razlika;
+    cout << funte << "funti = " << marke << " maraka\n";
+    return 0;
+}</pre></code>
+    </p>
+    <p>
+
+Do sada smo bili ograničeni samo na četiri osnovne računske operacije (“+”, “–”, “*” i “/”). Uključivanjem zaglavlja biblioteke “cmath” u program (u ranijim standardima jezika C++ kao i u jeziku C, zaglavlje ove biblioteke se zvalo “math.h”), dobijamo mogućnost korištenja velikog broja raznih matematičkih funkcija, kao što su kvadratni korijen, trigonometrijske funkcije, itd. Ovdje ćemo navesti neke najvažnije funkcije iz ove biblioteke:
+<pre class="line-numbers"><code class="language-cpp">fabs(x) //Apsolutna vrijednost od x
+pow(x,y) // Stepenovanje x sa y
+sqrt(x)  // Kvadratni korijen od x
+exp(x)   // Specijalni slučaj stepenovanja e na x
+log(x)   // Logaritam po bazi e od x, ln x
+log10(x) // Logaritam po bazi 10 of x, log x
+sin(x)   // Sinus od x (sin x), argument je u radijanima
+cos(x)   // Kosinus od x (cos x), argument je u radijanima
+tan(x)   // Tangens od x (tg x), argument je u radijanima
+asin(x)  // Glavna vrijednost arkus sinusa od xa (arcsin x), rezultat je u radijanima
+acos(x)  // Glavna vrijednost arkus kosinusa od x (arccos x), rezultat je u radijanima
+atan(x)  // Glavna vrijednost arkus tangensa od x (arctg x), rezultat je u radijanima
+sinh(x)  // Hiperbolni sinus od x, sh x 
+cosh(x)  // Hiperbolni kosinus od x, ch x 
+tanh(x)  // Hiperbolni tangens od x, th x </code></pre>
+    </p>
+    <p>
+        Sve navedene funkcije vraćaju kao rezultat realan broj. Jedno karakteristično svojstvo standarda ISO C++98 jezika C++ je da je svaka od ovih funkcija izvedena u tri verzije, koje daju rezultat tipa “float”, “double” ili “long double”, u zavisnosti da li je njihov argument tipa “float”, “double” ili “long double” respektivno. Tako će “sin(a)” dati rezultat tipa “float” ukoliko je promjenljiva “a” tipa “float”, rezultat tipa “double” ukoliko je promjenljiva “a” tipa “double”, itd. Na taj način preciznost računanja funkcije ovisi od preciznosti njenog argumenta (podsjetimo se da su promjenljive tipa “float” manje precizne od promjenljivih tipa “double”). U ranijim standardima jezika C++ nije bilo ovako, nego su sve realne funkcije vraćale rezultat tipa “double”.
+
+    </p>
+    <p>
+        Ova novouvedena osobina standarda ISO C++98 pruža izvjesne prednosti, ali je dovela i do izvjesnih komplikacija. Naime, ukoliko se kao argument neke od ovih funkcija upotrijebi cjelobrojna vrijednost, dolazi do nejasnoće odnosno dvosmislenosti (engl. ambiguity) koja uzrokuje grešku pri prevođenju. Naime, jasno je da se ova cjelobrojna vrijednost treba pretvoriti u realnu vrijednost prije prosljeđivanja funkciji, ali je nejasno u kakvu realnu vrijednost (tj. da li tipa “float”, “double” ili “long double”). Naime, od tipa odabrane pretvorbe ovisi i tačnost sa kojim će vrijednost funkcije biti izračunata. 
+    </p>
+    <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+    <p>
+        
+    </p>
+    </section>
+    </div>
+</body>
+</html>
