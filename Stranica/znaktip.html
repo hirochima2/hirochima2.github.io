@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Znakovni tipovi</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Znakovni tipovi</header>
+            <p>
+                Kada smo govorili o cjelobrojnim tipovima podataka, rekli smo da u ove tipove također spada i tip “char”. Promjenljive ovog tipa “char” uvijek zauzimaju tačno 1 bajt. Pod uvjetom da se koristi računarska arhitektura kod koje bajt ima 8 bita (zvuči nevjerovatno, ali postoje i računarske arhitekture kod kojih ovo nije slučaj), dozvoljeni opseg vrijednosti koje se mogu smjestiti u promjenljivu tipa “char” (ukoliko ne želimo da dođe do prekoračenja) iznosi od –128 do +127, odnosno od 0 do 255 ako koristimo i prefiks “unsigned”. Prema tome, sljedeće konstrukcije su sasvim legalne:
+                <pre class="line-numbers"><code class="language-cpp">char a(30), b, c;
+b = 20;
+c = a + b;</code></pre>
+            </p>
+            <p>
+                Međutim, promjenljive tipa “char”, imaju nešto što ih bitno razlikuje od ostalih cjelobrojnih promjenljivih: one se drugačije ponašaju prilikom slanja na izlazni tok (npr. ispisa na ekran) odnosno čitanja iz ulaznog toka (npr. unosa sa tastature). Na primjer, isprobajmo sljedeći program:
+                <pre data-src="C++/input/input19.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    char broj(65);
+    cout << broj << endl;
+    return 0;
+}</pre></code>  
+            </p>
+            <p>
+                Iako očekujemo da će ovaj program ispisati broj “65”, on će umjesto toga na većini današnjih računara ispisati slovo “A”. Da bismo ovo razjasnili, moramo se malo osvrnuti na to kako se znakovi (slova, itd.) čuvaju u računarskoj memoriji. Kako je poznato da se u računarskoj memoriji mogu pamtiti samo brojevi (i to binarni), dogovoreno je da se svi znakovi u memoriji čuvaju pomoću odgovarajuće brojne šifre ili kôda. Danas najviše korištena šifra (kod) je tzv. ASCII kod
+            </p>
+            <p>
+                Nema potrebe za eksplicitnim poznavanjem šifri pojedinih znakova. U jeziku C++ je definirano da umjesto navođenja šifre nekog znaka, možemo taj znak pisati između dva apostrofa (npr. 'A'). Dakle, apostrof predstavlja “šifru od”. Sljedeći program je, prema tome, mnogo jasniji:
+                <pre data-src="C++/input/input20.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    char znak('A');
+    cout << znak << endl;
+    return 0;
+}</pre></code>
+                </p>
+                <p>
+
+Promjenljive tipa “char” obično se koriste da čuvaju jednu znakovnu vrijednost, po čemu je tip “char” i dobio ime. Promjenljive tipa “char” nazivamo znakovne promjenljive (engl. character variables).
+                </p>
+                <p>
+                    Za razliku od većine drugih programskih jezika, u jeziku C++ nije zabranjeno dodijeliti znakovnu konstantu promjenljivim koji nisu tipa “char”, s obzirom da tip “char” u suštini spada u cjelobrojne tipove (za razliku od drugih jezika, kod kojih je znakovni tip posve neovisan od cjelobrojnih tipova). 
+                </p>
+                <p>
+                    Pored činjenice da se objekti tipa “char” drugačije ponašaju od objekata ostalih cjelobrojnih tipova prilikom slanja na izlazni tok, promjenljive (ili općenitije l-vrijednosti) tipa “char” se drugačije ponašaju i prilikom unosa sa ulaznog toka podataka. Sljedeći program to najbolje ilustrira:
+                    <pre data-src="C++/input/input21.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt; 
+using namespace std;
+int main(){
+    char znak;
+    cout << "Unesi neki znak: ";
+    cin >> znak;
+    cout << "Uneijeli ste znak  " << znak << endl 
+    << "Njegova sidra je " << (int)znak << endl;
+    return 0;
+};</pre></code>
+                    </p>
+                    <p>Mogući scenario izvršavanja ovog programa je: </p>
+                    <pre><code class="language-plain">Unesi neki znak : A
+Unijeli ste znak A
+Njegova sifra je 65</code></pre>
+                    <p>
+                        Dakle, pri čitanju promjenljive tipa “char” iz ulaznog toka računar ne očekuje da unesemo broj nego znak, a računar u odgovarajuću promjenljivu smješta njegovu šifru. Ovo je precizan opis šta se tačno dešava, a nećemo puno pogriješiti ako kažemo da se u promjenljivu smješta znak.
+                    </p>
+                    <p>
+                        rilikom čitanja promjenljivih tipa “char” pomoću operatora “>>”, iz ulaznog toka se izdvaja samo jedan znak, dok će preostali znakovi biti izdvojeni prilikom narednih čitanja.
+                    </p>
+                    <p>
+                        Ukoliko iz bilo kojeg razloga želimo da izdvojimo znak iz ulaznog toka, bez ikakvog ignoriranja, ma kakav on bio (uključujući razmake, specijalne znake tipa oznake novog reda, itd.) možemo koristiti poziv funkcije “cin.get()”. Ova funkcija (koju smo već koristili za neku drugu svrhu) izdvaja sljedeći znak iz ulaznog toka, ma kakav on bio, i vraća kao rezultat njegovu šifru (ako je ulazni tok prazan, ova funkcija zahtijeva da se ulazni tok napuni svježim podacima, npr. unosom novih podataka sa tastature, što zapravo objašnjava efekat ove funkcije koji smo koristili u prvom poglavlju). Treba znati da i oznaka novog reda (odnosno znak '\n') kao i ostali “specijalni” znaci imaju svoje šifre (koje u ASCII tablici zauzimaju vrijednosti ispod broja “32”). Na primjer, oznaka novog reda ima ASCII šifru “10”.
+                    </p>
+                    <p>
+                        Srodna funkciji “cin.get()” je funkcija “cin.peek()” koja daje kao rezultat šifru sljedećeg znaka koji bi bio izdvojen iz ulaznog toka, ali ne vrši njegovo izdvajanje. Obje funkcije će biti mnogo korisnije nakon što upoznamo naredbe ponavljanja koje će nam omogućiti da iščitamo čitav ulazni tok znak po znak, bez obzira koliko on znakova sadrži. Ipak, na ovom mjestu nije na odmet navesti da tip rezultata koji ove funkcije vraćaju nije “char” nego “int”. 
+                    </p>
+                    <p>
+                        Sljedeći primjer programa ilustrira jedan korisan primjer upotrebe aritmetike sa znakovnim promjenljivim:
+                        
+using namespace std;
+int main(){
+    char ch1, ch2;
+    cout << "Unesi veliko slovo: ";
+    cin >> ch1;
+    ch2 = ch1 + 'a' - 'A';
+    cout << "Malo slovo je: " << ch2;
+    return 0;
+}</pre></code>
+                    </p>
+                    <p>
+                        Slika demonstrira izvršavanje ovog programa: 
+                        <pre><code class="language-plain">Unesi veliko slovo: H
+Malo slovo je : h</code></pre>
+                    </p>
+                    <p>
+                        Ako ne razumijete kako ovaj program radi, proučite malo tablicu ASCII kôdova. Primijetimo da će program dati besmislene rezultate ako kao ulaz ne unesete veliko slovo.
+                    </p>
+                    <p>
+                        Uključivanjem zaglavlja biblioteke “cctype” (koje se u ranijim verzijama jezika C++ zvalo “ctype.h”) dobijamo nekoliko interesantnih funkcija za pretvaranje znakova koji odgovaraju malim slovima u velika, i obrnuto. Tako, funkcije “tolower” i “toupper” primaju kao argument znakovni izraz, koji konvertiraju u malo odnosno veliko slovo respektivno. Tako bi se prethodni program mogao napisati i na sljedeći način:
+                        <pre data-src="C++/input/input23.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cctype&gt;
+using namespace std;
+int main(){
+    char ch;
+    cout << "Unesi veliko slovo: ";
+    cin >> ch;
+    cout << "Malo slovo je: " << (char)tolower(ch) << endl;
+    return 0;
+}</pre></code>
+                    </p>
+                    <p>
+                        Eksplicitna konverzija u tip “char” je potrebna zbog činjenice da je rezultat funkcija “tolower” i “toupper” tipa “int” (tako da ove funkcije zapravo vraćaju kao rezultat šifru znaka nakon obavljene pretvorbe u malo odnosno veliko slovo). Također je interesantno da obje funkcije vraćaju znak neizmijenjenim ukoliko znak ne predstavlja malo odnosno veliko slovo (tako da prethodni program neće ispisati besmislice ukoliko ne unesemo veliko slovo). Ovo čini ove dvije funkcije nešto manje efikasnim nego što bi mogle biti (jer se gubi vrijeme na provjeru da li je znak koji se pretvara ispravan). Ukoliko smo sigurni da znak koji pretvaramo predstavlja veliko odnosno malo slovo, za njegovu konverziju u malo odnosno veliko slovo možemo koristiti funkcije “_tolower” odnosno “_toupper” iz iste biblioteke. Ove funkcije su neznatno efikasnije od “tolower” odnosno “toupper”, ali daju besmislene rezultate u slučaju da znak koji pretvaramo nije veliko odnosno malo slovo.
+                    </p>
+                    <p>
+                        Ranije smo spominjali mogućnost zadavanja širine ispisa uz pomoć funkcije “cout.width” ili manipulatora “setw”. Pri tome smo naveli da se prazan prostor koji je potreban da se ispis raširi do željene širine ispunjava prazninama (odnosno razmacima). Pomoću funkcije “cout.fill” može se zadati znak koji će se umjesto razmaka koristiti za ispunjavanje ove praznine. Ova funkcija kao argument prihvata znak koji će biti korišten (argument može biti bilo koji znakovni izraz, pa čak i cjelobrojni izraz, koji će biti konvertiran u znakovni tip). Na primjer, ukoliko izvršimo niz naredbi
+                    </p>
+                    <pre class="line-numbers"><code class="language-cpp">cout.width(10);
+cout.fill('*');
+cout << 23;</code></pre>
+                    <p>biće ispisano nešto poput</p>
+                    <pre><code class="language-plain">********23</code></pre>
+                    <p>
+                        Isti efekat možemo postići uz pomoć manipulatora “setfill”, odnosno naredbe poput
+                        <pre class="line-numbers"><code class="language-cpp">cout << setw(10) << setfill('*') << 23;</code></pre>
+                    </p>
+                    <p>
+                        Za korištenje manipulatora “setfill” (kao i za korištenje svih ostalih manipulatora), potrebno je u program uključiti biblioteku “iomanip”.
+                    </p>
+                    <p>
+                        Ranije smo rekli da je dužina “char” promjenljivih uvijek tačno 1 bajt. To je zbog toga što u 1 bajt memorije može stati tipično 256 različitih kombinacija, što je dovoljno da se pokriju sva “normalna” mala i velika slova, cifre i standardni interpunkcijski znakovi. Primijetimo da ASCII standard nije definirao šifre za naša slova (što ne treba mnogo da čudi), tako da su na području bivše Jugoslavije nastajale razne “zakrpe” sa ciljem da se i našim slovima dodijele odgovarajuće šifre. Problem je u tome što te razne “zakrpe” nisu saglasne međusobno (tj. za isto slovo, npr. “Š” jedan “standard” predviđa jednu šifru, a drugi drugu), tako da nisu rijetke pojave da se u nekom dokumentu koji sadrži naša slova ona izgube (ili pretvore u besmislene znakove) prilikom prenosa na neki drugi računar. Cijeli problem je u tome što izvorni i odredišni računar ne koriste iste šifre za memoriranje naših slova. Danas je u razvoju novi standard šifri nazvan UNICODE koji predviđa ne samo naša slova, nego i sva slova grčkog, arapskog, hebrejskog, indijskog, kineskog i svih drugih alfabeta koji se koriste na svijetu. Ukratko, UNICODE standard predviđa preko 30000 različitih znakova. Da bi se podržao rad sa znakovima zapisanih u UNICODE standardu, nedavno je u jezik C++ pored tipa “char” uveden i tip “wchar_t” koji omogućava pamćenje znakova po UNICODE standardu. UNICODE standard zahtijeva 2 bajta za pamćenje jednog znaka, pa je logično očekivati da promjenljive tipa “wchar_t” zauzimaju 2 bajta memorije. Ovo jeste slučaj u većini raspoloživih kompajlera za C++, mada standard nije precizirao tačno koliko promjenljive tipa “wchar_t” trebaju zauzimati memorije. Jedino je definirano da one moraju zauzimati barem 2 bajta, kao i da njihova veličina mora biti jednaka veličini nekog od cjelobrojnih tipova na istom kompajleru.
+                    </p>
+                    <p>
+                        Dobra stvar UNICODE standarda je u tome što je on saglasan sa ASCII standardom: oni znakovi koji već postoje u ASCII standardu zadržavaju iste šifre. Tako, slovo “A” i u UNICODE standardu ima šifru 65, kao i u ASCII standardu.
+                    </p>
+                    <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+    
+            </p>
+</section>
+</div>
+</body>
+</html>
