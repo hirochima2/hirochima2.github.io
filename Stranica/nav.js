@@ -11,7 +11,7 @@ document.write('<div>\
   <a href="print.html">1.1 Izlazni tok, funkcija cout</a>\
   <a href="biblioteke-std.html">1.2 Biblioteke, korištenje standardnog riječnika</a>\
 </div>\
-<button href="#prvi_dio" class="dropdown-btn">Promjenljive i ulazni tok\
+<button href="#prvi_dio" class="dropdown-btn">Ulazni tok\
     <i class="fa fa-caret-down"></i>\
     </button>\
     <div class="dropdown-container">\
@@ -28,6 +28,25 @@ document.write('<div>\
     <a href="tipvar.html">2.5 Druge vrste cjelobrojnih tipova</a>\
     <a href="realtip.html">2.6 Realni tipovi podataka</a>\
     <a href="znaktip.html">2.7 Znakovni tipovi</a>\
+    </div>\
+    <button href="#prvi_dio" class="dropdown-btn">Naredbe\
+    <i class="fa fa-caret-down"></i>\
+    </button>\
+    <div class="dropdown-container">\
+    <button href="#prvi_dio" class="dropdown-btn">Naredbe izbora\
+    <i class="fa fa-caret-down"></i>\
+    </button>\
+    <div class="dropdown-container">\
+    <a href="if.html">3. IF/ELSE</a>\
+    <a href="switch.html">3.1 SWITCH</a>\
+    </div>\
+    <button href="#prvi_dio" class="dropdown-btn">Naredbe ponavljanja\
+    <i class="fa fa-caret-down"></i>\
+    </button>\
+    <div class="dropdown-container">\
+    <a href="if.html">3. IF/ELSE</a>\
+    <a href="switch.html">3.1 SWITCH</a>\
+    </div>\
     </div>\
 <a href="prijava.html">Odjava</a>\
     </div>\

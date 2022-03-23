@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>SWITCH</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Naredbe izbora - SWITCH</header>
+            <p>
+                U jeziku C++ postoji još jedan način za realizaciju višestrukog izbora, koji se zasniva na naredbi “switch”. Ova naredba omogućava izbor izvršavanja jedne od nekoliko mogućih alternativa, pri čemu je izbor zasnovan na vrijednosti jednog izraza koji se naziva izborni izraz (engl. case expression). U najopćenitijem slučaju, naredba “switch” ima sljedeći oblik:
+                <pre class="line-numbers"><code class="language-cpp">switch(izraz){
+case konstanta_1:
+    naredba_11
+    naredba_12
+    ...
+case konstanta_2:
+    naredba_21
+    naredba_22
+    ... 
+        ...
+case konstanta_N: 
+    naredba_N1
+    naredba_N2
+    ...
+default:
+    naredba_d1
+    naredba_d2
+    ...
+}</code></pre>
+            </p>
+            <p>
+                Smisao ove naredbe je u sljedećem: izraz u zagradi iza ključne riječi “switch” se izračunava, i ako je njegova vrijednost jednaka nekoj od konstanti navedenih iza labele (oznake) “case” unutar pripadnog bloka “switch”, izvršavanje programa se nastavlja od tog mjesta. Ako vrijednost izraza nije jednaka ni jednoj od konstanti navedenih iza ključne riječi “case”, izvršavanje se nastavlja od mjesta unutar bloka označenog labelom “default”, ako takva oznaka postoji. U suprotnom, čitav pripadni blok “switch” naredbe se preskače. Sve konstante navedene iza “case” unutar istog bloka moraju se međusobno razlikovati. Te konstante mogu biti prave konstante (uključujući i obične brojeve), kao i konstantni izrazi, ali ne i neprave konstante. Razmak između ključne riječi “case” i konstante je obavezan.
+            </p>
+            <p>
+                Izborni izraz moze biti bilo kojeg rednog (engl. ordinal) tipa. To su svi tipovi između kojih je moguće uspostaviti diskretni poredak, zasnovan na pojmovima “slijedeći” i “prethodni” kao npr. tipovi “int”, “char” i “bool” (smatra se da je “false” < “true”), kao i svi tzv. pobrojani (engl. enumerated) tipovi koje ćemo upoznati kasnije, ali ne i realni tipovi poput “double” koji su prividno kontinualni) Na primjer, ako pretpostavimo da je “stupanj” promjenljiva tipa “char”, možemo napisati sljedeću “switch” naredbu, koja u zavisnosti od ocjene (stupnja) koju je kandidat dobio na nekom testu (u rasponu od 'A' do 'E') ispisuje koliko je poena kandidat imao na testu:
+                <pre class="line-numbers"><code class="language-cpp">switch(stupanj){
+case 'A':
+    cout << "75% ili više" << endl;
+    break; 
+case 'B': 
+    cout << "65% - 74%" << endl;
+    break;
+case 'C': 
+    cout <<  "55% - 64%" << endl;
+    break; 
+case 'D': 
+    cout <<  "40% - 54%" << endl;
+    break; 
+case 'E': 
+    cout << "manje od 40%" << endl;
+}</pre></code>
+            </p>
+            <p>
+                Slijedi još jedan ilustrativan primjer. Naredni program simulira jednostavan kalkulator, koji omogućava korisniku da unese broj, operator “+”, “–“, “*” ili “/”, i drugi broj (npr. “2+3”). Program tada računa i prikazuje rezultat tražene operacije nad traženim operandima:
+                <pre data-src="C++/naredbe/naredbe5.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    double prvi, drugi;
+    char operacija;
+    cin << prvi << operacija << drugi; 
+    switch(operacija) { 
+        case '+': 
+            cout << prvi + drugi << endl;
+            break;
+        case '-': 
+            cout << prvi - drugi << endl;
+            break;
+        case '*': 
+            cout << prvi * drugi << endl;
+            break;
+        case '/': 
+            cout << prvi / drugi << endl;
+            break;
+        default: cout << "Nedozvoljena operacija" << endl; 
+    }
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                U principu, naredba “switch” se uvijek može simulirati (nekad lakše, a nekad teže) pomoću višestrukih “if” – “else” struktura.
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+            </section>
+            </div>
+    
+</body>
+</html>

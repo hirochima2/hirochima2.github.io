@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>IF/ELSE</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Naredbe izbora - IF/ELSE</header>
+            <p>
+                Svi programi koje smo dosad pisali, imali su linijsku strukturu, tj. naredbe su se izvodile striktno jedna za drugom. Ovakva algoritamska struktura naziva se sekvenca, i predstavlja najprostiju algoritamsku strukturu. Pogledajmo, na primjer, kako je izgledao algoritam za računanje i prikaz obima i porvšine kruga:
+                <ul>
+                    <li>Unesi vrijednost poluprečnika</li>
+                    <li>Izračunaj obim po formuli 2*PI*poluprečnik</li>
+                    <li>Izračunaj površinu po formuli PI*poluprečnik na kvadrat</li>
+                    <li>Ispiši vrijednost obima</li>
+                    <li>Ispiši vrijednost površine</li>
+                </ul>
+            </p>
+            <p>
+                Međutim, za pisanje iole složenijih programa, pored prostog niza (sekvence) instrukcija, potrebno je formirati i algoritme koji sadrže izbor (engl. selection) izmedju dvije ili više mogućnosti, zavisno od vrijednosti nekog uvjeta. Ovakvu algoritamsku strukturu nazivamo grananje (engl. branch). Grananje je jedna od kontrolnih struktura, koje određuju redoslijed u kojem se izvršavaju naredbe algoritma.
+            </p>
+            <p>
+                bosanskom jeziku, izbor neke alternative koja se izvršava u slučaju da je neki uvjet ispunjen možemo iskazati pomoću riječi “Ako” (engl. “If”), dok se alternativa u slučaju neispunjenja uvjeta izražava pomoću riječi “Inače” (engl. “Else”). Najjednostavniji slučaj izbora je kada vršimo neku akciju samo ako je uvjet tačan, a u suprotnom ne radimo ništa. Na primjer:
+                <ul>
+                    <li><strong>Ako</strong> pada kiša:
+                    <ul>
+                        <li>Uzmi kišobran</li>
+                    </ul></li>
+                    <li><strong>Ako</strong> je danas radni dan:
+                    <ul>
+                        <li>Ustani</li>
+                        <li>Idi na posao</li>
+                    </ul></li>
+                </ul>
+                S druge strane, možemo imati i alternativni tok akcija koje slijede ako uvjet nije ispunjen:
+                <ul>
+                    <li><strong>Ako</strong> je danas radni dan:
+                    <ul>
+                        <li>Ustani</li>
+                        <li>Idi na posao</li>
+                    </ul></li>
+                    <li><strong>Inače:</strong>
+                        <ul>
+                            <li>Isključi zvono na budilniku</li>
+                            <li>Nastavi spavati</li>
+                        </ul></li>
+                </ul>
+            </p>
+            <p>
+                U jeziku C++, izbor se izvodi upotrebom naredbe “if”. Prvo ćemo navesti nekoliko karakterističnih primjera:
+                <pre class="line-numbers"><code class="language-cpp">if(stanje_kase < 0)
+cout << "Nema vise novca";
+
+if(starost >= 18)
+cout << "Punoljetni ste";
+
+if(stanje kase > 0){
+    stanje_kase -= zaduzenje;
+    cout << "Trgovina obavljena";
+}
+
+if(stanje_kase < 0)
+cout << "Nema vise novca";
+
+else{
+    stanje_kase -= zaduzenje;
+    cout << "Trgovina obavljena";</code></pre>
+            </p>
+            <p>
+                Smisao naredbe “if” je u sljedećem: prvo se izračunava izraz u zagradi, koji bi trebao da bude logičkog tipa (mada su dozvoljeni i numerički izrazi, pri čemu će njihova vrijednost biti konvertirana u logičku vrijednost prema pravilima opisanim u prethodnom poglavlju). Ukoliko je izraz tačan, izvršava se naredba “naredba” (u slučaju da treba izvršiti više naredbi u slučaju ispunjenja uvjeta, prosto ćemo upotrijebiti blok). Ukoliko izraz nije tačan, naredba “naredba” se ignorira, a izvršava se naredba “naredba_2” (također, naredba “naredba_2” se ignorira u slučaju da je izraz tačan). Naredba “naredba_2” također može biti blok. Sve ovo vrijedi ukoliko je predviđen alternativni tok akcija naznačen pomoću ključne riječi “else”. U slučaju da alternativni tok akcija nije naveden a izraz nije tačan, naredba “naredba” se prosto ignorira. U svakom slučaju, nakon izvršenja bilo direktne bilo alternativne akcije (tj. naredbe “naredba” ili naredbe “naredba_2 ”), program dalje nastavlja svojim tokom od sljedeće naredbe.
+            </p>
+            <p>
+                Navedimo sada kompletan (i ispravan) program koji zahtijeva da unesemo svoju starost, i koji na osnovu unesene starosti daje prikladan komentar:
+                <pre data-src="C++/naredbe/naredbe1.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main{
+    int starost;
+    cout << "Koliko imate godina? ";
+    cin >> starost;
+    if(starost >=18) {
+        cout << "Punoljetni ste" << endl;
+        cout << "Imate pravo glasati" << endl;
+    }
+    else {
+        cout << "Maloljetni ste" << endl;
+        cout << "Nemate pravo glasati" << endl;
+    }
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Mogući scenario ovog programa je: 
+                <pre><code class="language-plain">Koliko imate godina : 16
+Maloljetni ste
+Nemate pravo glasati</code></pre>
+            ili
+            <pre><code class="language-plain">Koliko imate godina : 18
+Punoljetni ste
+Imate pravo glasati</code></pre>
+            </p>
+            <p>
+                Primjer: 
+                Neka kompanija želi da kupi novi itison za svoje kancelarije. Dva prodavača itisona su dali svoje ponude kako slijedi:
+                Prodavač 1: 24.50 KM po kvadratnom metru postavljenog itisona (iznos uključuje cijenu itisona i postavljanja itisona)
+                Prodavač 2: 12.50 KM po kvadratnom metru itisona plus fiksni iznos od 400 KM (neovisno od kvadrature)
+            </p>
+            <p>
+                Sljedeći program na ulazu prihvata dimenzije jedne kancelarije (pretpostavimo da je tlocrt kancelarija pravougaonog oblika), računa cijene obe ponude, ispisuje ih i preporučuje jeftinijeg prodavača:
+                <pre data-src="C++/naredbe/naredbe2.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    const double JedinicnaCijena1(24.50);
+    const double JedinicnaCijena2(12.50);
+    const double FiksnaCijena2(400);
+    double duzina, sirina;
+    cout << "Unesi sirinu kancelarije u metrima: ";
+    cin >> sirina;
+    cout << "Unesi duzinu kancelarije u metrima: ";
+    cin >> duzina;
+    double povrsina = duzina * sirina;
+    double cijena_1 = JedinicnaCijena1 * povrsina;
+    double cijena_2 = JedinicnaCijena2 * povrsina + FiksnaCijena2; 
+    cout << "Prodavac 1 će Vam naplatiti " << cijena_1 << " KM.\n"
+    "Prodavac 2 će Vam naplatiti " << cijena_2 << " KM.\n"
+    "Preporucujem Vam ";
+    if (cijena_1 < cijena_2) cout << "prvog"; 
+    else cout << "drugog";
+    cout << " prodavača, jer je jeftiniji.\n"; 
+    return 0;
+}</pre></code>  
+            </p>
+            <p>
+                Još jedan interesantan primjer korištenja naredbe “if” je program koji rješava kvadratnu jednačinu, bez obzira da li su njena rješenja realna ili kompleksna, ali ovaj put bez upotrebe tipa “complex”. Kompleksna rješenja se i ovdje ispisuju kao parovi (re, im), pri čemu je to ovaj put urađeno “vještački”, tj, ručnim ispisivanjem zagrada, zareza itd. Ovaj put se realna rješenja ispisuju kao čisto realni brojevi a ne kao parovi:
+                <pre data-src="C++/naredbe/naredbe3.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cmath&gt;
+using namespace std;
+int main(){
+    double a, b, c;
+    cout << "a = ";
+    cin >> a;
+    cout << "b = ";
+    cin >> b;
+    cout << "c = ";
+    cin >> c;
+    double d = b * b - 4 * a * c;
+    if(d >= 0) {
+        double x1 = (-b - sqrt(d)) / (2 * a);
+        double x2 = (-b + sqrt(d)) / (2 * a);
+        cout << "x1 = " << x1 << "\nx2 = " << x2 << endl;
+} 
+    else {
+        double re = -b / (2*a);
+        double im = abs(sqrt(-d) / (2 * a));
+        cout << "x1 = (" << re << "," << -im << ")\n"
+        "x2 = (" << re << "," << im << ")\n"; 
+}
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Unutar naredbe “if” mogu se naravno koristiti i složeniji uvjeti, formirani pomoću logičkih operatora, kao u sljedećim primjerima:
+                <pre class="line-numbers"><code class="language-cpp">if(starost >= 16 && starost < 65) cout << "Mozete se zaposliti" << endl;
+if(starost < 16 || starost >= 65) cout << "Ne mozete se zaposliti" << endl;
+if(!(starost > 65)) cout << "Ne mozete imati penziju" << endl;</code></pre>
+            </p>
+            <p>
+                Biblioteka “cctype” sadrži nekoliko veoma korisnih funkcija za ispitivanje prirode znaka koji im se prosljeđuje kao argument. Sve ove funkcije testiraju da li znak pripada određenoj skupini znakova, i ukoliko ne pripada, kao rezultat daju nulu, a ukoliko pripada, kao rezultat daju neku vrijednost različitu od nule (nazovimo je ne-nula). Standard ne predviđa koja će vrijednost biti tačno vraćena u slučaju pripadnosti, ali to nije ni bitno, s obzirom da su ove funkcije predviđene da se koriste isključivo unutar uvjeta, tako da se svaka vrijednost različita od nule konvertira u vrijednost “true”. Može se postaviti pitanje zbog čega ove funkcije nisu napravljene tako da vraćaju vrijednosti “true” i “false”, ili barem “0” i “1”. Razlog leži u efikasnosti: njihova implementacija može biti mnogo efikasnija ukoliko se ne vodi računa o tačnoj vrijednosti koja će biti vraćena. Slijedi prikaz najvažnijih funkcija ove vrste iz biblioteke “cctype”:
+                <pre><code class="language-cpp">islower(c)      Daje ne-nulu ako je c malo slovo
+isupper(c)      Daje ne-nulu ako je c veliko slovo
+isalpha(c)      Daje ne-nulu ako je c slovo
+isdigit(c)      Daje ne-nulu ako je c cifra
+isalnum(c)      Daje ne-nulu ako je c cifra ili slovo
+ispunct(c)      Daje ne-nulu ako je c znak interpunkcije
+isgraph(c)      Daje ne-nulu ako je c ispisivi znak (cifra, slovo ili znak interpunkcije)
+isspace(c)      Daje ne-nulu ako je c praznina (razmak, tabulator ili oznaka kraja reda)
+iscntrl(c)      Daje ne-nulu ako je c kontrolni znak (npr. oznaka kraja reda)</code></pre>
+            </p>
+            <p>
+                Ispravno korištenje logičkih promjenljivih i logičkih operatora najbolje ilustrira sljedeći primjer. Po pravilu koje je na snazi u Velikoj Britaniji, na izborima imaju pravo glasanja samo osobe koje imaju 18 godina ili više, pod uvjetom da nisu u zatvoru, da nisu neuračunljive i da nisu “plemenite krvi” (tj. da nisu članovi kraljevske porodice ili da posjeduju neku plemićku titulu kao “vojvoda” ili “lord”). Sljedeći program postavlja korisniku nekoliko pitanja, i nakon toga mu saopštava da li ima pravo glasa po britanskom sistemu prava na glasanje:
+                <pre data-src="C++/naredbe/naredbe4.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cctype&gt;
+using namespace std;
+int main(){
+    int starost;
+    char odgovor;
+    cout << "Molim Vas, unesite svoju starost: "; 
+    cin >> starost;
+    cout << "Da li ste plemenite krvi? (D/N): "; 
+    cin >> odgovor;
+    bool plemic = toupper(odgovor) == 'D';
+    cout << "Da li ste u zatvoru? (D/N): "; 
+    cin >> odgovor;
+    bool zatvorenik = toupper(odgovor) == 'D'; 
+    cout << "Da li ste neuracunljivi? (D/N): "; 
+    cin >> odgovor;
+    bool neuracunljiv = toupper(odgovor) == 'D'; 
+    cout << endl;
+    bool pravo_glasa = (starost >= 18) && !(plemic || zatvorenik || neuracunljiv);
+    if(pravo_glasa) cout << "Imate pravo glasa" << endl; 
+    else cout << "Nemate pravo glasa" << endl;
+return 0;
+}</pre></code>
+            </p>
+            <p>
+
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+            </section>
+            </div>
+</body>
+</html>
