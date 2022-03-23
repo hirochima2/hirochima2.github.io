@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Naredbe ponavljanja</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Naredbe ponavljanja</header>
+            <p>
+                U svim dosada napisanim programima, napisane naredbe izvršavale su se najviše jedanput. Stoga nam u takvim situacijama programi i nisu bili osobito potrebni – sve probleme koje smo do sada rješavali lako bismo riješili uz pomoć običnog džepnog kalkulatora. Pravi smisao pisanja programa dolazi do izražaja tek kada treba iskazati algoritme koji zahtijevaju mehaničko ponavljanje (engl. repetition) određene skupine akcija. Na primjer, zamislimo da je potrebno izračunati sumu: 100000000!(faktorijal)
+            </p>
+            <p>
+                Ovu sumu bismo principijelno također mogli izračunati uz pomoć džepnog kalkulatora, samo problem nastaje što u ovoj sumi imamo milion sabiraka. Ukoliko bismo svake sekunde pritiskali po jedan taster na kalkulatoru, potrebno je preko pet mjeseci svakodnevnog osmočasovnog rada da bismo došli do rezultata (uz pretpostavku da nigdje ne pogriješimo, što je naravno praktično nemoguće). Međutim, uskoro ćemo vidjeti da je ovu sumu moguće izračunati za najviše nekoliko sekundi (ovisno od brzine računara) korištenjem sljedeće sekvence naredbi:
+                <pre class="line-numbers"><code class="language-cpp">long int s(1);
+for(int i=1; i<=100000000; i++) s = s * i;</code></pre>
+            </p>
+            <p>
+                Ono što je bitno uočiti je da je pri računanju navedene sume stalno potrebno ponavljanje praktično identičnih akcija.Ovakvi algoritmi realiziraju se upravljačkom strukturom koja se naziva petlja (engl. loop) ili iteracija (engl. iteration), koja predstavlja upravljačku strukturu koja omogućava ponavljanje neke akcije (ili skupine akcija). 
+            </p>
+            <p>
+                Najgeneralniji oblik petlje nastaje u slučajevima kada ne znamo unaprijed koliko puta se neka akcija treba ponoviti. Za te slučajeve je karakteristična pojava specijalne fraze “Sve dok” (engl. “While”) u verbalnom prikazu algoritma koji ih opisuje. Na primjer, ovo je algoritam koji princ iz bajke koristi da pronađe Pepeljugu:
+                <ul>
+                    <li>Uzmi cipelu</li>
+                    <li><strong>Sve dok</strong> Pepeljuga nije nađena: 
+                    <ul>
+                        <li>Potraži prvu sljedeću djevojku</li>
+                        <li>Probaj može li obući cipelu</li>
+                        <li><strong>Ako</strong> cipela odgovara: 
+                        <ul>
+                            <li>Pepeljuga je nađena</li>
+                        </ul></li>
+                    </ul></li>
+                    <li>Oženi se</li>
+                </ul>
+            </p>
+            <p>
+                Postoje tri vrste petlji u C++ programskom jeziku a to su(klikom na imena odlazite na stranicu o toj petlji): 
+                <ul>
+                    <li><a href="while.html" target="_blank">WHILE petlja</a></li>
+                    <li><a href="dowhile.html" target="_blank">DO-WHILE petlja</a></li>
+                    <li><a href="for.html" target="_blank">FOR petlja</a></li>
+
+                </ul>
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+            </section>
+            </div>
+</body>
+</html>

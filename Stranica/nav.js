@@ -44,8 +44,10 @@ document.write('<div>\
     <i class="fa fa-caret-down"></i>\
     </button>\
     <div class="dropdown-container">\
-    <a href="if.html">3. IF/ELSE</a>\
-    <a href="switch.html">3.1 SWITCH</a>\
+    <a href="loop.html">3.2 Naredbe ponavljanja</a>\
+    <a href="while.html">3.3 WHILE petlja</a>\
+    <a href="switch.html">3.4 DO-WHILE petlja</a>\
+    <a href="switch.html">3.5 FOR petlja</a>\
     </div>\
     </div>\
 <a href="prijava.html">Odjava</a>\
