@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>FOR</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>FOR petlja</header>
+            
+            <p>
+                Najčešći algoritmi koji koriste ponavljanje su algoritmi u kojima se javlja potreba za ponavljanjem neke akcije ili skupine akcija tačno određeni broj puta. Na primjer, zamislimo da želimo da unesemo ukupnu količinu padavina u toku svakog mjeseca u godini, i da izračunamo prosječnu količinu padavina u toku jednog mjeseca. Algoritam za rješavanje ovog problema može izgledati ovako:
+                <ul>
+                    <li>Postavi ukupnu količinu padavina na 0</li>
+                    <li><strong>Za</strong> sve mjesece od 1 do ukupnog broja mjeseci:
+                    <ul>
+                        <li>Unesi količinu padavina u toku mjeseca</li>
+                        <li>Dodaj uneseni broj na ukupnu količinu</li>
+                    </ul>
+                    </li>
+                    <li>Podijeli ukupnu količina sa brojem mjeseci (12)</li>
+                    <li>Prikaži rezultat</li>
+                </ul>
+            </p>
+            <p>
+                Specijalna riječ “Za” (engl. “for”) upotrebljena u opisu algoritma ukazuje da se akcije koje slijede (prikazane uvučeno) trebaju ponoviti tačno određeni broj puta, preciznije za sve mjesece redom od 1 do 12. Prikazani algoritam nije teško realizirati pomoću naredbe “while”:
+                <pre data-src="C++/loop/loop8.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    const int BrojMjeseci(12);      // Ukupan broj mjeseci
+    double ukupno(0);               // Ukupna godisnja kolicina padavina
+    int mjesec;                     // Redni broj mjeseca (1 - 12)
+    mjesec = 1;
+    while(mjesec <= BrojMjeseci){
+        double padavine;
+        cout << "Unesite kolicinu padavina u toku " << mjesec << ". mjeseca: ";
+        cin >> padavine;
+        ukupno += padavine;
+        mjesec++;
+}
+    double prosjek = ukupno / BrojMjeseci;
+    cout << "Prosjecna kolicina padavina je: " << prosjek << endl; 
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Razumije se da je dodjela “mjesec=1” mogla biti izvršena odmah pri deklaraciji promjenljive “mjesec”, putem njene inicijalizacije. Međutim, ovdje smo namjerno razdvojili deklaraciju promjenljive i dodjelu vrijednosti da bismo jasnije uočili neke karakteristike koje su zajedničke za sve algoritme ovog tipa.
+            </p>
+            <p>
+                FOR se koristi u sljedećem obliku:
+                <pre class="line-numbers"><code class="language-cpp">for(inicijalizacija_brojaca; neki_uvjet; izmjena_brojaca) naredba;</code></pre>
+                Tako, korištenjem naredbe “for”, program za računanje prosječne količine padavina možemo napisati ovako:
+            </p>
+            <p>
+                <pre data-src="C++/loop/loop9.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    const int BrojMjeseci(12);      // Ukupan broj mjeseci
+    double ukupno(0);               // Ukupna godisnja kolicina padavina
+    int mjesec;                     // Redni broj mjeseca (1 - 12)
+    for(mjesec = 1; mjesec <= BrojMjeseci; mjesec++) { 
+        double padavine;
+        cout << "Unesite količinu padavina u toku " << mjesec << ". mjeseca: ";
+                  cin >> padavine;
+                  ukupno += padavine;
+        }
+        double prosjek = ukupno / BrojMjeseci;
+        cout << "Prosječna količina padavina je: " << prosjek << endl; 
+        return 0;
+}</pre></code>
+            </p>
+            <p>
+                Naredba “for” u jeziku C++ je veoma općenita, mnogo opštija nego u drugim programskim jezicima. Ipak, ova naredba se najčešće koristi kada se neki algoritam treba izvršiti za više vrijednosti neke promjenljive (brojača) koja redom uzima vrijednosti od neke početne do neke krajnje vrijednosti.
+            </p>
+            <p>
+                Riječima iskazano, smisao naredbe “for” je slijedeći:
+                <ul>
+                    <li>Inicijaliziraj promjenljive pomoću izraza "izraz_1"</li>
+                    <li>Izvršavaj tijelo petlje sve dok je izraz "izraz_2" tačan (ili različit od nule ukoliko se ne radi o logičkom izrazu)</li>
+                    <li>Svaki put kada se tijelo petlje izvrši "izmijeni_vrijednost" promjenljivih (drugim riječima, izvršiti njihovu reinicijalizaciju) pomoću izraza "izraz_3"</li>
+                </ul>
+            </p>
+            <p>
+                Ova fleksibilnost naredbe “for” često je jako korisna (naravno, ne treba je zloupotrebljavati). Tako, na primjer, sljedeća sekvenca ispisuje stepene broja 2 koji nisu veći od 70000 (ovdje koristimo tip “longint” da bismo izbjegli eventualne probleme sa prekoračenjem na kompajlerima kod kojih promjenljive tipa “int” zauzimaju 2 bajta):
+                <pre class="line-numbers"><code class="language-cpp">long int i;
+for(i = 1; i <= 70000; i *=2) cout << i << " ";</code></pre>
+            </p>
+            <p>
+                Naredni program na izlazu daje tabelu konverzije temperature izražene u stepenima Celzijusa u stepene Farenhajta, i to u intervalu od 0 do 100 stepeni Celzijusovih, sa korakom od po 10 stepeni (obratite pažnju kako je ovaj korak realiziran u naredbi “for”).
+                <pre data-src="C++/loop/loop10.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+int main(){
+    cout << "Celzijusi:  Farenhajti:" << endl;
+    cout << "-----------------------" << endl;
+    for(double celzijusi = 0; celzijusi <= 100; celzijusi += 10){
+        double farenhajti = 9 * celzijusi / 5 + 32;
+        cout << setw(10) << celzijusi << setw(13) << farenhajti << endl;
+    }
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Naredni program za uneseni broj n računa njegov faktorijel n! = 1 × 2 × ... × n. Promjenljive su definirane kao promjenljive tipa “longint”, sa ciljem da se poveća opseg vrijednosti za koje se dobija tačan rezultat (vodite računa da je faktorijel funkcija koja raste veoma brzo): 
+                <pre data-src="C++/loop/loop11.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int n;
+    cout << "Unesite broj: ";
+    cin >> n;
+    long int proizvod(1);
+    for(int i = 1; i <= n; i++) proizvod *= i; 
+    cout << n << "! = " << proizvod << endl;
+    return 0; 
+}</pre></code>
+            </p>
+            <p>
+                Sljedeći program je proširenje programa za pomoć korisniku za izbor pogodnijeg prodavača itisona za svoje kancelarije, koji smo ranije priložili kao ilustraciju naredbe “if”. U ovom programu se ne unose dimenzije samo jedne kancelarije, nego dimenzije za nekoliko kancelarija, tako da program može da preporuči jeftiniju varijantu za ukupnu površinu kancelarija. Program na početku pita korisnika u koliko kancelarija treba postaviti itison.
+                <pre data-src="C++/loop/loop12.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    const double JedinicnaCijena1(24.50);
+    const double JedinicnaCijena2(12.50);
+    const double FiksnaCijena_2(400);
+    int broj_kancelarija;
+    cout << "Koliko ima kancelarija? ";
+    cin >> broj_kancelarija;
+    double cijena_1(0), cijena_2(0);
+    for(int i = 1; i <= broj_kancelarija; i++) {
+        double duzina, sirina;
+        cout << "Unesite sirinu " << i << ". kancelarije u metrima: "; 
+        cin >> sirina;
+        cout << "Unesite duzinu " << i << ". kancelarije u metrima: "; 
+        cin >> duzina;
+        double povrsina = duzina * sirina;
+        cijena_1 += JedinicnaCijena1 * povrsina;
+        cijena_2 += JedinicnaCijena2 * povrsina + FiksnaCijena2;
+    }
+    cout << "Prodavač 1 ce Vam naplatiti " << cijena_1 << " KM.\n";
+    cout << "Prodavač 2 ce Vam naplatiti " << cijena_2 << " KM.\n";
+    cout << "Preporucujem Vam ";
+    if(cijena_1 < cijena_2) cout << "prvog"; 
+    else cout << "drugog";
+    cout << " proizvodaca, jer je jeftiniji.\n";
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Nema nikakvih razloga da se unutar tijela jedne petlje ne mogu nalaziti druge petlje. To je ilustrirano u sljedećem programu, u kojem se unutar jedne “do” – ”while” petlje (vanjske) nalaze druge dvije “do” – ”while” petlje (unutrašnje), kao i jedna “for” petlja. U priloženom programu korisnik treba da unese neki broj u intervalu od 2 do 10. Ako korisnik unese pogrešan broj, ispisuje se upozorenje i korisnik treba da ponovo unese broj. Nakon unosa ispravnog broja, program na izlazu daje tablicu množenja za unijeti broj. Na primjer, ako korisnik unese broj 3, na izlazu program daje tablicu množenja za broj 3, od 3 x 1 do 3 x 10. Nakon unosa jednog broja, program treba da pita korisnika da li želi da unese drugi broj. Ako je odgovor 'D', postupak se ponavlja, a ako je odgovor 'N' program završava sa radom. Ako odgovor nije niti 'D' niti 'N', ispisuje se upozorenje, i od korisnika se zahtijeva da dâ smislen odgovor, sve dok ne unese 'D' ili 'N'. Podržana su i velika i mala slova u odgovorima.
+                <pre data-src="C++/loop/loop13.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cctype&gt;
+using namespace std;
+int main(){
+    char odgovor; 
+    do {
+        int broj; 
+        do {
+            cout << "Unesite broj izmedu 2 i 10: ";
+            cin >> broj;
+            if(broj < 2 || broj > 10) cout << "Neispravan broj!\n";
+        } while (broj < 2 || broj > 10); 
+        for(int i = 1; i <= 10; i++) cout << broj << " x " << i << " = " << broj * i << endl; 
+        cout << "Zelite li unijeti novi broj? ";
+        bool dobar_odgovor;
+        do {
+            cin >> odgovor;
+            cin.ignore(10000, '\n');
+            odgovor = toupper(odgovor);
+            dobar_odgovor = odgovor == 'D' || odgovor == 'N'; 
+            if(!dobar_odgovor) cout << "Odgovorite sa 'D' ili 'N'!\n";
+        } while(!dobar_odgovor); 
+    } while(odgovor == 'D'); 
+    return 0; 
+}</pre></code>
+            </p>
+            <p>
+                Obratite pažnju na to da je u program uvedena logička promjenljiva “dobar_odgovor”, kao i na način kako je ona iskorištena. Također, obratite pažnju i na mjesto gdje su deklarirane pojedine promjenljive. Kao što je već rečeno, dobro je truditi se da njihovo vrijeme života bude što je god moguće kraće, ali trebamo paziti da promjenljiva ne prestane postojati na mjestu gdje je njeno postojanje još uvijek potrebno. Na primjer, mada na prvi pogled izgleda da je promjenljiva “odgovor” potrebna samo unutar tijela posljednje unutrašnje “do”–“while” petlje, ona je zapravo potrebna i unutar uvjeta spoljašnje “do” – “while” petlje, tako da je moramo deklarirati prije početka spoljašnje “do” – “while” petlje!
+            </p>
+            <p>
+                Česti su slučajevi u kojima se kao tijelo “for” petlje javlja nova “for” petlja. Ovo se naročito često javlja kod obrade podataka organiziranih u formi tablica. Na primjer, sljedeći program, koji koristi dvije “for” petlje, jednu unutar druge, ispisuje na ekran tablicu množenja za sve brojeve od 1 do 10:
+                <pre data-src="C++/loop/loop14.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    for(int i = 1; i <= 10; i++){
+        for(int j = 1; j <= 10; j++){
+            cout.width(5);
+            cout << i * j;
+        }
+        cout << endl;
+    }
+    return 0;
+}</pre></code>
+            Kada pokrenemo ovaj program, ispis će izgledati ovako:
+            <pre><code class="language-plain"> 1   2   3   4   5   6   7   8   9   10
+ 2   4   6   8  10  12  14  16  18   20
+ 3   6   9  12  15  18  21  24  27   30
+ 4   8  12  16  20  24  28  32  36   40
+ 5  10  15  20  25  30  35  40  45   50 
+ 6  12  18  24  30  36  42  48  54   60 
+ 7  14  21  28  35  42  49  56  63   70
+ 8  16  24  32  40  48  56  64  72   80
+ 9  18  27  36  45  54  63  72  81   90
+10  20  30  40  50  60  70  80  90  100</code></pre>
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+            </section>
+            </div>
+</body>
+</html>
