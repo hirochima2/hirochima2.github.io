@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>DO-WHILE</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>DO-WHILE petlja</header>
+            <p>
+                Prošla petlja je bila WHILE petlja. Uvjet kod “while” petlje ispituje se na samom početku petlje, tako da se tijelo petlje neće izvršiti niti jedanput ukoliko je pripadni uvjet već na početku bio netačan. Međutim, često je potrebno imati takvu strukturu ponavljanja u kojoj neku akciju (ili skupinu akcija) želimo da preduzmemo barem jedanput, i da želimo vršiti ponavljanje sve dok je neki uvjet ispunjen, pri čemu se ispunjenje uvjeta treba provjeravati tek na kraju petlje (a ne na početku), jer je uvjet takav da ovisi o vrijednosti nekih promjenljivih čije vrijednosti tek treba da se formiraju unutar tijela petlje. Ovo se naprimjer dešava kada tražimo neki unos od korisnika, i ponavljamo zahtjev sve dok unos ne bude ispravan. Na primjer, ovdje je dat algoritam koji prikazuje na ekranu izbor opcija (meni), i traži unos od korisnika sve dok korisnik ne da korektan odgovor:
+                <ul>
+                    <li><strong>Radi sljedeće: </strong>
+                    <ul>
+                        <li>Ispiši spisak opcija("E-Editor", "S- Snimanje", "B- Brisanje", "K- Kraj");</li>
+                        <li>Učitaj znak sa tastature</li>
+                    </ul></li>
+                    <li>Ponavljaj gore navedene akcije <strong>sve dok</strong> je znak različit od 'E ', 'S' ', 'B ' i 'K'</li>
+                </ul>
+            </p>
+            <p>
+                U prikazanom opisu algoritma, prvo se izvršavaju sve naredbe koje slijede iza fraze “Radi sljedeće ” (engl. “Do”), a nakon toga se ispituje uvjet naveden iza fraze “sve dok je ” (engl. “while”). Ako je on tačan (tj. ako je korisnik unijeo pogrešan znak), naredbe unutar petlje (prikazane uvučeno) se ponavljaju, uvjet se testira ponovo, itd. sve dok je uvjet ispunjen (u našem slučaju, sve dok korisnik ne unese ispravan znak). U jeziku C++, ovakav tip ponavljanja realizira se pomoću strukture “do” – ”while”, koja se koristi u sljedećem obliku:
+                <pre class="line-numbers"><code class="language-cpp">do naredba while(neki_uvjet);</code></pre>
+            </p>
+            <p>
+                Smisao ove strukture potpuno je analogan običnoj ”while” naredbi, samo što se uvjet provjerava tek na kraju tijela petlje, odnosno nakon što se naredba napisana između ”do” i ”while” izvrši. Naravno, ukoliko želimo formirati tijelo petlje koje se sastoji od više naredbi, sve naredbe koje čine tijelo petlje objedinićemo u blok.
+            </p>
+            <p>
+                Struktura “do” – ”while” često se može (ali ne uvijek) zamijeniti običnom ”while” naredbom tako što će se neka promjenljiva od koje zavisi uvjet petlje vještački inicijalizirati na neku vrijednost koja će garantirati da će petlja započeti, odnosno da će uvjet na početku biti ispunjen. Na primjer, prethodni algoritam mogao se realizirati i pomoću obične ”while” petlje, na sljedeći način, u kojem je promjenljiva “opcija” inicijalizirana na neki neispravni znak.
+            </p>
+            <p>
+                Međutim, ukoliko je priroda problema takva da se logično nameće ispitivanje uvjeta na kraju a ne na početku petlje, prirodnije je koristiti “do” – ”while” strukturu. U posljednje vrijeme mogu se čuti prigovori da “do” – ”while” struktura ima tendenciju da dopušta duži period postojanja promjenljivih bez dodijeljene vrijednosti (tj. neinicijaliziranih promjenljivih) nego obična ”while” petlja, i da je zbog toga treba izbjegavati. Mada ova primjedba nije posve bez osnova, ipak djeluje previše paranoično iskoristiti je kao razlog za “protjerivanje” strukture “do” – ”while” iz programa.
+            </p>
+            <p>
+                Česti su slučajevi kada je gotovo svejedno da li ćemo koristiti “do” – ”while” strukturu ili običnu ”while” petlju. Na primjer, program za računanje sume unesenih brojeva do prvog negativnog unesenog broja koji smo pisali nešto ranije može se lako napisati i pomoću strukture “do” – ”while”:
+                <pre data-src="C++/loop/loop4.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    cout << "Unesite brojeve koji ce se sabirati " << "- negativan broj oznacava prekid." << endl << endl;
+    int suma(0), broj(0);
+    do{
+        suma += broj;
+        cout << "Unesite broj: ";
+        cin >> broj;
+    }while(broj >= 0);
+    cout << endl << "Suma unesenih brojeva je: " << suma << endl;
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                S druge strane, postoje brojne situacije u kojima je provjera uvjeta na kraju petlje koju vrši struktura “do” – ”while” prirodnija od provjere uvjeta na početku koja se dešava u običnoj ”while” petlji. Na primjer, neka je potrebno napraviti program koji određuje broj cifara i sumu cifara unesenog broja. Ideja se sastoji u činjenici da je ostatak dijeljenja bilo kojeg broja sa 10 jednak njegovoj posljednjoj cifri, dok cjelobrojni količnik sa 10 sadrži sve cifre osim posljednje. Dakle, ako uzastopno dijelimo broj sa 10, i pri tome na neku promjenljivu čija je početna vrijednost nula stalno nadodajemo ostatak tog dijeljenja, i ako postupak ponavljamo sve dok količnik ne bude nula, dobićemo željenu sumu cifara. Broj cifara ćemo dobiti tako što ćemo prosto brojati koliko je cifara izdvojeno u opisanom postupku:
+                <pre data-src="C++/loop/loop5.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int broj;
+    cout << "Unesite broj: ";
+    cin >> broj;
+    int suma(0), broj_cifara(0), broj_1(broj);
+    do{
+        int cifra = broj % 10;      //Izdvojena cifra
+        suma += cifra;
+        broj_cifara++;
+        broj /= 10;
+    } while(broj != 0);
+    cout << "Broj " << broj_1 << " ima " << broj_cifara << " cifara" << endl;
+    cout << "Suma njegovih cifara je " << suma << endl;
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Obratimo pažnju na pomoćnu promjenljivu “broj_1” koju smo inicijalizirali na vrijednost promjenljive “broj”. Ona nam je potrebna da bismo na kraju mogli ispisati originalnu vrijednost unesenog broja, s obzirom da je izvorna vrijednost promjenljive “broj” uništena tokom izvršavanja petlje (njena konačna vrijednost je nula). Također je interesantno razmotriti promjenljivu “cifra” koja je deklarirana unutar tijela petlje. Kao takva, ona “živi” samo dok traje izvršavanje tijela petlje, nakon čega ona prestaje postojati. Ovo je dozvoljeno s obzirom da nam ova promjenljiva samo i treba unutar tijela petlje (smatra se veoma dobrom praksom uvijek tako deklarirati promjenljive da im vrijeme života bude ograničeno samo na onaj period kada su zaista potrebne, jer se na taj način efikasnije troše memorijski resursi, i smanjuje se opasnost od grešaka). 
+            </p>
+            <p>
+                Razmotrimo pažljivije zbog čega nam je ovdje bila neophodna “do” – ”while” petlja, a ne obična ”while” petlja. Strogo uzevši, da nam je bilo neophodno samo računanje sume cifara, a ne i brojanje cifara, dovoljna bi bila obična ”while” petlja. Naime, razmotrimo sljedeći program, koji računa sumu cifara unesenog broja, a u kojem se koristi obična ”while” petlja:
+                <pre data-src="C++/loop/loop6.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int broj;
+    cout << "Unesite broj: ";
+    cin >> broj;
+    int suma(0), broj_cifara(0), broj_1(broj);
+    if(broj == 0) broj_cifara = 1;
+    while(broj != 0){
+        suma += broj % 10;
+        broj_cifara++;
+        broj /=10;
+    }
+    cout << "Broj " << broj_1 << " ima " << broj_cifara << " cifara" << endl;
+    cout << "Suma njegovih cifara je " << suma << endl;
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Naravno, rješenje sa “do” – ”while” petljom je elegantnije s obzirom da ne moramo voditi računa ni o kakvim specijalnim slučajevima. Inače se od više različitih rješenja nekog problema obično može smatrati elegantnijim ono rješenje kod kojeg se javlja manja potreba za tretiranjem raznih specijalnih slučajeva.
+            </p>
+            <p>
+                U sljedećem primjeru kombinira se “do” – ”while” struktura sa “if” – ”else” strukturom. Priloženi program omogućava korisniku da obavlja niz operacija na bankovnom računu. Korisnik treba da ukuca jedno slovo, na primjer slovo 'U' (unos) za stavljanje novca na račun, slovo 'P' (podizanje) za uzimanje novca sa računa, ili slovo 'K' (kraj) za prekid rada. Ako se traži stavljanje ili uzimanje novca sa računa, program učitava željeni iznos, i zatim prikazuje novo stanje na računu. Nakon izvršene jedne operacije unosa ili uzimanja novca, korisniku je omogućen izbor nove operacije, s tim da se program završava kada korisnik ukuca slovo 'K'. Početno stanje na računu je nula. Programu je svejedno da li korisnik unosi velika ili mala slova. U slučaju da korisnik unese nepostojeću komandu, ispisuje se upozorenje, nakon čega korisnik može zadati novu komandu.
+                <pre data-src="C++/loop/loop7.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    double stanje(0); 
+    char komanda;
+    do {
+        cout << "Unesite komandu (U - unos, P - podizanje, K - kraj): "; 
+        cin >> komanda;
+        if(komanda == 'U' || komanda == 'u') {
+            double iznos;
+            cout << "Unesite iznos koji ulazete: ";
+            cin >> iznos;
+            stanje += iznos;
+            cout << "Novo stanje na racunu je: " << stanje << endl;
+        }
+        else if(komanda == 'P' || komanda == 'p') {
+        double iznos;
+        cout << "Unesite iznos koji podizete: "; 
+        cin >> iznos;
+        if(stanje < iznos) cout << "Nazalost, nemate dovoljno novca na racunu!\n"; 
+        else {
+              stanje -= iznos;
+              cout << "Novo stanje na racunu je: " << stanje << endl; 
+            }
+        }
+        else if(komanda != 'K' && komanda != 'k') cout << "Neispravna komanda!\n";
+    } while(komanda != 'K' && komanda != 'k'); 
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                U ovom primjeru interesantno je razmotriti vrijeme života pojedinih promjenljivih korištenih u programu. Prvo obratimo pažnju na promjenljivu “iznos”. Izgleda kao da je ova promjenljiva deklarirana dva puta u programu. Međutim, u suštini se radi o dvije različite promjenljive istog imena od kojih svaka postoji samo unutar bloka u kojem je deklarirana. U principu smo mogli deklarirati i samo jednu promjenljivu “iznos” koja bi vrijedila u oba bloka (na primjer, deklaracijom na početku tijela “do” –
+“while” petlje), ali ovdje smo namjerno željeli demonstrirati i ovakvu mogućnost. Dalje, promjenljiva “komanda” deklarirana je ispred “do” – “while” petlje. Ovu promjenljivu nismo smjeli deklarirati unutar tijela petlje (mada se tek tamo prvi put koristi), jer u tom slučaju ona ne bi bila dostupna unutar uvjeta petlje (s obzirom da bi joj dostupnost bila ograničena samo na tijelo petlje). Ipak, najinteresantnije je razmotriti promjenljivu “stanje”. Na prvi pogled, ona bi se mogla deklarirati unutar tijela “do” –
+“while” petlje, jer se ona samo tamo i koristi. Međutim, ukoliko to učinimo, program neće raditi ispravno! Naime, ova promjenljiva je inicijalizirana na vrijednost nula. Ukoliko neku promjenljivu deklariramo i inicijaliziramo unutar tijela petlje, ta inicijalizacija će se iznova vršiti pri svakom prolasku kroz petlju (odnosno, svaki put kada se pri izvršavanju programa naiđe na navedenu inicijalizaciju). U našem slučaju, vrijednost promjenljive “stanje” bi se pri svakom prolasku kroz petlju iznova vraćala na nulu, umjesto da čuva tekuću vrijednost stanja na računu. Iz izloženog primjera možemo zaključiti da je potreban izvjestan oprez pri deklariranju promjenljivih unutar tijela petlje. Naime, unutar tijela petlje ima smisla deklarirati samo promjenljive čisto lokalnog značaja
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+            </section>
+            </div>
+</body>
+</html>

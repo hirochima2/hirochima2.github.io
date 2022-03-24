@@ -46,7 +46,7 @@ document.write('<div>\
     <div class="dropdown-container">\
     <a href="loop.html">3.2 Naredbe ponavljanja</a>\
     <a href="while.html">3.3 WHILE petlja</a>\
-    <a href="switch.html">3.4 DO-WHILE petlja</a>\
+    <a href="dowhile.html">3.4 DO-WHILE petlja</a>\
     <a href="switch.html">3.5 FOR petlja</a>\
     </div>\
     </div>\
