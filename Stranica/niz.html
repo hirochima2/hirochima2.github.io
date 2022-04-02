@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Nizovi</title>
+</head>
+
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Nizovi</header>
+            <p>
+                Dosada uvedeni tipovi podataka poput “int”, “double”, “char”, “bool” itd. omogućavaju predstavljanje
+                samo pojedinačnih vrijednosti, u smislu da jedna promjenljiva u jednom trenutku može pamtiti samo jednu
+                vrijednost. Na primjer, ukoliko su date sljedeće deklaracije:
+            <pre class="line-numbers"><code class="language-cpp">int brojac;
+double temperatura;
+char slovo;</code></pre>
+            njima odgovara sljedeća slika u memoriji računara:
+            <pre><code class="language-plain">brojac       temperatura         slovo</code></pre>
+            </p>
+            <p>
+                S druge strane, pri rješavanju problema iz stvarnog svijeta često se javlja potreba za predstavljanjem
+                skupine vrijednosti koje su sve istog tipa, na primjer:
+            <ul>
+                <li>Prosječne količine padavina za svaki mjesec</li>
+                <li>Ocjene svih učenika u razredu</li>
+                <li>Stanje prodaje za svaki dan u sedmici, itd.</li>
+            </ul>
+            </p>
+            <p>
+                U načelu, za predstavljanje skupine vrijednosti principijelno je moguće deklarirati skupinu neovisnih
+                promjenljivih. Na primjer, za predstavljanje prosječne količine padavina za svaki mjesec, principijelno
+                je moguće deklarirati 12 različitih promjenljivih “padavine_1”, “padavine_2” itd. do “padavine_12”.
+                Međutim, na opisani način nemoguće je obrađivati podatke iz ovih 12 nezavisnih promjenljivih i na kakav
+                sistematičan način. Na primjer, nije moguće ispisati njihov sadržaj petljom poput:
+            <pre
+                class="line-numbers"><code class="language-cpp">for(int i = 1; i <= 12; i++) cout << padavine_i << endl;</code></pre>
+            </p>
+            <p>
+                jer bi ovakva petlja, umjesto ispisa redom promjenljivih “padavine_1”, “padavine_2” itd. zapravo 12 puta
+                ispisala vrijednost jedne te iste promjenljive nazvane “padavine_i”, pod uvjetom da takva postoji (u
+                protivnom bi bila prijavljena greška).
+            </p>
+            <p>
+                Da bi se omogućila sistematična obrada skupina vrijednosti srodne prirode, jezik C++ omogućava razne
+                načine za čuvanje skupina vrijednosti unutar jedne promjenljive. Najelementarniji način za
+                predstavljanje skupina vrijednosti istog tipa je upotreba tzv. nizova (engl. arrays), koje ćemo
+                razmotriti u ovom poglavlju. Druge načine za predstavljanje skupina vrijednosti istog tipa, koji su u
+                osnovi najčešće također izvedeni iz nizova, razmotrićemo kasnije. Isto vrijedi i za predstavljanje
+                skupina međusobno povezanih vrijednosti koje nisu istog tipa.
+            </p>
+            <p>
+                Niz možemo kreirati pomoću deklaracije poput:
+            <pre class="line-numbers"><code class="language-cpp">double padavine[12];</code></pre>
+            </p>
+            <p>
+                Ova deklaracija promjenljive kreiraće promjenljivu “padavine” koja predstavlja niz koji može čuvati najviše 12 vrijednosti, pri čemu je svaka od tih vrijednosti tipa “double”. Ovome odgovara sljedeća memorijska slika:
+                <pre><code class="language-plain">padavine
+
+0  1  2  3  4  5  6  7  8  9  10  11            indeks</code></pre> 
+            </p>
+            <p>
+                Pojedinačni elementi niza su određeni svojim indeksom. Indeks se piše u uglastim zagradama, nakon navođenja imena niza. Pri tome se svaki element niza sam za sebe ponaša poput individualnih promjenljivih (preciznije, elementi niza predstavljaju l-vrijednosti). Drugim riječima, bilo koja operacija koja se može vršiti nad običnim promjenljivim odgovarajućeg tipa, može se vršiti i nad invididualnim elementima niza istog tipa.  
+            </p>
+            <p>
+                Kao i u slučaju običnih promjenljivih, elementi niza nemaju nikakvu precizno određenu vrijednost sve dok im se eksplicitno ne dodijeli vrijednost, bilo pomoću operatora dodjele “=”, bilo pomoću unosa sa tastature. Alternativno, postoji mogućnost da izvrši zadavanje početnih vrijednosti elemenata niza (inicijalizacija) uporedo sa deklaracijom, o čemu ćemo govoriti nešto kasnije u ovom poglavlju. Prilikom deklaracije nizovnih promjenljivih, unutar uglastih zagrada mora se nalaziti nešto čija je vrijednost konstantna i poznata prije početka izvršavanja programa, poput broja, prave konstante (deklarirane sa oznakom “const” i inicijalizirane brojem ili konstantnim izrazom) ili konstantnog izraza.
+            </p>
+            <p>
+                U jeziku C++ nisu direktno podržane operacije koje bi se izvršavale nad nizovnim promjenljivim kao cjelinom (bar ne sa standardnim nizovnim tipovima), nego samo nad individualnim elementima niza (iako u standardnim bibliotekama jezika C++ postoje funkcije koje rade sa nizovima kao cjelinama). Na primjer, ukoliko želimo ispisati sve elemente niza, postaviti sve elemente niza na neku vrijednost (npr. nulu), ili unijeti sve elemente niza sa tastature, ne možemo pisati naredbe poput sljedećih:
+                <pre class="line-numbers"><code class="language-cpp">cin >> padavine;
+padavine = 0;
+cout << padavine;</code></pre>
+                Umjesto toga, željene operacije potrebno je obaviti element po element, najčešće uz pomoć “for” petlje. Na primjer, sve elemente niza “padavine” možemo postaviti na nulu pomoću naredbe:
+                <pre class="line-numbers"><code class="language-cpp">for(int mjesec = 0; mjesec < 12; mjesec++) padavine[mjesec] = 0;</code></pre>
+                </p>
+                <p>
+                    Treba napomenuti da činjenica da se sa nizovima ne može baratati kao cjelinom nego samo sa njegovim individualnim elementima ne znači da se ime nizovne promjenljive ne može upotrijebiti samo za sebe, bez navođenja indeksa. Međutim, takve konstrukcije ne rade ono što bi se od njih moglo očekivati na prvi pogled. Na primjer, sljedeća naredba, u kojoj se pojavljuje ime nizovne promjenljive “padavine”
+                    <pre class="line-numbers"><code class="language-cpp">cout << padavine;</code></pre>
+                </p>
+                <p>
+                    sasvim je legalna u jeziku C++, ali ne radi ono što bi se moglo pomisliti (odnosno ne ispisuje sve elemente niza “padavine” na ekran). Umjesto toga, kao rezultat izvršavanja ove naredbe na ekranu će biti ispisan neki heksadekadni broj (koji predstavlja adresu lokacije u memoriji od koje započinje smještanje elemenata ovog niza)! Naime, kasnije ćemo vidjeti da se ime svake nizovne promjenljive upotrijebljeno samo za sebe (tj. bez navođenja indeksa) automatski konvertira u tzv. pokazivač na prvi element niza, a pokazivači se na ekran ispisuju u vidu adresa lokacija u memoriji na koje pokazuju (u heksadekadnom brojnom sistemu). O pokazivačima ćemo detaljno govoriti u kasnijim poglavljima, a na ovom mjestu je samo potrebno da zapamtimo da upotreba imena nizovnih promjenljivih bez navođenja indeksa neće dati očekivane rezultate.
+                </p>
+                <p>
+                    Sljedeći primjer, koji predstavlja program koji traži unos pet cijena i ispisuje ih kao spisak sa naslovom, ilustrira rad sa nizovima u kombinaciji sa naredbom “for”, kao i neke probleme uzrokovane činjenicom da indeksiranje nizova započinje od nule a ne od jedinice:
+                    <pre data-src="C++/niz/niz1.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+int main(){
+    double cijene[5];
+    cout << "Unesi pet cijena: ";
+    for(int i = 0; i < 5; i++) cin >> cijene[i];
+    cout << endl;
+    cout << "Spisak cijena" << endl;
+    cout << "-------------" << endl;
+    cout << "Stavka     Cijena" << endl;
+    for(int i = 0; i < 5; i++) cout << setw(2) << i + 1 << "." << setw(13) << cijene[i] << endl;
+    return 0;
+}</pre></code>
+                </p>
+                <p>
+                    Zbog činjenice da se indeksi niza koji ima N elemenata kreću od 0 do N–1, a ne od 1 do N, u ovom primjeru unesene cijene su smještene u elemente niza sa indeksima 0, 1, 2, 3 i 4, odnosno prva cijena smještena je u “nulti” element niza, itd. Ovakva numeracija, koja je sasvim logična sa aspekta organizacije podataka u računarskoj memoriji, veoma je neuobičajena sa aspekta čovjeka, koji je navikao da vrši indeksiranje počevši od 1 nadalje. Zbog toga je u prethodnom programu, prilikom ispisa cijena, u koloni “stavka” indeks “vještački” uvećan za 1, tako da će brojevi ispisani u ovoj koloni biti 1, 2, 3, 4 i 5, kao što je uobičajeno. Generalno se prilikom svakog ispisa indeksa niza na ekran, on obično uvećava za 1 za bi se ispis prilagodio obliku na koji je čovjek navikao.
+                </p>
+                <p>
+                    Kao alternativno rješenje, neki programeri deklariraju niz koji sadrži jedan element više nego što je potrebno, pri čemu element sa indeksom 0 nikada ne koriste (tj. ostavljaju ga neiskorištenim), kao u sljedećem programu, koji je funkcionalno ekvivalentan prethodnom programu:
+                     <pre data-src="C++/niz/niz2.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+int main(){
+    double cijene[5];
+    cout << "Unesi pet cijena: ";
+    for(int i = 1; i <= 5; i++) cin >> cijene[i];
+    cout << endl;
+    cout << "Spisak cijena" << endl;
+    cout << "-------------" << endl;
+    cout << "Stavka     Cijena" << endl;
+    for(int i = 1; i <= 5; i++) cout << setw(2) << i + 1 << "." << setw(13) << cijene[i] << endl;
+    return 0;
+}</pre></code>
+                </p>
+                <p>
+                    Međutim, postoji više razloga zbog čega ovakvo rješenje nije osobito preporučljivo. Pored činjenice da na taj način nepotrebno trošimo memoriju za jedan element niza više, neke naprednije tehnike programiranja koje se oslanjaju na upotrebu tzv. pokazivača i pokazivačke aritmetike očekuju da su elementi niza zaista smješteni počev od elementa sa indeksom 0. U suštini, ako je indeksacija koja započinje od nule svojstvo jezika C++, za dobro ovladavanje ovim jezikom bolje se navići na ovu činjenicu i prilagoditi joj se, nego bježati od nje.
+                </p>
+                <p>
+                    Sličnu situaciju imamo i u sljedećem programu, koji učitava prosječnu temperaturu za svaki od 12 mjeseci, i prikazuje unesene temperature na ekranu u obliku tabele. U ovom programu, kada nas program pita “Unesi temperaturu u toku 1. mjeseca:” unesena vrijednost se zapravo smješta u element čiji je indeks 0, a ne 1, jer je indeks ispisan na ekran (tj. promjenljiva “mjesec”) vještački ispisan za 1 veći nego što zaista jeste:
+                 <pre data-src="C++/niz/niz3.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+int main(){
+    double temperature[12];
+    for(int mjesec = 0; mjesec < 12; mjesec ++) {
+        cout << "Unesi prosjecnu temperaturu u toku " << mjesec + 1 << ". mjeseca: ";
+        cin >> temperature[mjesec];
+    }
+    cout << endl << "Mjesec     Temperatura" << endl;
+    for(int mjesec = 0; mjesec < 12; mjesec++) cout << setw(6) << mjesec + 1 << setw(14) << temperature[mjesec] << endl;
+    return 0;
+}</pre></code>
+                </p>
+                <p>
+                    Bitno je napomenuti da nizove treba koristiti samo u slučajevima u kojima je zaista neophodno pamćenje čitave skupine vrijednosti. Tako, ukoliko je potrebno sabrati 100 brojeva koji se unose sa tastature, nizovi nisu potrebni, s obzirom da nije potrebno pamtiti sve unesene vrijednosti, već samo upravo uneseni broj i sumu do tada unesenih brojeva. Sličnu situaciju imamo i prilikom traženja najveće ili najmanje vrijednosti između skupine brojeva unesenih sa tastature, što smo već ranije demonstrirali. Međutim, ukoliko je potrebno prebrojati koliko se puta u skupini brojeva unesenih sa tastature javlja najveća vrijednost, nizovi su potrebni. Naime, koja je najveća vrijednost možemo znati tek nakon što unesemo posljednji broj, nakon čega trebamo prebrojati koliko puta se među unesenim brojevima pojavila ta vrijednost. Međutim, to ne možemo uraditi ukoliko nismo prethodno zapamtili sve unesene brojeve.
+                </p>
+                <p>
+                    Generalno, nizove (ili neku srodnu strukturu podataka, koje će biti kasnije razmotrene) treba koristiti kad god je potrebno izvršiti neku obradu podataka za koju je potrebno u jednom trenutku poznavati čitavu skupinu podataka. Na primjer, nemoguće je ispisati skupinu unesenih brojeva nakon završetka njihovog unosa ukoliko njihove vrijednosti nismo prethodno pohranili u memoriju. 
+                </p>
+                <p>
+                    U praksi često ne znamo unaprijed koliko je elemenata potrebno smjestiti u niz. Nažalost, jedini način da ovaj problem riješimo uz upotrebu klasičnih nizova je da prilikom deklaracije niza zadamo najveći očekivani broj elemenata niza, pri čemu nas niko ne primorava da zaista moramo iskoristiti sve elemente. Neka, na primjer, određen broj studenata (ali ne više od 50) polaže neki ispit. Za svaki rad dobija se od 0 do 100 poena. Sljedeći program prvo pita korisnika koliko je kandidata pristupilo ispitu, zatim učitava broj poena za svakog kandidata posebno, i konačno, prikazuje na ekranu rezultate ispita (položio/pao) za svakog kandidata, uz pretpostavku da je za prolaz potrebno barem 55 poena. U program je ugrađena kontrola da li je broj kandidata zaista u dozvoljenom opsegu (od 1 do 50). S druge strane, radi jednostavnosti, nije ugrađena provjera ispravnosti broja unesenih poena za svakog kandidata:
+                   <pre data-src="C++/niz/niz4.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+int main(){
+    const int MaxBroj(50), PragZaProlaz(55);
+    int broj_kandidata;
+    do{
+        cout << "Koliko kandidata je pristupilo ispitu? ";
+        cin >> broj_kandidata;
+        if(broj_kandidata < 1 || broj_kandidata > MaxBroj) cout << "Broj mora biti od 1 do " << MaxBroj << "!" << endl;
+    } while(broj_kandidata < 1 || broj_kandidata > MaxBroj);
+    int poeni[MaxBroj];
+    for(int i = 0; i < broj_kandidata; i++){
+        cout << "Unesi broj poena za " << i + 1 << "kandidata: ";
+        cin >> poeni[i];
+    }
+    cout << endl << "Kandidat      Status" << endl;
+    for(int i = 0; i < broj_kandidata; i++){
+        cout << setw(7) << i + 1 << ".";
+        if(poeni[i] >= PragZaProlaz) cout << "POLOZIO" << endl;
+        else cout << "PAO" << endl;
+    }
+}</pre></code> 
+                </p>
+                <p>
+                    Očigledan nedostatak rješenja u kojem se deklarira najveći očekivani broj elemenata niza je činjenica da se tako nepotrebno rezervira memorija za elemente koji se ne koriste. U slučajevima kada ne možemo ni grubo pretpostaviti koliki bi maksimalan broj elemenata bio potreban, jedino rješenje (za sada) je da rezerviramo veoma veliki broj elemenata niza, što je zaista veliko rasipanje memorije. Na primjer, ukoliko deklariramo niz od 1000000 cijelih brojeva, zauzimamo (vjerovatno bespotrebno) skoro 4 megabajta memorije, uz pretpostavku da jedan element niza (jedan cijeli broj) zauzima 4 bajta!                    
+                </p>
+                <p>
+                    Možemo primijetiti da je u prethodnom programu veoma lako izvršiti prilagođavanje za bilo koji maksimalno dozvoljeni broj studenata, s obzirom da se sve promjene svode samo na promjenu vrijednosti konstante “MaxBroj”. Ovakvu praksu bi trebalo primjenjivati u svim programima.                    
+                </p>
+                <p>
+                    Neki programeri prakticiraju upotrebu različitih trikova kojima je moguće na kasnijim mjestima u programu odrediti kapacitet niza (odnosno maksimalan broj elemenata koje niz može primiti) zadan pri deklaraciji. Jedan od najčešće korištenih trikova prikazan je u sljedećem programskom isječku:
+                    <pre class="line-numbers"><code class="language-cpp">int niz[100];
+...
+cout << "Broj elemenata je " << sizeof niz / sizeof niz[0];</code></pre>                    
+                </p>
+                <p>
+                    Kako radi ovaj isječak? Podsjetimo se da operator “sizeof” daje kao rezultat broj bajta koje zauzima tip, promjenljiva ili izraz naveden kao njegov argument. Tako, “sizeof niz” daje broj bajtova u memoriji koje zauzima čitav niz, što je jednako broju elemenata niza pomnoženom sa brojem bajtova koje zauzima jedan element niza. Međutim, tu veličinu lako možemo saznati pomoću izraza “sizeof niz[0]”, tako da dijeljenjem ove dvije vrijednosti dobijamo broj elemenata niza. U konkretnom primjeru, umjesto “sizeof niz[0]” mogli smo upotrijebiti “sizeof(int)”, ali prikazano rješenje je neovisno od tipa elemenata niza. Mnogi C++ programeri često koriste opisani trik. Na primjer, sljedeća petlja ispisaće sve elemente niza “niz”, bez potrebe da apriori znamo broj njegovih elemenata:
+                    <pre class="line-numbers"><code class="language-cpp">for(int i = 0; i < sizeof niz / sizeof niz[0]; i++) cout << niz[i] << endl;</code></pre>
+                </p>
+                <p>
+                    Sasvim je moguće definirati i nizove znakova. Sljedeći primjer traži od korisnika da unese neku petoslovnu riječ, a zatim ispisuje unesenu riječ u obrnutom poretku slova:
+                    <pre data-src="C++/niz/niz5.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    const int BrojSlova(5);
+    char rijec[BrojSlova];
+    cout << "Unesi rijec od " << BrojSlova << " slova: ";
+    for(int i = 0; i < BrojSlova; i++) cin >> rijec[i];
+    cout << "Rijec izgovorena naopako glasi: ";
+    for(int i = BrojSlova - 1; i >= 0 ; i--) cout << rijec[i];
+    return 0;
+}</pre></code>       
+                </p>
+                <p>
+                    Često je potrebno ispitati da li svi elementi nekog niza posjeduju neko svojstvo. Na primjer, u jednom od ranije navedenih primjera imali smo niz nazvan “temperature”. Ukoliko želimo utvrditi da li su sve temperature pozitivne, možemo koristiti sljedeću konstrukciju:
+                    <pre class="line-numbers"><code class="language-cpp">bool svi_su_pozitivni(true);
+for(int mjesec = 0; mjesec < 12; mjesec ++)
+if(temperature[mjesec] <= 0) svi_su_pozitivni = false;</code></pre>
+                </p>
+                <p>
+                    Princip rada ove konstrukcije je sličan principu koji smo koristili kod ispitivanja da li je broj prost ili ne. Drugim riječima, apriori pretpostavljamo da svi elementi jesu pozitivni tako što logičku promjenljivu “svi_su_pozitivni” inicijaliziramo na vrijednost “true”, a zatim u petlji tražimo eventualan kontraprimjer za postavljenu pretpostavku. Ukoliko pri tome naiđemo na kontraprimjer (tj. na negativan element ili nulu), ovu promjenljivu postavljamo na vrijednost “false”, čime signaliziramo da pretpostavka nije bila tačna (tj. da svi elementi nisu pozitivni). Ukoliko se cijela petlja izvršila a ni jedan element nije bio negativan (ili nula), tijelo naredbe “if” neće se izvršiti niti jedanput, tako da će vrijednost promjenljive “svi_su_pozitivni” ostati onakva kakva je bila na početku (tj. “true”), iz čega zaključujemo da je pretpostavkja bila tačna, tj. da su zaista svi elementi pozitivni.
+                </p>
+                <p>
+                    Sljedeći primjer ilustrira mnoge od do sada opisanih tehnika. Neka meteorološka služba svakog dana registrira najvišu i najnižu dnevnu temperaturu. Prikazani program učitava najvišu i najnižu temperaturu za svaki dan jednog mjeseca (u trajanju od 30 dana), i na izlazu daje sljedeće podatke:
+                    <ul>
+                        <li>Maksimalnu temperaturu zabilježenu tokom tog mjeseca</li>
+                        <li>Minimalnu temperaturu zabilježenu tokom tog mjeseca</li>
+                        <li>Broj dana u toku mjeseca u kojima je zabilježena maksimalna temperatura</li>
+                        <li>Pretpostavku o godišnjem dobu na osnovu sljedećih pravila:
+                            <ul>
+                                <li>Predpostavlja se da je u pitanju zima ako je makar jedanput maksimalna dnevna temperatura bila ispod nule</li>
+                                <li>Predpostavlja se da je u pitanju ljeto ako minimalne dnevne temperature niti jedanput nisu bile ispod 15 stepeni</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <pre data-src="C++/niz/niz6.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    const int BrojDana(30);
+    double max_temperature[BrojDana], min_temperature[BrojDana];
+    for(int dan = 0; dan < BrojDana; dan++){
+        do{
+            cout << "Unesite minimalnu temperaturu u toku " << dan + 1 << "dana: ";
+            cin >> min_temperature[dan];
+            cout << "Unesite maksimalnu temperaturu u toku " << dan + 1 <<"dana: ";
+            cin >> max_temperature[dan];
+            if(min_temperature[dan] > max_temperature[dan]){
+                cout << "Neispravan unos!" << endl;
+            }
+        }while (min_temperature[dan] > max_temperature[dan]);
+    }
+        double max_temperatura(max_temperature[0]);
+        double min_temperatura(min_temperature[0]);
+        for(int dan = 1; dan < BrojDana; dan++){
+            if(max_temperature[dan] > max_temperatura) max_temperatura = max_temperature[dan];
+            if(min_temperature[dan] < min_temperatura) min_temperatura = min_temperature[dan];
+        }
+        cout << "Maksimalna temperatura zabilježena u toku mjeseca je " << max_temperatura << "." << endl;
+        cout << "Minimalna temperatura zabilježena u toku mjeseca je " << min_temperatura << "." << endl;
+        int br_dana_sa_max_temp(0);
+        for(int dan = 0; dan < BrojDana; dan++){
+            if(max_temperature[dan] == max_temperatura) br_dana_sa_max_temp++;
+        }
+        cout << "Maksimalna temperatura zabilježena je " << br_dana_sa_max_temp << " puta u toku mjeseca." << endl;
+        bool da_li_je_ljeto(true), da_li_je_zima(false);
+        for(int dan = 0; dan < BrojDana; dan++){
+        if(max_temperature[dan] < 0 ){
+            da_li_je_zima = true;
+            break;
+        }
+    }
+        for(int dan = 0; dan < BrojDana; dan++){
+            if(min_temperature[dan] < 15){
+                da_li_je_ljeto = false;
+                break;
+            }
+        }
+        if(da_li_je_ljeto && da_li_je_zima) cout << "Temperaturne oscilacije ovog mjeseca su veoma cudne.";
+        else if(da_li_je_ljeto) cout << "Jako je toplo, vjerovatno je ljeto.";
+        else if(da_li_je_zima) cout << "Vjerovatno je zima, temperature su bile ispod nule.";
+        return 0;
+    }</pre></code>
+                </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+        </section>
+    </div>
+</body>
+
+</html>

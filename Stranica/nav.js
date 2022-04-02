@@ -50,6 +50,15 @@ document.write('<div>\
     <a href="for.html">3.5 FOR petlja</a>\
     </div>\
     </div>\
+    <button href="#prvi_dio" class="dropdown-btn">Nizovi\
+    <i class="fa fa-caret-down"></i>\
+    </button>\
+    <div class="dropdown-container">\
+      <a href="niz.html">4. Obični nizovi</a>\
+      <a href="vektor.html">4.1 Vektori</a>\
+      <a href="#">4.2</a>\
+      <a href="#">4.3</a>\
+    </div>\
 <a href="prijava.html">Odjava</a>\
     </div>\
 ');
