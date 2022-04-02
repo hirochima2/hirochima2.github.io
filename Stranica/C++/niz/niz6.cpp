@@ -5,9 +5,9 @@ int main(){
     double max_temperature[BrojDana], min_temperature[BrojDana];
     for(int dan = 0; dan < BrojDana; dan++){
         do{
-            cout << "Unesite minimalnu temperaturu u toku " << dan + 1 << "dana: ";
+            cout << "Unesite minimalnu temperaturu u toku " << dan + 1 << ". dana: ";
             cin >> min_temperature[dan];
-            cout << "Unesite maksimalnu temperaturu u toku " << dan + 1 <<"dana: ";
+            cout << "Unesite maksimalnu temperaturu u toku " << dan + 1 <<". dana: ";
             cin >> max_temperature[dan];
             if(min_temperature[dan] > max_temperature[dan]){
                 cout << "Neispravan unos!" << endl;
