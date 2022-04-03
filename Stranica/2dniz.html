@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Dvodimenzionalni nizovi</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Dvodimenzionalni nizovi</header>
+            <p>
+                Pored jednodimenzionalnih nizova koje smo do sada opisivali, postoje i višedimenzionalni nizovi, čijim se elementima pristupa sa više indeksa. Dvodimenzionalni nizovi se obično nazivaju matrice. Na primjer, neka imamo sljedeću deklaraciju:
+                <pre class="line-numbers"><code class="language-cpp">int matrica[5][3];</code></pre>
+            </p>
+            <p>
+                Ovim je definirana promjenljiva “matrica” koja predstavlja dvodimenzionalni niz (matricu) formata 5 x 3, odnosno matricu sa 5 redova i 3 kolone. Elementima matrice “matrica” pristupa se preko dva indeksa, npr. izrazom poput “matrica[2][3]”. Na sličan način se deklariraju i koriste nizovi sa više od dvije dimenzije.
+            </p>
+            <p>
+                Primjer upotrebe dvodimenzionalnog niza (program printa brojeve od 0 do 8 koji su pohranjeni u matrici 3x3): 
+                <pre data-src="C++/niz/niz7.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    int tabela[3][3]; // Tabela dimenzije 3x3
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            tabela[i][j] = i * 3 + j;
+        }
+    }
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++) cout << tabela[i][j] << " ";
+        cout << endl;
+    }
+    return 0;
+} </pre></code>
+            </p>
+            <p>
+                Nakon izvršenja ovog koda, mogući scenario je: 
+                <pre><code class="language-plain">0 1 2
+3 4 5
+6 7 8</code></pre>
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+            </section>
+        </div>
+</body>
+</html>

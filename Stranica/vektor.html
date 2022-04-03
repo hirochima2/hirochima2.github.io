@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Vektori</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Vektori</header>
+            <p>
+                Iz dosadašnjih izlaganja može se vidjeti da nizovi, bez obzira na svoju korisnost i fleksibilnost, posjeduju neke primjetne nedostatke. Svi ovi nedostaci su uglavnom posljedica činjenice da je rad sa nizovima naslijeđen iz jezika C, koji je jezik nižeg nivoa od jezika C++ (u smislu da mu je filozofija razmišljanja više orijentirana ka načinu rada samog računara). Zbog toga, rad sa klasičnim nizovima, u izvjesnom smislu nije “u duhu” jezika C++. Da bi se ovi problemi izbjegli, u standard ISO C++98 je uveden novi tip podataka, nazvan “vector”, definiran u istoimenoj biblioteci (za korištenje ovog tipa podataka moramo uključiti u program zaglavlje biblioteke “vector”). Ovaj tip podataka (zovimo ga prosto vektor) zadržava većinu svojstava koji posjeduju standardni nizovi, ali ispravlja neke njihove nedostatke. Promjenljive tipa “vector” deklariraju se na sljedeći način:
+                <pre class="line-numbers"><code class="language-cpp">vector&lt;tip_elemenata&gt; ime_promjenljive(broj_elemenata);</code></pre>
+                Na primjer: 
+                <pre class="line-numbers"><code class="language-cpp">vector&lt;double&gt; padavine(12);</code></pre>
+            </p>
+            <p>
+                Primijetimo da “vector” nije ključna riječ, s obzirom da tip vektor nije tip ugrađen u sam jezik C++, već korisnički definirani tip (slično kao i npr. tip “complex”), definiran u istoimenoj biblioteci “vector”. Ovako deklarirane promjenljive mogu se u gotovo svim slučajevima koristiti poput običnih nizovnih promjenljivih (za pristup individualnim elementima vektora, kao i kod običnih nizova, koriste se uglaste zagrade). S druge strane, rad sa ovakvim promjenljivim je fleksibilniji nego sa običnim nizovima, iako postoje i neki njihovi nedostaci u odnosu na klasične nizove. Najbitnije razlike između običnih nizovnih promjenljivih i promjenljivih tipa “vector” ogledaju se u sljedećim karakteristikama:
+                <ul>
+                    <li>Broj elemenata pri deklaraciji vektora navodi se u običnim, a ne u uglastim zagradama, čime je istaknuta razlika između zadavanja broja elemenata i navođenja indeksa za pristup elementima (u kasnijim poglavljima ćemo vidjeti da bismo upotrebom uglastih zagrada pri deklaraciji vektora zapravo deklarirali niz čiji su elementi vektori, što nije ono što u ovom slučaju želimo). Pored toga, broj elemenata može biti proizvoljan izraz, a ne samo konstantna vrijednost ili konstantan izraz. Drugim riječima, broj elemenata vektora ne mora biti apriori poznat.</li>
+                    <li>Elementi vektora se automatski inicijaliziraju na nulu, za razliku od običnih nizova, kod kojih elementi imaju nedefinirane vrijednosti, ukoliko se eksplicitno ne navede inicijalizaciona lista. S druge strane, kod vektora nije moguće zadati inicijalizacionu listu (mada postoje neki drugi načini za inicijalizaciju vektora, o kojima na ovom mjestu nećemo govoriti).</li>
+                    <li>
+                        Postoji mogućnost naknadnog mijenjanja broja elemenata u vektoru primjenom operacije “resize”. Na primjer, ukoliko se u toku rada programa utvrdi da vektor “padavine” treba da sadrži 18 elemenata umjesto 12, moguće je izvršiti naredbu
+                        <pre class="line-numbers"><code class="language-cpp">padavine.resize(18);</code></pre>
+                        nakon koje će broj elemenata vektora "padavine" biti povećan sa 12 na 18. Postojeći elementi zadržavaju svoje vrijednosti.
+                    </li>
+                    <li>
+                        Imena promjenljivih tipa vektor upotrijebljena sama za sebe (tj. bez indeksa) ne konvertiraju se automatski u pokazivače, kao što je to slučaj kod običnih nizova. Mada nekome to može djelovati kao prednost a ne mana vektora u odnosu na obične nizove, to kao posljedicu ima činjenicu da se tzv. pokazivačka aritmetika, koju ćemo upoznati u kasnijim poglavljima, ne može neposredno primjenjivati na vektore.
+                    </li>
+                    <li>
+                        Promjenljive tipa vektor mogu se dodjeljivati jedna drugoj pomoću operatora “=” (pri čemu se kopiraju svi elementi, odnosno vektor kao cjelina), kao i testirati na jednakost odnosno različitost pomoću operatora “==” i “!=” što, kao što smo već vidjeli, nije moguće sa običnim nizovima.
+                    </li>
+                    <li>
+                        Pomoću operacije “push_back” moguće je jednostavno dodavati nove elemente na kraj vektora, pri čemu se broj elemenata vektora pri takvom dodavanju povećava za jedan. Na primjer, naredba
+                        <pre class="line-numbers"><code class="language-cpp">padavine.push_back(27.3);</code></pre>
+                        povećava broj elemenata vektora “padavine” za 1, i novododanom elementu (koji se nalazi na kraju vektora) dodjeljuje vrijednost “27.3”. Sasvim je moguće deklarirati prazan vektor, odnosno vektor koji ne sadrži niti jedan element (u tom slučaju, u deklaraciji vektora, broj elemenata vektora zajedno sa pripadnim zagradama se izostavlja), a zatim operacijom “push_back” dodati onoliko elemenata u vektor koliko nam je potrebno. Ova strategija je naročito praktična u slučaju kada ne znamo unaprijed koliko će vektor imati elemenata (npr. kada elemente vektora unosimo sa tastature, pri čemu se unos vrši sve dok na neki način ne signaliziramo da smo završili sa unosom).
+                    </li>
+                    <li>
+                        Postoje operacije, koje nećemo ovdje opisivati, pomoću kojih je moguće ubaciti novi element u vektor (između dva postojeća elementa) ili ukloniti element iz vektora, bez potrebe za korištenjem “for” petlje.
+                    </li>
+                    <li>
+                        Prilikom prenošenja običnih nizova kao parametara u funkcije, o čemu ćemo govoriti u kasnijim poglavljima, gotovo uvijek je potrebno prenijeti broj elemenata niza kao poseban parametar. Ovo nije potrebno pri prenosu vektora kao parametara u funkcije. Također, funkcija kao svoj rezultat ne može vratiti običan niz, ali može vektor (o čemu ćemo također govoriti kasnije).
+                    </li>
+                    <li>
+                        Operator “sizeof” primijenjen na promjenljive tipa vektor daje rezultat koji nije u skladu sa intuicijom. Zbog toga, trik za određivanje broja elemenata niza zasnovan na primjeni ovog operatora ne daje ispravan rezultat ukoliko se primijeni na promjenljive tipa vektor. Umjesto toga, za određivanje broja elemenata vektora treba koristiti operaciju “size”. Na primjer:
+                        <pre class="line-numbers"><code class="language-cpp">cout << "Vektor \"padavine\" ima " << padavine.size() << " elemenata.";</code></pre>
+                        </li>
+                        </ul>
+                        <p>
+                        Kao ilustraciju dopunskih mogućnosti tipa “vector” u odnosu na obične nizove, navedimo ponovo program koji obrađuje rezultate ispita, ali koji koristi promjenljive tipa “vector” umjesto običnih nizova. U ovom slučaju nemamo ograničenje na maksimalan broj kandidata, s obzirom da broj elemenata vektora možemo zadati na osnovu podatka o broju kandidata unesenom sa tastature:
+                        <pre data-src="C++/niz/niz8.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+#include &lt;vector&gt;
+using namespace std;
+int main(){
+    const int PragZaProlaz(55);
+    int broj_kandidata;
+    cout << "Koliko kandidata je pristupilo ispitu? ";
+    cin >> broj_kandidata;
+    vector&lt;int&gt; poeni(broj_kandidata);
+    for(int i = 0; i < broj_kandidata; i++) {
+        cout << "Unesi broj poena za " << i + 1 << "kandidata: ";
+        cin >> poeni[i];
+    }
+    cout << endl << "Kandidat   Status" << endl;
+    for(int i = 0; i < broj_kandidata; i++){
+        cout << setw(7) << i + 1 << ".";
+        if(poeni[i] >= PragZaProlaz) cout << "POLOZIO" << endl;
+        else cout << "PAO" << endl;
+    }
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Također, činjenica da možemo deklarirati prazan vektor, a zatim operacijom “push_back” dodavati nove elemente na njegov kraj, često olakšava izvođenje mnogih operacija. Na primjer, program koji ispisuje unijetu rečenicu naopako postaje mnogo jednostavniji i fleksibilniji ukoliko umjesto običnih nizova koristimo vektor (čiji su elementi tipa “char”):
+                 <pre data-src="C++/niz/niz9.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+int main(){
+    char znak;
+    vector&lt;char&gt; recenica;
+    cout << "Unesi recenicu: ";
+    while((znak = cin.get()) != '\n') recenica.push_back(znak);
+    cout << "Recenica izgovorena naopako glasi: ";
+    for(int i = recenica.size() - 1; i >= 0; i--) cout << recenica[i];
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Zbog njihovih očiglednih prednosti, danas se savjetuje upotreba vektora umjesto običnih nizova. Osnovni razlog zbog kojeg ćemo mi u nastavku ipak pretežno koristiti obične nizove leži u činjenici da obični nizovi predstavljaju fundamentalni tip koji čini srž samog jezika C++, dok su vektori izvedeni tip koji je napravljen koristeći fundamentalne tipove jezika C++. Kako je nama, između ostalog, cilj i da naučimo praviti vlastite korisnički definirane tipove, to nije moguće ukoliko se prethodno temeljito ne upoznamo sa fundamentalnim tipovima podataka (u koje spadaju nizovi) i ukoliko se ne naviknemo na njihove osobine (sviđale nam se one ili ne), jer oni predstavljaju temelj na kojem se kasnije grade izvedeni korisnički definirani tipovi podataka.
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+            </section>
+        </div>
+</body>
+</html>

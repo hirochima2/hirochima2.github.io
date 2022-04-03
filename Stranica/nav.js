@@ -54,10 +54,19 @@ document.write('<div>\
     <i class="fa fa-caret-down"></i>\
     </button>\
     <div class="dropdown-container">\
-      <a href="niz.html">4. Obični nizovi</a>\
-      <a href="vektor.html">4.1 Vektori</a>\
-      <a href="#">4.2</a>\
-      <a href="#">4.3</a>\
+    <button href="#prvi_dio" class="dropdown-btn">Statički nizovi\
+    <i class="fa fa-caret-down"></i>\
+    </button>\
+    <div class="dropdown-container">\
+    <a href="niz.html">4. 1D nizovi</a>\
+    <a href="2dniz.html">4.1 2D nizovi</a>\
+    </div>\
+    <button href="#prvi_dio" class="dropdown-btn">Dinamični nizovi\
+    <i class="fa fa-caret-down"></i>\
+    </button>\
+    <div class="dropdown-container">\
+    <a href="vektor.html">4.2 Vektori</a>\
+    </div>\
     </div>\
 <a href="prijava.html">Odjava</a>\
     </div>\
