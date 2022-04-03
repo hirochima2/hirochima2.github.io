@@ -1,5 +1,6 @@
 document.write(
     '<link rel="stylesheet" type="text/css" href="prism.css">\
+    <link rel="icon" type="image/x-icon" href="favicon.png">\
     <script src="prism.js"></script>\
     <script src="navbar.js"></script>\
     <script src="preuzimanje.js"></script>\
