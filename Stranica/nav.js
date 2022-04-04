@@ -68,6 +68,16 @@ document.write('<div>\
     <a href="vektor.html">4.2 Vektori</a>\
     </div>\
     </div>\
+    <button href="#prvi_dio" class="dropdown-btn">Funkcije\
+    <i class="fa fa-caret-down"></i>\
+    </button>\
+    <div class="dropdown-container">\
+      <a href="void.html">5. Osnovne funkcije (VOID)</a>\
+      <a href="#">5.1 Prenos parametara u funkcije</a>\
+      <a href="#">5.2 Funkcije koje vraćaju vrijednost</a>\
+      <a href="#">5.3 Reference i prenos parametara po referenci</a>\
+      <a href="#">5.4 Reference i prenos parametara po referenci</a>\
+</div>\
 <a href="prijava.html">Odjava</a>\
     </div>\
 ');

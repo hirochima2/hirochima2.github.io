@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>VOID</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Osnovne funkcije (VOID)</header>
+            <p>
+                Potprogrami (engl. subroutines) predstavljaju samostalne dijelove kôda (programa) koji izvršavaju određeni zadatak. Svrha potprograma je da poboljšaju strukturu programa tako da oni budu modularni, tj. da budu načinjeni od manjih jedinica koje su neovisne jedna od druge koliko god je to moguće. Modularni programi su jednostavniji kako za pisanje, tako i za čitanje, razumijevanje i vršenje naknadnih izmjena. Veoma često se dobro napisan potprogram koji je definiran i korišten u jednom programu može upotrijebiti bez ikakve izmjene u drugom programu, što štedi vrijeme i trud, i omogućava ponovnu iskoristivost napisanog kôda (engl. code reusability).
+            </p>
+            <p>
+                Mnogi programski jezici (poput Pascala) poznaju dvije vrste potprograma: procedure i funkcije. U jeziku C++ javlja se samo jedna vrsta potprograma, i to su funkcije, mada se njihova suština često razlikuje od matematskog pojma funkcije. Zbog toga ćemo u ovom tekstu, dok se detaljnije ne upoznamo sa pojmom funkcije u jeziku C++ radije upotrebljavati izraz potprogram, jer je manje zbunjujući za početnike. Ovdje treba napomenuti da pojmovi “potprogram” i “funkcija” nisu sinonimi. Naime, “potprogram” je konceptualni pojam nevezan za konkretan programski jezik, dok je “funkcija” jedan od konkretnih načina realizacije ovog koncepta (ujedno i jedini način realizacije ovog koncepta u jeziku C++).
+            </p>
+            <p>
+                Svakom potprogramu (funkciji) uvijek se daje ime (koje može biti bilo koji valjani identifikator koji nije iskorišten za nešto drugo), za koje je preporučljivo da bude vezano sa zadatkom koji potprogram obavlja. Pozivanje potprograma vrši se prostim navođenjem imena potprograma iza koje slijedi par malih zagrada (kasnije ćemo vidjeti da ovaj par zagrada zapravo formira operator poziva funkcije), čime se daje nalog potprogramu da obavi svoj zadatak (što se zapravo svodi na izvršavanje naredbi u tijelu potprograma). Ovo će biti ilustrirano na jednostavnom primjeru programa u kojem je definiran jedan potprogram, nazvan “PredstaviSe”:
+                <pre data-src="C++/funkcije/funkcije1.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+void PredstaviSe(){
+    cout << "Ja sam PC racunar." << endl;
+    cout << "Star sam 3 godine." << endl;
+}
+int main(){                                     // Glavni program (glavna funkcija)
+    cout << "Dobro jutro!" << endl;
+    PredstaviSe();
+    cout << "Zelim vam lijep dan." << endl;
+    return 0;
+}</pre></code>
+            Kada pokrenemo ovaj program, dobićemo sljedeći ispis na ekranu: 
+            <pre><code class="language-plain">Dobro jutro!
+Ja sam PC racunar!
+Star sam 3 godine.
+Zelim vam lijep dan.</code></pre>
+            </p>
+            <p>
+                Primijetimo da potprogram “PredstaviSe” ima istu formu kao i funkcija “main”, samo što je tip povratne vrijednosti (povratni tip) “int” zamijenjen tipom “void”, što u suštini znači da povratne vrijednosti zapravo nema (riječ “void” znači ništavilo). Iz istog razloga, potprogram ne sadrži naredbu “return” (ovakvi potprogrami zapravo odgovaraju pojmu procedura u programskim jezicima kao što je Pascal). O potprogramima koji imaju povratnu vrijednost govorićemo u kasnijim poglavljima. Što se tiče imena potprograma, preporuka je da se za njihova imena koriste glagolske forme u imperativu (npr. “PredstaviSe”) a ne imenice (npr. “Predstavljanje”), sa velikim početnim slovom.
+            </p>
+            <p>
+                Kao što je već rečeno na samom početku, kada se program pokrene, izvršavanje uvijek započinje od funkcije nazvane “main”, bez obzira gdje se ona nalazi unutar programa. Njeno tijelo je “glavni program”, dok su sve ostale funkcije potprogrami. Potprogrami se izvršavaju onog trenutka kada se eksplicitno pozovu. Osim u slučaju nekim veoma specifičnim situacijama, tijelo potprograma se nikada neće izvršiti prije nego što se potprogram eksplicitno pozove. Poziv potprograma se vrši navođenjem njegovog imena iza kojeg slijede zagrade, unutar kojih se navode argumenti (ili parametri) potprograma ukoliko postoje. Dok ne vidimo šta su argumenti i kako se koriste, naši potprogrami ih neće imati, tako da zagrade ostavljamo prazne. Nakon što se izvrši čitavo tijelo potprograma, izvršavanje programa se nastavlja od sljedeće naredbe iza mjesta gdje je potprogram pozvan. Pri tome je sasvim moguće isti potprogram pozvati sa više različitih mjesta. Tijelo potprograma će se propisno izvršiti svaki put kada se potprogram pozove. Strogo rečeno, i funkciju “main” možemo shvatiti kao potprogram, ali koji se poziva iz samog operativnog sistema onog trenutka kada se pokrene program.
+            </p>
+            <p>
+                Potprogram može imati i svoje vlastite promjenljive (uskoro ćemo vidjeti da su promjenljive u različitim potprogramima potpuno neovisne međusobno, čak i ukoliko imaju ista imena). Na primjer, ovdje je dat jednostavan potprogram koji čita dva broja i ispisuje njihov zbir:
+                <pre class="line-numbers"><code class="language-cpp">void SaberiUlaze() {
+int prvi, drugi;
+cin >> prvi >> drugi;
+cout << prvi + drugi;
+}</code></pre>
+            </p>
+            <p>
+                Za poziv ovog potprograma, koristimo naredbu koja se sastoji samo od imena potprograma i zagrada:
+                <pre class="line-numbers"><code class="language-cpp">SaberiUlaze();</code></pre>
+                Ova naredba će uzrokovati da se kod sadržan u potprogramu izvrši.
+            </p>
+            <p>
+                Može se postaviti pitanje kakva je korist od potprograma. Na prvom mjestu, oni nam omogućavaju da složenije programe iscjepkamo na manje neovisne dijelove koje je lakše pratiti i održavati. Dalje, potprogram se može u programu pozvati proizvoljan broj puta. Pretpostavimo, na primjer, da želimo da nam program ispiše tekst neke pjesme koja ima tri strofe, i refren nakon svake strofe. Bez pomoći potprograma, mi bismo tekst refrena morali ispisivati tri puta, nakon svake strofe. Uz pomoć potprograma, mogli bismo napisati program koji bi principijelno izgledao ovako:
+                <pre data-src="C++/funkcije/funkcije2.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+void IspisiPrvuStrofu(){
+    cout << "Tekst prve strofe... " << endl;
+}
+void IspisiDruguStrofu(){
+    cout << "Tekst druge strofe..." << endl;
+}
+void IspisiTrecuStrofu(){
+    cout << "Tekst trece strofe..." << endl;
+}
+void IspisiRefren(){
+    cout << "Tekst refrena..." << endl;
+}
+int main(){
+    IspisiPrvuStrofu();
+    IspisiRefren();
+    cout << endl;
+    IspisiDruguStrofu();
+    IspisiRefren();
+    cout << endl;
+    IspisiTrecuStrofu();
+    IspisiRefren();
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Primijetimo da poredak u kojem se potprogrami definiraju nije bitan. Naime, rezultat izvršavanja programa zavisi od redoslijeda kojim se potprogrami pozivaju, a ne od redoslijeda u kojem su definirani, što je vidljivo i iz navedenog primjera.
+            </p>
+            <p>
+                Već smo ranije govorili da je vrijeme života promjenljivih koje su definirane unutar nekog bloka ograničeno do završetka bloka u kojem su definirane (osim ukoliko se neka promjenljiva specijalno ne proglasi za statičku promjenljivu, o čemu ćemo govoriti malo kasnije). To, naravno, vrijedi i za blok koji predstavlja tijelo potprograma. Pored toga, promjenljivim definiranim unutar bloka nije ograničeno samo vrijeme života, već i vidljivost. Naime, ostatak programa koji se ne nalazi unutar istog bloka uopće ne zna za njihovo postojanje! Kaže se da su promjenljive definirane unutar nekog bloka lokalne: za njihovo postojanje se praktički ne zna izvan tog bloka. Dio programa u kojem je neko ime promjenljive ili bilo koji drugi identifikator dostupno naziva se vidokrug, doseg ili opseg vidljivosti (engl. scope) identifikatora.
+            </p>
+            <p>
+                Vidokrug promjenljivih ilustriraćemo na konkretnim primjerima. U sljedećem programu upotrebljen je potprogram nazvan “IspisiPozdrav” koji ne radi ništa posebno, osim što četiri puta ispisuje riječ “Pozdrav!” na ekran:
+                <pre data-src="C++/funkcije/funkcije3.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+void IspisiPozdrav(){
+    for(int i = 1; i <= 4; i++) cout << "Pozdrav!" << endl;
+}
+int main(){
+    int i = 10;
+    cout << i << endl;
+    IspisiPozdrav();
+    cout << i << endl;
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                <pre><code class="language-plain">10
+Pozdrav!
+Pozdrav!
+Pozdrav!
+Pozdrav!
+10</code></pre>
+            </p>
+            <p>
+                U ovom primjeru, potprogram “IspisiPozdrav” i glavna funkcija “main” koriste promjenljivu nazvanu “i”. Međutim, promjenljiva “i” definirana unutar potprograma “pozdrav” i promjenljiva “i” definirana unutar glavne funkcije “main” predstavljaju dvije potpuno različite promjenljive, bez obzira što imaju isto ime. Da bismo se uvjerili u to, ubacili smo dvije naredbe za ispis promjenljive “i” prije i nakon poziva potprograma “IspisiPozdrav”. Vidimo da iako je potprogram “IspisiPozdrav” koristio i mijenjao promjenljivu “i”, vrijednost promjenljive “i” iz glavne funkcije “main” je ostala kakva je bila i prije poziva potprograma “IspisiPozdrav”. Ovo je sasvim prirodno, jer su to dvije posve različite promjenljive, sa različitim vidokruzima. Vidokrug prve promjenljive “i” je tijelo potprograma “IspisiPozdrav”, dok je vidokrug druge promjenljive “i” tijelo glavnog programa (“main” funkcije). Na ovaj način je omogućeno da više različitih ljudi pišu razne potprograme istog programa neovisno jedan od drugog, tj. bez potrebe da znaju koje će promjenljive koristiti ostali potprogrami. Dvije promjenljive istog imena u dva različita potprograma “neće smetati” jedna drugoj.
+            </p>
+            <p>
+                Da je vidokrug promjenljivih ograničen samo na blok unutar kojeg su definirane, vidljivo je iz sljedećeg primjera:
+                <pre class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+void Potprogram(){
+    int i = 5;
+}
+int main(){
+    Potprogram();
+    cout << i;
+    return 0;
+}</code></pre>
+Ovaj program se neće izvršiti, jer će kompajler prijaviti grešku unutar funkcije “main”, s obzirom da vidokrug u kojem se promjenljiva “i” može koristiti prestaje završetkom tijela potprograma “Potprogram”. Također, vrijednosti promjenljivih se ne prenose automatski u potprogram prilikom poziva potprograma.
+            </p>
+            <p>
+                Pored lokalnih promjenljivih postoje i globalne promjenljive. To su promjenljive koje su deklarirane izvan svih blokova. Njihov je vidokrug čitav program počev od mjesta na kojem su definirane pa sve do kraja programa. Također, njihovo vrijeme života je od početka do kraja programa. Na primjer, u sljedećem programu, promjenljiva “i” je globalna promjenljiva:
+                 <pre data-src="C++/funkcije/funkcije4.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int i;
+
+void IspisiPozdrav(){
+    for(int i = 1; i <= 4; i++) cout << "Pozdrav!" << endl;
+}
+int main(){
+    int i = 10;
+    cout << i << endl;
+    IspisiPozdrav();
+    cout << i << endl;
+    return 0;
+}</pre></code>
+                Ovdje je promjenljiva “i” zajednička i za potprogram “IspisiPozdrav” i za funkciju “main”, u šta se možemo uvjeriti ako prikažemo rezultate izvršavanja ovog programa:
+                <pre><code class="language-plain">10
+Pozdrav!
+Pozdrav!
+Pozdrav!
+Pozdrav!
+5</code></pre>
+            </p>
+            <p>
+                Vidimo da promjenljiva “i” nije ostala sačuvana nakon poziva potprograma “IspisiPozdrav”. Zbog toga, upotrebu globalnih promjenljivih treba izbjegavati kada god je to moguće, jer njihova upotreba često dovodi do neželjenih tzv. bočnih efekata (engl. side effects). Mada smo pojam bočnog efekta već susreli u drugom kontekstu, ovdje pod bočnim efektima podrazumijevamo pojavu da poziv nekog potprograma izazove posljedice koje nisu očigledne iz načina kako je potprogram pozvan. Na primjer, prostim posmatranjem poziva potprograma “IspisiPozdrav” nije moguće zaključiti da će on izmijeniti vrijednost promjenljive “i”. U dugačkim programima ovakvi bočni efekti se često previde, što dovodi do programa koji ne rade onako kako korisnik očekuje. U sljedećem poglavlju ćemo vidjeti da se upotreba globalnih promjenljivih gotovo uvijek može potpuno izbjeći upotrebom parametara odnosno argumenata funkcija. Generalno, kao globalne promjenljive treba definirati samo one strukture podataka koje zajednički i planski treba da koristi više potprograma u istom programu, i to samo ako je upotreba argumenata za njihov prenos nepraktična.
+            </p>
+            <p>
+                Slijedi još jedan primjer koji demonstrira razliku između lokalnih i globalnih promjenljivih. U ovom programu, globalne promjenljive “a”, “b” i “c” mogu se koristiti unutar tijela potprograma “P1” i “P2”, ali lokalna promjenljiva “d”, na primjer, ne može se koristiti unutar tijela potprograma “P2”, ili unutar glavnog programa. Krajnji rezultat ovog programa je ispis brojeva 2, 3 i 2:
+                <pre data-src="C++/funkcije/funkcije5.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+int a, b, c;
+
+void P1(){
+    int d, e;
+    d = a + 1;
+    e = c;
+    cout << d << " ";               // Vidokrug od "d" i "e"
+    cout << e << " ";
+}
+
+void P2(){
+    int f;
+    f = b;                         // Vidokrug od "f"
+    cout << f << " ";
+}
+int main(){
+    a = 1;                        // Glavni program
+    b = 2;
+    c = 3;
+    P1();
+    P2();
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Ako u programu postoje i globalna i lokalna promjenljiva istog imena, lokalna promjenljiva ima prioritet u pristupu unutar svog vidokruga. Kažemo da je globalna promjenljiva skrivena (engl. hidden) istoimenom lokalnom promjenljivom.
+            </p>
+            <p>
+                Globalne promjenljive, poput svih ostalih promjenljivih, mogu se inicijalizirati odmah prilikom njihovog definiranja. Pri tome se njihova inicijalizacija obavlja prije nego što se glavni program uopće počne izvršavati (drugim riječima, garantira se da će u trenutku kada se počne izvršavati prva naredba unutar tijela funkcije “main”, sve globalne promjenljive već biti inicijalizirane). Za razliku od lokalnih promjenljivih, sve globalne promjenljive koje nisu eksplicitno inicijalizirane automatski se inicijaliziraju na vrijednost 0. Drugim riječima, garantira se da će u trenutku kada program započne, sve globalne promjenljive kojima nije eksplicitno zadana početna vrijednost, imati vrijednost nula.
+            </p>
+            <p>
+                Potprogrami podržavaju tehniku razvoja programa koja se obično naziva razvoj programa odozgo na dolje (engl. top-down approach). Naime, prilikom razvoja većih programa, programer obično ne može odmah uočiti sve neophodne aspekte programa. Zbog toga se programi obično razvijaju u etapama. U prvoj etapi skicira se grubo struktura programa. U drugoj etapi razrađuje se detaljnije svaki od koraka opisan u prvoj etapi. U svakoj narednoj etapi razrađuju se oni koraci koji su u prethodnoj etapi ostali nedovoljno razrađeni, itd. Postupak se ponavlja sve dok svaki od koraka ne bude razrađen dovoljno detaljno da se neposredno može prevesti u odgovarajuće instrukcije programskog jezika. Pri tome, potprogrami mogu učiniti razvoj programa po etapama lakšim, jer se svaki od koraka može implementirati neovisno jedan od drugog.
+            </p>
+            <p>
+                Opisani pristup ilustriraćemo na jednom relativno jednostavnom primjeru. Pretpostavimo da želimo napraviti program koji štampa lik šahovske table, koristeći praznine i zvjezdice, kao na sljedećoj slici, pri čemu se željena visina i širina svakog kvadrata može zadavati:
+                <pre data-src="C++/funkcije/funkcije6.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int sirina_polja;                       // Sirina kvadratnog polja
+int visina_polja;                       // Visina kvadratnog polja
+
+void StampajRazmake(){
+    for(int i = 1; i <= sirina_polja; i++) cout << " ";
+}
+void StampajZvjezdice(){
+    for(int i = 1; i <= sirina_polja; i++) cout << "*";
+}
+void StampajLinijuNeparnogReda(){
+    for(int i = 1; i <= 4; i++) {
+        StampajRazmake();
+        StampajZvjezdice();
+    }
+    cout << endl;
+}
+void StampajLinijuParnogReda(){
+    for(int i = 1; i <= 4; i++){
+        StampajZvjezdice();
+        StampajRazmake();
+    }
+}
+void StampajNeparniRed(){
+    for(int i = 1; i <= visina_polja; i++) StampajLinijuNeparnogReda();
+}
+void StampajParniRed(){
+    for(int i = 1; i <= visina_polja; i++) StampajLinijuParnogReda();
+}
+void StampajTablu(){
+    for(int i = 1; i <= 4; i++){
+        StampajNeparniRed();
+        StampajParniRed();
+    }
+}
+int main(){
+    cout << "Ovaj program prikazuje sahovsku tablu." << endl << endl;
+    cout << "Unesite sirinu svakog kvadrata, u znakovima: ";
+    cin >> sirina_polja;
+    cout << "Unesite visinu svakog kvadrata u linijama: ";
+    cin >> visina_polja;
+    cout << endl << endl;
+    StampajTablu();
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Pokušajte pokrenuti ovaj program sami!
+                Ovako izgleda pokretanje tog programa: 
+                <pre><code class="language-plain">Unesite sirinu svakog kvadrata, u znakovima: 4
+Unesite visinu svakog kvadrata, u linijama: 4
+
+
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+****    ****    ****    ****    
+****    ****    ****    ****    
+****    ****    ****    ****    
+****    ****    ****    ****    
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+****    ****    ****    ****    
+****    ****    ****    ****    
+****    ****    ****    ****    
+****    ****    ****    ****    
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+****    ****    ****    ****    
+****    ****    ****    ****    
+****    ****    ****    ****    
+****    ****    ****    ****    
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+    ****    ****    ****    ****
+****    ****    ****    ****    
+****    ****    ****    ****    
+****    ****    ****    ****    
+****    ****    ****    ****</code></pre>
+            </p>
+            <p>
+                Klasične lokalne promjenljive nazivaju se i automatske promjenljive, s obzirom da se one automatski kreiraju (i eventualno inicijaliziraju) svaki put kada tok programa dovede do njihove deklaracije, i automatski uništavaju svaki put kada tok programa dovede do kraja bloka unutar kojeg su definirane.
+            </p>
+            <p>
+                Pored automatskih lokalnih promjenljivih, postoje i tzv. statičke lokalne promjenljive. Sa aspekta vidljivosti, ove promjenljive se ponašaju poput običnih lokalnih promjenljivih, odnosno dostupne su samo unutar bloka unutar kojeg su definirane. Međutim, sa aspekta vremena života, ove promjenljive ponašaju se poput globalnih promjenljivih. Naime, njihov život ne prestaje po završetku bloka unutar kojeg su definirane, već traje do kraja programa. Ove promjenljive se stvaraju i inicijaliziraju onog trenutka kada tok programa prvi put dovede do njihove deklaracije, i samo tada. Da bismo bolje uvidjeli razliku između automatskih i statičkih promjenljivih, razmotrimo sljedeći program:
+                <pre data-src="C++/funkcije/funkcije7.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+void P(){
+    int a = 5;
+    cout << a;
+    a++;
+    cout << a;
+}
+int main(){
+    P();
+    P();
+    P();
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Nije teško uvidjeti da je efekat ovog programa ispis “565656”, s obzirom da se lokalna promjenljiva “a” iznova stvara i inicijalizira svaki put kada započne izvršavanje potprograma “P” (izazvano njegovim pozivom), i uništava po njegovom završetku. Međutim, situacija postaje posve drugačija proglasimo li lokalnu promjenljivu “a” statičkom, što se postiže dodavanjem ključne riječi “static” ispred njene deklaracije (slično, ključna riječ “auto” ispred deklaracije označava automatsku promjenljivu, ali se ova ključna riječ praktično nikad ne koristi, s obzirom da se podrazumijeva u slučaju da se ne navede ključna riječ “static”)
+            </p>
+            <p>
+                Statičke promjenljive se ne koriste osobito često, i služe uglavnom kada je potrebno da neka informacija “preživi” kraj potprograma i bude dostupna pri njegovom ponovnom pozivu. Na primjer, neka je potrebno napraviti potprogram “IspisiBrojPoziva” koji ispisuje koliko je puta pozvan. Jedna mogućnost je da definiramo neku globalnu promjenljivu, s obzirom da ona postoji neovisno od potprograma (tako da može “preživjeti” njegov završetak), kao u sljedećem primjeru:
+                <pre data-src="C++/funkcije/funkcije8.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int broj_poziva(1);
+
+void IspisiBrojPoziva(){
+    cout << "Ovo je " << broj_poziva << ". poziv" << endl;
+    broj_poziva++;
+}
+int main(){
+    for(int i = 1; i <= 5; i++) IspisiBrojPoziva();
+    IspisiBrojPoziva();
+    return 0;
+}</pre></code>
+            Pokretanjem ovog programa dobijamo sljedeći ispis:
+            <pre><code class="language-plain">Ovo je 1. poziv
+Ovo je 2. poziv
+Ovo je 3. poziv
+Ovo je 4. poziv
+Ovo je 5. poziv
+Ovo je 6. poziv</code></pre>
+            </p>
+            <p>
+                Naime, potprogram “IspisiBrojPoziva” je zaista pozvan 6 puta (pet puta iz “for” petlje, i šesti put nakon nje). Mana ovog rješenja je u tome što promjenljiva “broj_poziva” koja je iskorištena za brojanje poziva ima vidokrug koji se proteže na čitav program, mada je njeno funkcioniranje neophodno samo unutar potprograma “IspisiBrojPoziva”. To ostavlja mogućnost da njena vrijednost bude nehotično promijenjena negdje izvan potprograma (npr. negdje unutar funkcije “main”), čime će biti narušen ispravan rad ovog potpograma. Također, nije dobro što je promjenljiva “broj_poziva”, koja je od vitalnog značaja za rad potprograma “IspisiBrojPoziva”, definirana izvan njega, odnosno ne predstavlja njegov sastavni dio, čime potprogram gubi na samostalnosti i neovisnosti od ostatka programa (što je veoma bitan cilj, kao što ćemo uskoro pokazati). Stoga je mnogo bolje suziti vidokrug ove promjenljive tako da obuhvati samo tijelo potprograma “IspisiBrojPoziva”. To možemo uraditi kao u sljedećem rješenju:
+                <pre data-src="C++/funkcije/funkcije9.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+void IspisiBrojPoziva(){
+    static int broj_poziva(1);
+    cout << "Ovo je " << broj_poziva <<". poziv" << endl;
+    broj_poziva++;
+}
+int main(){
+    for(int i = 1; i <= 5; i++) IspisiBrojPoziva();
+    IspisiBrojPoziva();
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Statička promjenljiva je neophodna da bi “preživila” kraj potprograma (u suprotnom bi njena vrijednost pri svakom pozivu bila ponovo inicijalizirana na vrijednost “1”). Dakle, statičke lokalne promjenljive su lokalne samo po vidokrugu, ali su globalne po vremenu života.
+            </p>
+            <p>
+                Na kraju napomenimo da statičke promjenljive posjeduju još jednu osobinu koja ih povezuje sa globalnim promjenljivim. Naime, vrijednosti svih statičkih promjenljivih se, poput globalnih promjenljivih, automatski inicijaliziraju na nulu prilikom njihovog kreiranja, ukoliko eksplicitno nije navedena njihova početna vrijednost.
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+            </section>
+        </div>
+</body>
+</html>
