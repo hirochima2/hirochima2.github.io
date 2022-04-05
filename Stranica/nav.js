@@ -73,7 +73,7 @@ document.write('<div>\
     </button>\
     <div class="dropdown-container">\
       <a href="void.html">5. Osnovne funkcije (VOID)</a>\
-      <a href="#">5.1 Prenos parametara u funkcije</a>\
+      <a href="funvar.html">5.1 Prenos parametara u funkcije</a>\
       <a href="#">5.2 Funkcije koje vraćaju vrijednost</a>\
       <a href="#">5.3 Reference i prenos parametara po referenci</a>\
       <a href="#">5.4 Reference i prenos parametara po referenci</a>\

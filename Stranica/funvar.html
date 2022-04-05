@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Prenos parametara u funkcije</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Prenos parametara u funkcije</header>
+            <p>
+                Upotreba globalnih promjenljivih često može dovesti do grešaka u programima koje se teško otkrivaju, s obzirom da im je vidokrug izuzetno velik, tako da je velika i mogućnost njihove upotrebe na pogrešan način. Također, upotreba globalnih promjenljivih u više različitih potprograma dovodi do stvaranja neprirodne zavisnosti između potprograma, koji ovise od imena dijeljenih globalnih promjenljivih. Međutim, do sada nam je upotreba globalnih promjenljivih bila jedini način da izvršimo razmjenu informacija između više različitih potprograma. Srećom, C++ nudi mnogo praktičniji i sigurniji način razmjene informacija između potprograma zasnovan na tzv. prenosu parametara, koji ne dovodi do stvaranja zavisnosti između pojedinih potprograma.
+            </p>
+            <p>
+                Potrebu za prenosom parametara ilustriraćemo na primjeru sljedećeg programa koji računa i štampa obim i površinu kruga:
+                <pre data-src="C++/funkcije/funkcije10.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+const double PI(3.141592654);
+
+double poluprecnik;
+
+// Stampa obim i povrsinu kruga sa poluprecnikom "poluprecnik"
+void ProracunajKrug(){
+    cout << "Obim: " << 2 * PI * poluprecnik << endl;
+    cout << "Povrsina: " << PI * poluprecnik * poluprecnik << endl;
+}
+int main(){                 // Glavni program
+    cin >> poluprecnik; 
+    ProracunajKrug();
+    return 0;
+}</code></pre>
+            </p>
+            <p>
+                Iako nema nikakve sumnje da ovaj program radi ispravno, u njemu se mogu uočiti i brojni problemi, koji nisu vezani za njegovo funkcioniranje, već za njegovu strukturu i mogućnost prilagođavanja. Na prvom mjestu, komunikacija između glavnog programa i potprograma “ProracunajKrug” ostvarena je preko zajedničke globalne promjenljive “poluprecnik”. Ukoliko se njeno ime promijeni, potprogram će imati grešku, s obzirom da se oslanja na vrijednost nedeklarirane promjenljive. U nekom složenijem okruženju, moglo bi se čak desiti da izmjena imena promjenljive dovede do toga (što je još gore) da program formalno nema sintaksnu grešku, ali da radi pogrešno (to se, na primjer, može desiti ukoliko se u nekom drugom potprogramu neočekivano upotrebi ista promjenljiva, a da te činjenice ovaj potprogram nije svjestan). To nije ono što zaista želimo. Naime, potprogram bi trebao biti neovisna jedinica kôda, neovisna od ostatka programa koliko god je to moguće. Trebali bismo biti veoma pažljivi, i možda bismo morali izmijeniti dio kôda, ukoliko bismo željeli da potprogram “ProracunajKrug” prosto upotrijebimo u nekom drugom programu. Međutim, dobro napisan potprogram ne bi trebao ništa da “zna” o tome šta se nalazi u ostatku programa, niti kako će i gdje će on biti upotrebljen u ostatku programa. Dobro napisan potprogram trebao bi samo da “radi” posao koji mu je povjeren, bez “razmišljanja” o tome kome i zašto je taj posao potreban.
+            </p>
+            <p>
+                Na sličan problem nailazimo i ukoliko želimo proširiti naš program koji ispisuje pozdrav na ekranu, tako da možemo zadati koliko puta želimo da se ispiše riječ “Pozdrav!”. Ovo zadavanje trebamo izvršiti u glavnom programu, koji poziva potprogram “IspisiPozdrav”, prije njegovog poziva. Međutim, potprogram “IspisiPozdrav” mora imati način da sazna ovu vrijednost. Ukoliko se ograničimo samo na ono što smo do sada utvrdili, jedino što možemo uraditi je da iskoristimo globalne promjenljive, kao u sljedećem primjeru:
+                <pre data-src="C++/funkcije/funkcije11.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int broj_ponavljanja;
+
+void IspisiPozdrav(){
+    for(int i = 1; i <= broj_ponavljanja; i++) cout << "Pozdrav" << endl;
+}
+int main(){
+    cout << "Koliko puta zelite pozdrav? ";
+    cin >> broj_ponavljanja;
+    IspisiPozdrav();
+    return 0;
+}</code></pre>
+            </p>
+            <p>
+                Loše strane ovog programa su iste kao u prethodnom primjeru. Rješenje ovih problema nađeno je uvođenjem tehnike prenosa parametara. Pri tome se razlikuje pojam formalnih i stvarnih (ili aktualnih) parametara. Formalni parametri su specijalna vrsta lokalnih promjenljivih koje ne inicijalizira sam potprogram, već njihovom inicijalizacijom upravlja onaj ko poziva potprogram. Za razliku od običnih lokalnih promjenljivih, deklaracija formalnih parametara se navodi unutar zagrada koje se nalaze u zaglavlju potprograma. Inicijalne vrijednosti formalnih parametara zadaju se navođenjem željenih inicijalnih vrijednosti (koje se zovu stvarni parametri) unutar zagrada prilikom poziva potprograma. Slijedi poboljšana verzija programa za računanje obima i površine kruga, koja koristi ovu tehniku.
+                <pre data-src="C++/funkcije/funkcije12.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+const double PI(3.14159265);
+
+// Stampa obim i povrsinu kruga sa poluprecnikom zadanim kao parametar
+void ProracunajKrug(double r){
+    cout << "Obim: " << 2 * PI * r << endl;
+    cout << "Povrsina: " << PI * r * r << endl;
+}
+int main(){                     // Glavni program
+    double poluprecnik;
+    cin >> poluprecnik;
+    ProracunajKrug(poluprecnik);
+    return 0;
+}</code></pre>
+            </p>
+            <p>
+                Korištenje parametara omogućava potprogramu “ProracunajKrug” da koristi svoje vlastito lokalno ime za poluprečnik kruga (u navedenom primjeru “r”) koje ne mora nužno imati nikakve veze sa imenom promjenljive (u navedenom primjeru “poluprecnik”) koju koristi glavni program (koji poziva ovaj potprogram) za čuvanje informacije o poluprečniku kruga. Prilikom poziva potprograma “ProcarunajKrug”, tekuća vrijednost promjenljive “poluprecnik” (stvarni parametar) koristi se za inicijalizaciju lokalne promjenljive (formalnog parametra) “r”, odnosno vrijednost promjenljive “poluprecnik” se kopira u formalni parametar “r”. Poput svih drugih lokalnih promjenljivih (osim statičkih), formalni parametri su vidljivi samo unutar odgovarajućeg potprograma, i automatski se uništavaju nakon završetka potprograma. Formalni parametri ne mogu biti statički.
+            </p>
+            <p>
+                U navedenom primjeru, stvarni parametar “poluprecnik” kopira se u formalni parametar “r”. S obzirom da se stvarni parametri navode prilikom poziva, a isti potprogram je moguće pozvati koliko god puta želimo, u svakom pozivu moguće je zadati drugačije vrijednosti stvarnih argumenata, odnosno stvarni argumenti nisu jedinstveno određeni samim potprogramom. U tom slučaju, prilikom svakog izvršavanja potprograma, formalni parametri će imati drugačije početne vrijednosti (određene vrijednostima stvarnih parametara).
+            </p>
+            <p>
+                Potprogram “StampajPrazneLinije” u sljedećem primjeru ispisuje “n” praznih linija, gdje je “n” formalni parametar:
+                <pre class="line-numbers"><code class="language-cpp">void StampajPrazneLinije(int n){
+for(int i = 1; i <= n; i++) cout << endl; </code></pre>
+                Potprogram možemo kasnije pozvati bilo gdje u programu. Na primjer, kada nam zatreba 5 praznih linija, možemo napisati:
+                <pre class="line-numbers"><code class="language-cpp">StampajPrazneLinije(5);</code></pre>
+            </p>
+            <p>
+                Opisani način prenosa parametara pri kojem se vrijednost stvarnog parametra kopira u odgovarajući formalni parametar, naziva se prenos po vrijednosti (engl. passing by value). Kasnije ćemo vidjeti da jezik C++ podržava i drugi način prenosa parametara, nazvan prenos po referenci (engl. passing by reference), mada u jeziku C++ ova razlika u prenosu nije toliko striktne forme koliko u nekim drugim jezicima kao što je Pascal. Strogo rečeno, C++ zapravo i ne podržava prenos po referenci, ali se on može simulirati tako što se kao formalni parametar upotrijebi specijalna vrsta objekata nazvana referenca.
+            </p>
+            <p>
+                Pored termina parametar, koristi se i termin argument. Mada su termini parametar i argument sinonimi, u literaturi se veoma često kada se upotrijebi termin “parametar” bez konkretne specifikacije da li se radi o formalnom ili stvarnom parametru češće misli na formalni parametar, dok je pri upotrebi termina argument obrnuto (tj. češće se misli na stvarni argument). Na primjer, dosta često se govori o “parametrima koje potprogram prima”, odnosno o “argumentima koje prosljeđujemo potprogramu”.
+            </p>
+            <p>
+                Formalni i stvarni parametar u principu mogu imati ista imena, ali treba voditi računa da se i u tom slučaju radi o različitim objektima, a da su njihova istovjetna imena samo stvar slučaja. Dakle, čak i ukoliko formalni i stvarni parametar slučajno imaju isto ime (npr. “n”), formalni parametar “n” je neovisan od stvarnog parametra “n”, mada se pri pozivu potprograma “IspisiPozdrav” stvarni parametar “n” kopira u formalni parametar “n”. Ovo je ilustrirano u sljedećem (potpuino legalnom) primjeru, koji predstavlja modificirani program za ispis pozdrava zadani broj puta, uz tehniku prenosa parametara:
+                <pre data-src="C++/funkcije/funkcije13.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+void IspisiPozdrav(int n) {
+    for(int i = 1; i <= n; i++) cout << "Pozdrav" << endl;
+}
+int main(){
+    int n;
+    cout << "Koliko puta zelis pozdrav? ";
+    cin >> n;
+    IspisiPozdrav(n);
+    return 0;
+}</code></pre>
+            </p>
+            <p>
+                Ovdje se prilikom poziva potprograma “IspisiPozdrav” stvarni parametar “n” (koji je lokalna promjenljiva potprograma “main”) kopira u formalni parametar “n” (koji je lokalna promjenljiva potprograma “IspisiPozdrav”). 
+            </p>
+            <p>
+                Prenos parametara po vrijednosti može se koristiti kada god želimo prenijeti neku informaciju u potprogram, pri čemu nas dalje ne zanima šta će taj potprogram uraditi sa prenesenom informacijom (tj. da li će prenesena informacija pretrpiti izmjene ili ne; to je privatna stvar potprograma). Osnovna svrha parametara je da učine potprogram generalnijim, tako da se on lakše može ponovo iskoristiti u drugim programima. Na primjer, u programu za ispis šahovske table imali smo potprogram nazvan “StampajZvjezdice” koji je štampao “sirina_polja” zvjezdica na ekranu, pri čemu je “sirina_polja” bila globalna promjenljiva:
+                <pre class="line-numbers"><code class="language-cpp">void StampajZvjezdice(){           // Stampa "sirina_polja" zvjezdica
+    for(int i = 1; i <= sirina_polja; i++) cout << "*";
+}</code></pre>
+                Ovaj potprogram može biti poboljšan, uvođenjem formalnog parametra (nazvanog npr. “brzv”, skraćeno od “broj zvjezdica”) koji omogućava da potprogram ne mora ništa “znati” o tome kakva se imena promjenljivih koriste u ostatku programa:
+                <pre class="line-numbers"><code class="language-cpp">void StampajZvjezdice(int brzv){       // Stampa "brzv" zvjezdica
+    for(int i = 1; i <= brzv; i++) cout << "*";
+}</code></pre>
+            </p>
+            <p>
+                Ovim je potprogram postao mnogo generalniji, jer omogućava štampanje onoliko zvjezdica koliko želimo, kada god to zatražimo. Pri tome, željeni broj zvjezdica jednostavno zadajemo prilikom poziva potprograma.
+            </p>
+            <p>
+                Kada koristimo prototipove potprograma koji imaju parametre, njihova imena nije neophodno navoditi i u prototipu, jer je kompajleru dovoljno da zna njihov broj i tip u trenutku kada se potprogram poziva. Tako je sljedeći program potpuno korektan:
+                <pre data-src="C++/funkcije/funkcije14.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main(void) {
+    void IspisiZbir(int, int);
+    IspisiZbir(3,2);
+    return 0;
+}
+void IspisiZbir(int p, int q){
+    cout << p + q;
+}</pre></code>
+            </p>
+            <p>
+                Nije greška navesti imena parametara i u prototipu, tako da bi u prethodnom programu sasvim legalan bio i prototip
+                <pre class="line-numbers"><code class="language-cpp">void IspisiZbir(int p, int q);</code></pre>
+            </p>
+            <p>
+                Parametri mogu biti bilo kojeg legalnog tipa. U sljedećem primjeru koristimo parametar koji je pobrojanog tipa. Definiran je pobrojani tip “Dani”, i potprogram “StampajKalendar” sa dva parametra. Prvi parametar “broj_dana” je tipa “int”, dok je drugi parametar “pocetni_dan” tipa “Dani”. Parametar “broj_dana” određuje broj dana u mjesecu, parametar “pocetni_dan” određuje dan u sedmici kojim započinje taj mjesec, a potprogram “StampajKalendar” štampa kalendar za taj mjesec. U programu je definiran i glavni program koji ilustrira kako se poziva taj potprogram za slučaj kada želimo odštampati kalendar za mjesec koji ima 31 dan, a počinje srijedom(enum je varijabla kojoj mi podesavamo ime i parametre):
+                <pre data-src="C++/funkcije/funkcije15.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+
+enum Dani {Ponedjeljak, Utorak, Srijeda, Cetvrtak, Petak, Subota, Nedjelja};
+
+void StampajKalendar(int broj_dana, Dani pocetni_dan){
+    cout << "  P  U  S  C  P  S  N " <<  endl << setw(3 * pocetni_dan) << " ";
+    for(int j = 1; j <= broj_dana; j++) {
+        cout << setw(3) << j;
+        if(pocetni_dan != Nedjelja) pocetni_dan = Dani(pocetni_dan + 1);
+        else{
+            pocetni_dan = Ponedjeljak;
+            cout << endl;
+        }
+    }
+}
+int main(){
+    StampajKalendar(31, Srijeda);
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Kao efekat izvrsavanja ovog programa dobićemo sljedeći ispis:
+                <pre><code class="language-plain">  P  U  S  C  P  S  N 
+        1  2  3  4  5
+  6  7  8  9 10 11 12
+ 13 14 15 16 17 18 19
+ 20 21 22 23 24 25 26
+ 27 28 29 30 31
+                </code></pre>
+            </p>
+            <p>
+                U ovom programu, uz pomoć “setw” manipulatora ispisujemo određeni broj praznih mjesta, da bismo doveli poziciju za ispis ispod slova koje predstavlja odgovarajući dan. Kako je svaka kolona široka 3 znaka, broj dodatnih praznina koje treba ispisati jednak je trostrukoj vrijednosti rednog broja odgovarajućeg dana (redni brojevi dana počinju od nule, što nam upravo odgovara, jer za slučaj da je početni dan ponedjeljak, nikakvi dopunski razmaci nisu potrebni). Nakon toga, “for” petljom ispisujemo sve brojeve redom od 1 do vrijednosti parametra “broj_dana”, ažurirajući pri tom svaki put promjenljivu “pocetni_dan” tako da ukazuje na sljedeći dan, osim za slučaj kada je njena vrijednost “Nedjelja”. U tom slučaju, vrijednost promjenljive “pocetni_dan” vraćamo nazad na vrijednost “Ponedjeljak”, uz ispis jednog praznog reda, čime zapravo prelazimo na ispis novog reda kalendara.
+            </p>
+            <p>
+                U prethodnom primjeru, deklarirali smo tip “Dani” sa globalnom vidljivošću, samim tim što smo ga deklarirali izvan svih blokova. Stoga je ovaj tip dostupan i u potprogramu “StampajKalendar” i u glavnoj funkciji “main”, što nam je upravo i potrebno. Da smo tip “Dani” deklarirali unutar potprograma “StampajKalendar”, on ne bi bio vidljiv nigdje izvan tijela tog potprograma, što znači da pobrojana konstanta “Srijeda” ne bi bila vidljiva u “main” funkciji (tako da program ne bi uopće radio). Treba napomenuti da se, za razliku od deklaracija globalnih promjenljivih, deklaracija tipova sa globalnom vidljivošću ne smatra štetnom, i često je veoma potrebna. Naime, dok se informacije mogu razmjenjivati između potprograma putem prenosa parametara, ne postoji sličan način kojim bi potprogrami mogli međusobno razmjenjivati tipove, stoga je upotreba tipova sa globalnom vidljivošću često jedino rješenje.
+            </p>
+            <p>
+                Veoma je važno napomenuti da iako jezik C++ garantira da će vrijednosti svih stvarnih parametara biti izračunate prije nego što njihove vrijednosti budu proslijeđene formalnim parametrima (odnosno prije početka izvršavanja potprograma), jezik C++ ne propisuje redoslijed kojim će stvarni parametri biti izračunati. Mada redoslijed izračunavanja stvarnih parametara u većini slučajeva uopće nije bitan, on može biti značajan u slučaju kada stvarni parametri predstavljaju izraze koji sadrže bočne efekte.
+            </p>
+            <p>
+                U jeziku C++ je podržana mogućnost da se prilikom pozivanja potprograma navede manji broj stvarnih parametara nego što iznosi broj formalnih parametara. Međutim, to je moguće samo ukoliko se u definiciji potprograma na neki način naznači kakve će početne vrijednosti dobiti oni formalni parametri koji nisu inicijalizirani odgovarajućim stvarnim parametrom, s obzirom da formalni parametri uvijek moraju biti inicijalizirani. Da bismo pokazali kako se ovo postiže, razmotrimo sljedeći potprogram sa tri parametra, koji na ekranu iscrtava pravougaonik od znakova sa visinom i širinom koje se zadaju kao prva dva parametra, dok treći parametar predstavlja znak koji će se koristiti za iscrtavanje pravougaonika:
+                <pre class="line-numbers"><code class="language-cpp">void CrtajPravougaonik(int visina, int sirina, char znak){
+    for(int i = 1; i <= visina; i++){
+        for(int j = 1; j <= sirina; j++) cout << znak;
+        cout << endl;
+    }
+}</code></pre>
+            </p>
+            <p>
+                Ukoliko sada, na primjer, želimo iscrtati pravougaonik formata 5 ¥ 8 sastavljen od zvjezdica, koristićemo sljedeći poziv:
+                <pre class="line-numbers"><code class="language-cpp">CrtajPravougaonik(5,8,'*');</code></pre>
+            </p>
+            <p>
+                U jeziku C++ je dozvoljeno imati više potprograma sa istim imenima, pod uvjetom da je iz načina kako je potprogram pozvan moguće nedvosmisleno odrediti koji potprogram treba pozvati. Neophodan uvjet za to je da se potprogrami koji imaju ista imena moraju razlikovati ili po broju parametara, ili po tipu odgovarajućih formalnih parametara, ili i po jednom i po drugom. Ova mogućnost naziva se preklapanje ili preopterećivanje (engl. overloading) potprograma (funkcija). Na primjer, u sljedećem primjeru imamo preklopljena dva potprograma istog imena “P1” koji ne rade ništa korisno (služe samo kao demonstracija preklapanja):
+                <pre class="line-numbers"><code class="language-cpp">void P1(int a){
+    cout << "Jedan parametar: " << a << endl;
+}
+void P1(int a, int b){
+    cout << "Dva parametra: " << a << " i " << b << endl;
+}</code></pre>
+            </p>
+            <p>
+                Kod programa koji sadrže mnoštvo potprograma, neophodno je poznavati strukturu programa, odnosno informaciju o tome koje potprograme on sadrži, i kakva je pozivna hijerarhija (tj. koji potprogrami zovu koje potprograme). Pregledan način za prikazivanje strukture programa predstavljaju tzv. strukturni dijagrami.
+            </p>
+            <p>
+                Strukturni dijagrami mogu također prikazivati i prenos parametara. Ne treba miješati strukturne dijagrame sa tzv. dijagramima toka (engl. flowcharts). Naime, strukturni dijagrami prikazuju samo hijerarhiju potprograma, a ne i algoritam kako pojedini potprogrami djeluju (niti kako funkcioniraju).
+            </p>
+            <p>
+                Mehanizam prenosa parametara je od ključnog značaja za razvoj programa. Naime, u dobro napisanom programu, niti jedan dio programa ne bi trebao da ima pristup onim promjenljivim koje mu nisu potrebne. Na primjer, sa gledišta onog ko poziva potprogram, svaki potprogram treba djelovati kao “crna kutija” (pod ovim pojmom se u tehnici obično podrazumijeva uređaj za koji možemo utvrditi šta radi, ali ne i kako radi, s obzirom da nam je njegova unutrašnjost posve nedostupna). Naime, onaj ko poziva potprogram treba samo da potprogramu preda ispravne parametre i da im prepusti da odrade svoj posao, ne ulazeći u to kako će oni to uraditi. S druge strane, potprogrami samo primaju parametre od pozivaoca, i ne tiče ih se šta radi ostatak programa. Oni se brinu samo kako da obave zadatak koji im je povjeren. Također, u dobro napisanom programu, ni jedan potprogram ne bi trebao da radi više različitih poslova (svakom poslu treba dodijeliti poseban potprogram).
+            </p>
+            <p>
+                Mehanizam koji obezbjeđuje ispunjenje ovih principa naziva se sakrivanje informacija (engl. information hiding). U jeziku C++ ovaj mehanizam se ostvaruje tako što svaku promjenljivu definiramo tako da joj je vidokrug što je god moguće manji. Da se izbjegne upotreba globalnih promjenljivih u funkcijama, treba intenzivno koristiti parametre. Ovaj koncept je ilustriran na poboljšanoj verziji modularnog programa za prikaz šahovske table, u kojem je izbjegnuta upotreba globalnih promjenljivih, korištenjem mehanizma prenosa parametara:
+                <pre data-src="C++/funkcije/funkcije16.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+const char Razmak(' '), Zvjezdica('*');
+int main(){                             // Glavni program
+    void StampajTablu(int, int);        // Prototip funkcije "StampajTablu"
+    int m;
+    int n;
+    cout << "Ovaj program prikazuje sahovsku tablu. " << endl << endl;
+    cout << "Unesite sirinu svakog kvadrata, u znakovima: ";
+    cin >> m;
+    cout << "Unesite visinu svakog kvadrata, u linijama: ";
+    cin >> n;
+    cout << endl << endl;
+    StampajTablu(n,m);
+    return 0;
+}
+// Stampa sahovsku tablu
+void StampajTablu(int visina, int sirina){
+    void StampajNeparniRed(int, int);
+    void StampajParniRed(int, int);
+    for(int i = 1; i <= 4; i++){
+        StampajNeparniRed(visina,sirina);
+        StampajParniRed(visina,sirina);
+    }
+}
+// Stampa neparni red
+void StampajNeparniRed(int visina, int sirina) {
+    void StampajLinijuNeparnogReda(int);
+    for(int i = 1; i <= visina; i++) StampajLinijuNeparnogReda(sirina);
+}
+// Stampa parni red
+void StampajParniRed(int visina, int sirina) {
+    void StampajLinijuParnogReda(int);
+    for(int i = 1; i <= visina; i++) StampajLinijuParnogReda(sirina);
+}
+// Stampa liniju neparnog reda
+void StampajLinijuNeparnogReda(int sirina_kvadrata) {
+    void StampajZnakove(int,char);
+    for(int i = 1; i <= 4; i++){
+        StampajZnakove(sirina_kvadrata, Razmak);
+        StampajZnakove(sirina_kvadrata, Zvjezdica);
+    }
+    cout << endl;
+}
+// Stampa liniju parnog reda
+void StampajLinijuParnogReda(int sirina_kvadrata){
+    void StampajZnakove(int, char);
+    for(int i = 1; i <= 4; i++){
+        StampajZnakove (sirina_kvadrata, Zvjezdica);
+        StampajZnakove (sirina_kvadrata, Razmak);
+    }
+    cout << endl;
+}
+// Stampa niz znakova
+void StampajZnakove(int broj_znakova, char znak){
+    for(int i = 1; i <= broj_znakova; i++) cout << znak;
+}</pre></code>
+            </p>
+            <p>
+                Osobina modularnih programa koja omogućava da se jednom napisani potprogrami mogu upotrebljavati u drugim programima dovodi do velike uštede u vremenu prilikom razvoja obimnih programskih paketa. S druge strane, skraćivanje programa obično zahtijeva oslanjanje na neke “trikove” specifične za problem koji se rješava, što čini razrađeni algoritam potpuno “vezanim” za problem koji se rješava. Pogledajmo, na primjer, sljedeću verziju programa za iscrtavanje šahovske table. On je nesumnjivo izuzetno kratak, i koristi samo dvije petlje, ali i prilično težak za razumijevanje, jer se zasniva na nekim “karakterističnim” svojstvima “šare” koju čini šahovska tabla. Također, ovaj program koristi i prilično “konfuzni” ternarni operator “? :”. Nemojte se previše zabrinjavati ukoliko ne uspijete razumjeti kako radi ovaj program. On je više “mozgalica” za enigmatičare nego primjer kako bi trebalo pisati dobre programe:
+                <pre data-src="C++/funkcije/funkcije17.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main(){
+    int m, n;
+    cout << "Ovaj program prikazuje sahovsku tablu. " << endl << endl;
+    cout << "Unesite sirinu svakog kvadrata, u znakovima: ";
+    cin >> m;
+    cout << "Unesite visinu svakog kvadrata, u linijama: ";
+    cin >> n;
+    cout << endl << endl;
+    for(int i = 0; i < 8 * n; i++){
+        for(int k = 0; k < 8 * m; k++) cout << ((i / n + k / m) % 2 ? "*" : " ");
+        cout << endl;
+    }
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Na primjeru ovog programa također možemo vidjeti i da su kratkoća i efikasnost međusobno sukobljeni zahtjevi. Tako je ovaj program vjerovatno “šampion kratkoće”, ali je manje efikasan od prethodnog, jer se u ovom programu unutar unutrašnje petlje izvršavaju tri operacije dijeljenja. Kako se unutrašnja petlja izvršava 8 × m puta a spoljašnja 8 × n puta, slijedi da se u ovom programu izvršava ukupno 192×m×n dijeljenja (koje je relativno spora operacija), dok se u prethodnom programu ne izvršava niti jedno dijeljenje! Efikasnost ovog programa se može osjetno popraviti (uz zadržavanje kratkoće) upotrebom manipulatora “setw” i “setfill”, što prepuštamo enigmatski nastrojenim čitateljima i čitateljkama kao korisnu vježbu.
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+            </section>
+    </div>
+</body>
+</html>
