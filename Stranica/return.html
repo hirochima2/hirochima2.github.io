@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Funkcije koje vraćaju vrijednost</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Funkcije koje vraćaju vrijednost</header>
+            <p>
+                Mana svih dosad napisanih potprograma je u tome što oni ne omogućavaju da se ikakav rezultat iz potprograma vrati nazad na mjesto njegovog poziva. Šta se pod ovim misli, vidjećemo iz sljedećeg razmatranja. Već smo vidjeli da C++ poznaje funkciju “sqrt” (definiranu u biblioteci “cmath”) koja računa kvadratni korijen svog argumenta, i da tu funkciju možemo koristiti u konstrukcijama poput sljedećih (naravno, uz pretpostavku da su propisno deklarirane odgovarajuće promjenljive koje se u ovim primjerima spominju):
+                <pre class="line-numbers"><code class="language-cpp">korijen = sqrt(broj);
+hipotenuza = sqrt(kateta1 * kateta1 + kateta2 * kateta2);
+stranica = dijagonala / sqrt(2);
+cout << sqrt(3);</code></pre>
+            </p>
+            <p>
+                Odavde vidimo da funkcija “sqrt” ima svoju vrijednost (koja je jednaka kvadratnom korijenu njenog argumenta), koja joj omogućava da se ona može koristiti unutar izraza. Pokušajmo sada da sami napravimo funkciju koja kao rezultat vraća kvadrat broja koji je zadan kao argument. Sa dosadašnjim znanjem, sve što možemo da uradimo je da napravimo “funkciju” koja na ekran ispisuje kvadrat svog argumenta, konstrukcijom poput:
+                <pre class="line-numbers"><code class="language-cpp">void Kvadrat(double x){
+    cout << x * x;
+}</code></pre>
+               Iako ovu funkciju možemo upotrebiti da ispišemo kvadrat nekog broja, pozivima poput
+               <pre class="line-numbers"><code class="language-cpp">Kvadrat(3);
+Kvadrat(2 * a + 5);</code></pre> 
+            </p>
+            <p>
+                i slično, ovakvu funkciju možemo upotrebiti samo samu za sebe, a ne i unutar nekog izraza. Razlog je u tome što je ovako definirana funkcija objekat bez vrijednosti, tj. ona ne vraća nikakvu vrijednost nazad na mjesto poziva koja bi mogla da bude upotrebljena unutar nekog izraza. Zbog toga su sljedeće konstrukcije besmislene, i kompajler će prijaviti grešku pri pokušaju da napišemo nešto slično:
+                <pre class="line-numbers"><code class="language-cpp">c = Kvadrat(a + b);
+cout << Kvadrat(5);
+cout << Kvadrat(a) + Kvadrat(b);
+hipotenuza = sqrt(Kvadrat(kateta1) + Kvadrat(kateta2));</code></pre>
+                Iz istog razloga, potpuno su besmislene i konstrukcije poput
+                <pre class="line-numbers"><code class="language-cpp">a = StampajTablu(m, n);
+b = StampajTablicuMnozenja(3, 5);</code></pre>
+            </p>
+            <p>
+                gdje su “StampajTablu” i “StampajTablicuMnozenja” funkcije (potprogrami) koje su navedene kao primjeri u prethodnom poglavlju. Da bismo omogućili da se funkcija može koristiti unutar izraza, moramo napisati funkciju koja vraća neku vrijednost. Definicija ovakve funkcije je slična definiciji običnog potprograma (funkcije) koji ne vraća vrijednost, osim što se umjesto riječi “void” na početku piše tip vrijednosti (rezultata) koji funkcija vraća, koji često nazivamo i povratni tip (engl. return type). Rezervirana riječ “void” zapravo ukazuje na odsustvo povrante vrijednosti. Sljedeća definicija definira funkciju “Kvadrat” koja vraća vrijednost tipa “double”:
+                <pre class="line-numbers"><code class="language-cpp">double Kvadrat(double x){
+return x*x;</code></pre>
+            </p>
+            <p>
+                Barem jedna naredba (najčešće posljednja) unutar funkcije koja vraća vrijednost mora biti naredba “return”, pomoću koje se vraća vrijednost iz funkcije. Po nailasku na ovu naredbu, izvršavanje tijela funkcije se prekida, pri čemu se vrijednost izraza navedenog iza ključne riječi “return” vraća kao rezultat funkcije na mjesto odakle je funkcija pozvana. Program se dalje nastavlja izvršavati kao da je čitav poziv funkcije (zajedno sa njenim argumentima) prosto zamijenjen vrijednošću koja je vraćena iz funkcije. Na primjer, ovako definiranu funkciju “Kvadrat” bez problema možemo koristiti unutar izraza, tako da su potpuno legalne sljedeće naredbe:
+                <pre class="line-numbers"><code class="language-cpp">cout << Kvadrat(5);
+c = Kvadrat(a);
+cout << "Zbir kvadrata brojeva 3 i 4 je " << Kvadrat(3) + Kvadrat(4);
+hipotenuza = sqrt(Kvadrat(kateta1) + Kvadrat(kateta2));</code></pre>
+            </p>
+            <p>
+                Izraz naveden iza ključne riječi “return” mora se slagati po tipu sa navedenim povratnim tipom funkcije, osim u slučajevima u kojima je podržana automatska konverzija tipova iz jednog tipa u drugi. Funkcija može vratiti rezultat bilo kojeg tipa osim nizovnog tipa. U slučaju da ne upotrijebimo naredbu “return” unutar funkcije koja vraća vrijednost, vraćena vrijednost će biti nedefinirana (odnosno slučajna, ili bolje rečeno nepredvidljiva) što sigurno nije poželjno. Ova situacija smatra se greškom. Stoga mnogi kompajleri (ali nažalost ne svi) javljaju grešku u slučaju da se unutar funkcije koja vraća vrijednosti nigdje ne upotrijebi naredba “return”.
+            </p>
+            <p>
+                Možemo primijetiti da su funkcije koje vraćaju vrijednost znatno bliže pojmu funkcije u matematskom smislu, za razliku od funkcija koje ne vraćaju vrijednost. Zbog toga smo, pri razmatranju funkcija koje ne vraćaju vrijednost, izbjegavali upotrebu termina “funkcija”, nego smo koristili općenitiji pojam “potprogram”. S druge strane, funkcija “Kvadrat” ne radi ništa drugo osim što vraća vrijednost nazad, pri čemu se onaj ko je pozvao funkciju brine o tome šta će biti urađeno sa vraćenom vrijednošću (tj. sama funkcija se o tome ne brine). 
+            </p>
+            <p>
+                U sljedećem primjeru naveden je ponovo program koji računa i ispisuje obim i površinu kruga, samo što se u njemu koriste i funkcije koje vraćaju vrijednost (razmotrite zašto je u ovom primjeru dobro da je konstanta “PI” definirana sa globalnom vidljivošću):
+                <pre data-src="C++/funkcije/funkcije18.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+const double PI(3.141592654);
+
+double Obim(double r){
+    return 2 * PI * r;                  // Racuna obim kruga
+}
+
+double Povrsina(double r){
+    return PI * r * r;                  // Racuna povrsinu kruga
+}
+
+void ProracunajKrug(double r){          // Stampa obim i povrsinu kruga
+    cout << "Obim: " << Obim(r) << endl;
+    cout << "Povrsina: " << Povrsina(r) << endl;
+}
+
+int main(){                            // Glavni program
+    double poluprecnik;
+    cin >> poluprecnik;
+    ProracunajKrug(poluprecnik);
+    return 0;
+}</code></pre>
+            Funkcije “Obim” i “Povrsina” imaju imena koja nisu u glagolskoj formi. Ukoliko bismo ipak insistirali na glagolskim formama, prihvatljiva imena mogu biti “RacunajObim” i “RacunajPovrsinu”.
+            </p>
+            <p>
+                Funkcije koje vraćaju vrijednost često su kratke, i nekad se njihovo tijelo sastoji samo od “return” naredbe (takve funkcije pogodno je realizirati kao tzv. umetnute funkcije, o kojima ćemo govoriti kasnije). Na primjer, u sljedećem primjeru definirana je funkcija “Kub” koja kao rezultat vraća kub broja zadanog kao parametar, kao i funkcija “DaLiJePrestupna” koja kao rezultat vraća logičku vrijednost “true” ili “false” zavisno da li je godina zadana kao parametar prestupna ili ne. Napomenimo da je po trenutno važećem Gregorijanskom kalendaru godina prestupna ako je djeljiva sa 4, osim ukoliko je djeljiva sa 100 a nije istovremeno djeljiva sa 400. Dakle, svaka četvrta godina nije uvijek prestupna, nego se u razdoblju od 400 godina tri puta pojavi razmak od 8 godina između dvije prestupne godine:
+                <pre class="line-numbers"><code class="language-cpp">double Kub(double x){
+    return x * x * x;
+}
+bool DaLiJePrestupna(int godina){
+    return (godina % 4 == 0) && (godina % 100 != 0 || godina % 400 == 0);
+}</code></pre>
+                Ovako definirane funkcije mogu se koristiti u konstrukcijama poput:
+                <pre class="line-numbers"><code class="language-cpp">cout << 5 + Kub(3.7) / 2.5;
+if(DaLiJePrestupna(ova_godina)) broj_dana[Februar] = 29;</code></pre>
+            </p>
+            <p>
+                Mnogi od programa koji smo ranije pisali mogu se učiniti mnogo fleksibilnijim upotrebom funkcija. Na primjer, slijedeći program definira funkciju “NZD” koja računa najveći zajednički djelilac svoja dva argumenta, a zatim koristi definiranu funkciju za računanje najmanjeg zajedničkog sadržioca (NZS) dva broja unesena sa tastature koristeći činjenicu da je NZS ( p, q) = p × q / NZD ( p, q):
+                <pre data-src="C++/funkcije/funkcije19.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int NZD(int p, int q){
+    int ostatak;
+    do{
+        ostatak = p % q; p = q; q = ostatak;
+    } while(ostatak);
+    return p;
+}
+int main(){
+    int a,b;
+    cout << "Unesite dva broja: ";
+    cin >> a >> b;
+    cout << "Njihov NZS je " << a * b / NZD(a, b) << endl;
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Možda iz do sada navedenih primjera nije očigledno da nailazak na naredbu “return” prekida izvršavanje tijela funkcije, i vrši trenutačan povratak na mjesto odakle je funkcija pozvana. U sljedećem primjeru ovo svojstvo je iskorišteno u funkciji “DaLiJeProst” koja vraća logičku vrijednost “true” ili “false” u zavisnosti da li je parametar koji joj je proslijeđen prost broj ili nije (algoritam na kojem se zasniva ova funkcija već je korišten ranije). Ta funkcija je iskorištena kao potprogram u programu koji ispisuje sve proste brojeve od 1 do 1000.
+                <pre data-src="C++/funkcije/funkcije20.cpp" data-download-link data-download-link-label="Preuzmite!" class="line-numbers"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cmath&gt;
+using namespace std;
+
+bool DaLiJeProst(long int n){
+    long int korijen = sqrt(n);
+    if(n != 2 && n % 2 == 0) return false;
+    else 
+        for(long int i = 3; i <= korijen; i +=2)
+            if(n % i == 0) return false;
+        return true;
+}
+int main(){
+    cout << "Prosti brojevi od 1 do 1000" << endl;
+    for(int i = 1; i <= 1000; i++)
+        if(DaLiJeProst(i)) cout << i << " ";
+    return 0;
+}</pre></code>
+            </p>
+            <p>
+                Naredba “return” može se koristiti i unutar funkcija koje ne vraćaju nikakav rezultat, samo se u tom slučaju iza ove naredbe ne stavlja ništa (tj. nikakva vrijednost). Dejstvo ove naredbe je prekidanje izvršavanje tijela funkcije i povratak na mjesto poziva (ona se može koristiti ukoliko želimo da pod određenim uvjetima prekinemo izvršavanje tijela funkcije prije nego što program naiđe na njen kraj, slično naredbi “break” koja prekida izvršavanje petlji). Neki programeri uvijek stavljaju naredbu “return” neposredno prije kraja funkcije koja ne vraća vrijednost, iako to u principu nije neophodno, jer će nailazak na kraj funkcije svakako uzrokovati povratak na mjesto poziva. Ako se naredba “return” upotrebi unutar glavnog programa (tj. unutar funkcije “main”), ona dovodi do prekida izvršavanja programa (odnosno povratka u operativni sistem, koji je zapravo pozvao funkciju “main”).
+            </p>
+            <p>
+                Primijetimo da je, u suštini, funkcija “main” funkcija koja vraća vrijednost. Njen tip povratne vrijednosti mora biti “int”, s obzirom da onaj koji je pozvao funkciju “main” (tj. operativni sistem) očekuje da ona vrati vrijednost tog tipa. Kako ne možemo utjecati na način kako se “main” funkcija poziva iz operativnog sistema, nemamo načina da utičemo na tip povratne vrijednosti koju funkcija “main” mora imati. Prirodno je zapitati se da li funkcija “main” može imati parametre. Odgovor je potvrdan (njihove vrijednosti se tada “main” funkciji prosljeđuju iz samog operativnog sistema). Međutim, o ovoj mogućnosti nećemo govoriti, jer ona zahtijeva izvjesno poznavanje rada samog operativnog sistema, što izlazi izvan okvira o kojima se ovdje govori.
+            </p>
+            <p>
+                Poseban oprez je potreban u slučaju funkcija koje pamte stanje svog izvršavanja (što je također jedna specijalna vrsta bočnog efekta). Na primjer, neka je potrebno napraviti funkciju nazvanu “KumulativnaSuma” sa jednim parametrom koja vraća kao rezultat ukupnu (kumulativnu) sumu svih dotada zadanih vrijednosti njenih stvarnih argumenata. Na primjer, sljedeća sekvenca naredbi:
+                <pre class="line-numbers"><code class="language-cpp">cout << KumulativnaSuma(3) << endl;
+cout << KumulativnaSuma(5) << endl;
+cout << KumulativnaSuma(2) << endl;
+cout << KumulativnaSuma(1) << endl;
+cout << KumulativnaSuma(7) << endl;</code></pre>
+            </p>
+            <p>
+                trebala bi da ispiše niz brojeva 3, 8, 10, 11 i 18 (3+5=8, 8+2=10, 10+1=11, 11+7=18). Ovakvu funkciju nije teško napraviti tako što ćemo definirati promjenljivu koja pamti sumu dotada zadanih vrijednosti argumenata. Ta promjenljiva naravno mora biti statička, jer treba da se inicijalizira samo pri prvom pozivu funkcije, i da “preživi” njen završetak. Tako dobijamo definiciju poput sljedeće (pomalo neobična konstrukcija “returnsuma+=n;” služi kao zamjena za dvije naredbe “suma+=n;” i “return suma;”):
+                <pre class="line-numbers"><code class="language-cpp">int KumulativnaSuma(int n){
+static int suma(0);
+return suma += n;</code></pre>
+            </p>
+            <p>
+                Ovakva funkcija sasvim ispravno radi ukoliko se upotrijebi u sekvenci naredbi poput maloprije navedene sekvence. Međutim, ukoliko umjesto toga napišemo naredbu
+                <pre class="line-numbers"><code class="language-cpp">cout << KumulativnaSuma(3) << endl << KumulativnaSuma(5) << endl 
+<< KumulativnaSuma(2) << endl << KumulativnaSuma(1) << endl 
+<< KumulativnaSuma(7) << endl;</code></pre>
+            </p>
+            <p>
+                koja izgleda ekvivalentna prethodnoj sekvenci, vjerovatno ćemo dobiti posve neočekivane rezultate. Naime, ova naredba je, u suštini, jedan izraz u kojem se pet puta poziva funkcija “KumulativnaSuma”. Mada je redoslijed ispisa jasno definiran (slijeva nadesno), redoslijed poziva ove funkcije (unutar istog izraza) nije definiran, stoga su rezultati nepredvidljivi. Na primjer, ukoliko redoslijed poziva ove funkcije bude izvršen zdesna nalijevo, umjesto očekivane sekvence brojeva dobićemo ispis sekvence 7, 8, 10, 15 i 18 (7+1=8, 8+2=10, 10+5=15, 15+3=18). Ovdje se ponovo radi o upotrebi više bočnih efekata u istom izrazu, mada se ovakva situacija lako može da previdi (mnogi programeri nemaju naviku da naredbu za ispis posmatraju kao izraz)!
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+        </section>
+    </div>
+</body>
+</html>
