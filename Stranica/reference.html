@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="header.js"></script>
+    <title>Reference i prenos parametara po referenci</title>
+</head>
+<body>
+    <script src="preuzimanje.js"></script>
+    <script src="nav.js"></script>
+    <script src="dropdownmn.js"></script>
+    <div id="main" class="main">
+        <section class="glavni-sektsn">
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <header>Reference i prenos parametara po referenci</header>
+            <p>
+                Mehanizam prenošenja parametara u funkcije koji smo do sada upoznali naziva se prenos parametara po vrijednosti (engl. passing by value). Ovaj mehanizam omogućava prenošenje vrijednosti sa mjesta poziva funkcije u samu funkciju. Međutim, pri tome ne postoji nikakav način da funkcija promijeni vrijednost nekog od stvarnih parametara koji je korišten u pozivu funkcije, s obzirom da funkcija manipulira samo sa formalnim parametria koji su posve neovisni objekti od stvarnih parametara (mada su inicijalizirani tako da im na početku izvršavanja funkcije vrijednosti budu jednake vrijednosti stvarnih parametara). Slijedi da se putem ovakvog prenosa parametara ne može prenijeti nikakva informacija iz funkcije nazad na mjesto poziva funkcije. Informacija se doduše može prenijeti iz funkcije na mjesto poziva putem povratne vrijednosti, ali postoje situacije gdje to nije dovoljno. 
+            </p>
+            <p>
+                Ograničenja prenosa po vrijednosti lako možemo vidjeti iz sljedećeg razmatranja. Zamislimo da želimo da definiramo funkciju “Povecaj” koja uvećava vrijednost cjelobrojne promjenljive koja joj je prosljeđena kao parametar, tako da sljedeća sekvenca naredbi
+                <pre class="line-numbers"><code class="language-cpp">int a = 5;
+Povecaj(a);
+cout << a;</code></pre>
+            </p>
+            <p>
+                ispiše broj “6”. Postavljeni problem je zapravo principijelne prirode, jer je jasno da nam za nešto ovakvo uopće nije potrebna nikakva funkcija (dovoljno je samo izvršiti izraz “a++”). Međutim, činjenica je da ovakvu funkciju nije moguće napisati koristeći samo do sada izložene koncepte. Naime, ako napišemo nešto poput
+                <pre class="line-numbers"><code class="language-cpp">void Povecaj(int x){
+    x++;
+}</code></pre>
+            </p>
+            <p>
+                nismo postigli ništa korisno. Naime, vrijednost promjenljive “a” će prilikom poziva funkcije “Povecaj” biti prenesena u formalni parametar “x”, koji će nakon toga zaista biti povećan za 1, ali se to neće odraziti na sadržaj promjenljive “a”. Naime, formalni parametar “x” je posve neovisan objekat od promjenljive “a”, koji pored toga biva uništen prilikom završetka funkcije, odnosno prilikom povratka iz funkcije na mjesto poziva. Naravno, ne bi ništa pomoglo ni da formalni parametar ima isto ime kao stvarni parametar, s obzirom da su formalni i stvarni parametri uvijek različiti objekti, bez obzira na to kako se zovu. Ni sljedeća definicija ne nudi mnogo veću korist:
+                <pre class="line-numbers"><code class="language-cpp">int Povecaj(int x){
+    return x + 1;
+}</code></pre>
+            </p>
+            <button class="openbtn" onclick="otvoriNavBar()">&#9776; Otvori Meni</button>
+            <p>
+
+            </p>
+        </section>
+    </div>
+</body>
+</html>

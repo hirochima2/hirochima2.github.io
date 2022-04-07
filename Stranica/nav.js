@@ -75,7 +75,6 @@ document.write('<div>\
       <a href="void.html">5. Osnovne funkcije (VOID)</a>\
       <a href="funvar.html">5.1 Prenos parametara u funkcije</a>\
       <a href="return.html">5.2 Funkcije koje vraćaju vrijednost</a>\
-      <a href="#">5.3 Reference i prenos parametara po referenci</a>\
 </div>\
 <a href="prijava.html">Odjava</a>\
     </div>\
